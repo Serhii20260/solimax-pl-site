@@ -1,0 +1,26 @@
+# залежності
+node_modules/
+
+# збірка
+dist/
+dist-ssr/
+
+# змінні середовища
+.env
+.env.*
+!.env.example
+
+# логи
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+logs/
+
+# редактори й ОС
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
