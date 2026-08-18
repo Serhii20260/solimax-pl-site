@@ -6,6 +6,10 @@ import { useLanguage } from "../lib/LanguageContext";
 
 const CONTACT_PHONE_DISPLAY = "+48 732 071 337";
 const CONTACT_PHONE_TEL = "+48732071337";
+const SALES_PHONE_DISPLAY = "+48 732 071 393";
+const SALES_PHONE_TEL = "+48732071393";
+const SUPPORT_PHONE_DISPLAY = "+48 732 071 670";
+const SUPPORT_PHONE_TEL = "+48732071670";
 const CALLBACK_EMAIL_PLACEHOLDER = "callback@solimax.pl";
 
 type ProductType = "pv" | "heat_pump";
@@ -46,6 +50,11 @@ const initialCallbackData: CallbackFormData = {
 
 export default function Kontakty() {
   const { t } = useLanguage();
+  const contacts = [
+    { title: t.kontaktMainContactTitle, phone: CONTACT_PHONE_DISPLAY, tel: CONTACT_PHONE_TEL, email: "info@solimax.pl" },
+    { title: t.kontaktSalesTitle, phone: SALES_PHONE_DISPLAY, tel: SALES_PHONE_TEL, email: "sales@solimax.pl" },
+    { title: t.kontaktSupportTitle, phone: SUPPORT_PHONE_DISPLAY, tel: SUPPORT_PHONE_TEL, email: "support@solimax.pl" },
+  ];
   const [formData, setFormData] = useState<LeadFormData>(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
@@ -544,15 +553,30 @@ export default function Kontakty() {
                   ul. Ruska 22<br />
                   {t.kontaktAddressLine3}
                 </p>
+                <div className="pt-2">
+                  <h3 className="font-semibold text-slate-900">{t.kontaktTaxId}</h3>
+                  <p className="text-slate-700 text-sm">8971959206</p>
+                </div>
               </div>
               <div className="space-y-3">
                 <h3 className="font-semibold text-slate-900">{t.kontaktContactsTitle}</h3>
-                <p className="text-slate-700 text-sm sm:text-base">
-                  <a href="mailto:info@solimax.pl" className="text-yellow-600 hover:text-yellow-500">info@solimax.pl</a><br />
-                  <a href={`tel:${CONTACT_PHONE_TEL}`} className="text-yellow-600 hover:text-yellow-500">{CONTACT_PHONE_DISPLAY}</a>
-                </p>
-                <h3 className="font-semibold text-slate-900 mt-4">{t.kontaktTaxId}</h3>
-                <p className="text-slate-700 text-sm">8971959206</p>
+                <div className="space-y-4">
+                  {contacts.map((contact) => (
+                    <div key={contact.email} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                      <h4 className="text-sm font-semibold text-slate-900">{contact.title}</h4>
+                      <div className="mt-2 space-y-1 text-sm sm:text-base">
+                        <p className="text-slate-700">
+                          <span className="text-slate-500">{t.kontaktPhoneLabel}: </span>
+                          <a href={`tel:${contact.tel}`} className="text-yellow-600 hover:text-yellow-500">{contact.phone}</a>
+                        </p>
+                        <p className="text-slate-700">
+                          <span className="text-slate-500">{t.kontaktEmailLabel}: </span>
+                          <a href={`mailto:${contact.email}`} className="text-yellow-600 hover:text-yellow-500">{contact.email}</a>
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
             
