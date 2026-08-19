@@ -7,6 +7,49 @@ const API_BASE =
 
 export const apiUrl = (path: string) => `${API_BASE}${path}`;
 
+/**
+ * Приводить шлях до картинки з бази до того, що реально лежить на диску.
+ *
+ * Дві поправки, обидві — наслідок історії, а не примха:
+ *  1) частина записів зберігає абсолютний URL на старий домен solimax.xyz —
+ *     відкидаємо хост, бо той самий шлях віддається і з solimax.pl;
+ *  2) шляхи записані з розширенням .png/.jpg, а статику переведено у WebP —
+ *     підміняємо розширення. Каталог /pl/uploads/ не чіпаємо: там файли,
+ *     завантажені через адмінку, вони у WebP не переганялись.
+ *
+ * Базу даних не редагуємо, тому підміна робиться на льоту в одному місці —
+ * через нього мають проходити ВСІ дані пакетів, звідки б вони не прийшли.
+ */
+export const normalizeAssetUrl = (url: string): string => {
+  if (!url) return url;
+  const m = url.match(/^https?:\/\/(?:www\.)?solimax\.(?:xyz|pl)(\/.*)$/i);
+  const relative = m ? m[1] : url;
+  return relative.startsWith('/pl/') && !relative.startsWith('/pl/uploads/')
+    ? relative.replace(/\.(png|jpe?g)$/i, '.webp')
+    : relative;
+};
+
+/** Те саме для одного пакета: imageUrl + галерея images (рядок JSON або масив). */
+export const normalizePackageAssets = <T extends { imageUrl?: string | null; images?: unknown }>(pkg: T): T => {
+  if (!pkg) return pkg;
+  const out: T = { ...pkg };
+  if (typeof out.imageUrl === 'string') {
+    out.imageUrl = normalizeAssetUrl(out.imageUrl) as T['imageUrl'];
+  }
+  const imgs = out.images;
+  if (Array.isArray(imgs)) {
+    out.images = imgs.map((i) => (typeof i === 'string' ? normalizeAssetUrl(i) : i)) as T['images'];
+  } else if (typeof imgs === 'string' && imgs.trim().startsWith('[')) {
+    try {
+      const parsed = JSON.parse(imgs);
+      if (Array.isArray(parsed)) {
+        out.images = JSON.stringify(parsed.map((i) => (typeof i === 'string' ? normalizeAssetUrl(i) : i))) as T['images'];
+      }
+    } catch { /* лишаємо як є */ }
+  }
+  return out;
+};
+
 export interface PackageSpec {
   key: string;
   value: string;

@@ -8,7 +8,19 @@
     <link rel="preload" as="image" href="/pl/hero-poster.webp" type="image/webp" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&display=swap" />
+    <!-- Barlow Condensed потрібен лише на /biznes (BusinessKPI, ESGDashboard).
+         Вантажимо неблокуюче: як preload, який після завантаження сам стає
+         stylesheet. Головна більше не чекає на цей файл. <noscript> — щоб
+         шрифт приїхав і без JS. -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&display=swap" />
+    </noscript>
   </head>
   <body>
     <div id="root"></div>

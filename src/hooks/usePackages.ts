@@ -1,7 +1,7 @@
 // src/hooks/usePackages.ts
 import { useState, useEffect, useCallback } from 'react';
 import type { Package, PackageFilters, PackageSpec } from '../lib/api';
-import { apiUrl, fetchPackages, fetchPackageById } from '../lib/api';
+import { apiUrl, fetchPackages, fetchPackageById, normalizePackageAssets } from '../lib/api';
 import { useLanguage } from '../lib/LanguageContext';
 import type { SupportedLanguage } from '../lib/i18n';
 
@@ -26,34 +26,8 @@ type PackageCopy = {
 
 const nowIso = () => new Date().toISOString();
 
-/**
- * Каталог у базі частину картинок зберігає абсолютним URL на старий домен
- * solimax.xyz (напр. sb3-e2700-pro). Для solimax.pl це зайвий DNS + TLS до
- * чужого хоста на кожному відкритті сторінки. Той самий шлях /pl/uploads/…
- * nginx віддає і з solimax.pl, тому досить прибрати хост і лишити відносний
- * шлях — файл їде з того самого з'єднання. Базу цим не чіпаємо.
- */
-const localizeImageUrl = (url: string): string => {
-  if (!url) return url;
-  const m = url.match(/^https?:\/\/(?:www\.)?solimax\.(?:xyz|pl)(\/.*)$/i);
-  return m ? m[1] : url;
-};
-
-/**
- * Каталог у базі зберігає шляхи з розширенням .png/.jpg — так було до того,
- * як статику перевели у WebP. Базу ми не редагуємо, тому підміняємо
- * розширення на льоту. Шляхи /pl/uploads/… не чіпаємо: там лежать
- * завантажені через адмінку файли, які у WebP не переганялись.
- */
-const webpImageUrl = (url: string): string =>
-  url.startsWith('/pl/') && !url.startsWith('/pl/uploads/')
-    ? url.replace(/\.(png|jpe?g)$/i, '.webp')
-    : url;
-
-const withLocalImage = <T extends { imageUrl: string }>(pkg: T): T => {
-  const fixed = webpImageUrl(localizeImageUrl(pkg.imageUrl));
-  return fixed === pkg.imageUrl ? pkg : { ...pkg, imageUrl: fixed };
-};
+// Нормалізація шляхів до картинок живе в одному місці — src/lib/api.ts.
+const withLocalImage = <T extends { imageUrl: string }>(pkg: T): T => normalizePackageAssets(pkg);
 
 
 const packageBase = (

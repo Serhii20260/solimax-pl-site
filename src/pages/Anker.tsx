@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../lib/CartContext";
-import { apiUrl } from "../lib/api";
+import { apiUrl, normalizePackageAssets } from "../lib/api";
 import ProductCard from "../components/ProductCard";
 import { useLanguage } from "../lib/LanguageContext";
 
@@ -40,7 +40,7 @@ export default function Anker() {
 
     fetch(apiUrl(`/packages?${params.toString()}`))
       .then((r) => r.json())
-      .then((data: AnkerProduct[]) => setProducts(Array.isArray(data) ? data.filter((p) => p.isActive !== false) : []))
+      .then((data: AnkerProduct[]) => setProducts(Array.isArray(data) ? data.filter((p) => p.isActive !== false).map(normalizePackageAssets) : []))
       .catch(() => {});
   }, [language]);
 

@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { normalizeCartPrice, useCart } from '../lib/CartContext';
-import { apiUrl } from '../lib/api';
+import { apiUrl, normalizePackageAssets } from '../lib/api';
 import { useLanguage } from '../lib/LanguageContext';
 
 interface Spec {
@@ -78,7 +78,7 @@ export default function AnkerProductDetails() {
         return res.json();
       })
       .then((data) => {
-        setProduct(data);
+        setProduct(normalizePackageAssets(data));
         setLoading(false);
       })
       .catch((err) => {

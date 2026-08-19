@@ -1,7 +1,7 @@
 // src/pages/PropozycjeDetails.tsx
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { apiUrl } from '../lib/api';
+import { apiUrl, normalizePackageAssets } from '../lib/api';
 import { useLanguage } from '../lib/LanguageContext';
 
 interface Spec {
@@ -110,7 +110,7 @@ export default function PropozycjeDetails() {
         return res.json();
       })
       .then((data) => {
-        setPkg(data);
+        setPkg(normalizePackageAssets(data));
         setLoading(false);
       })
       .catch((err) => {
