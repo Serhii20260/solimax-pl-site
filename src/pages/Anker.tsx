@@ -59,11 +59,15 @@ export default function Anker() {
           <video
             autoPlay
             muted
-            poster="/pl/hero-anker-poster.jpg" loop
+            loop
             playsInline
+            preload="metadata"
+            poster="/pl/hero-anker-poster.webp"
             className="absolute inset-0 w-full h-full object-cover"
-            src="/pl/hero-anker.mp4"
-          />
+          >
+            <source src="/pl/hero-anker-1080.mp4" type="video/mp4" media="(min-width: 768px)" />
+            <source src="/pl/hero-anker-720.mp4" type="video/mp4" />
+          </video>
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent" />
         <div className="relative z-10 mx-auto max-w-7xl px-4 py-20 w-full">

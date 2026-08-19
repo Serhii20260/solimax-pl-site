@@ -28,12 +28,14 @@ export default function PompyCiepla() {
         <div className="absolute inset-0">
           <video
             autoPlay
-            poster="/pl/hero-pompy-poster.jpg" loop
             muted
+            loop
             playsInline
+            preload="metadata"
+            poster="/pl/hero-pompy-poster.webp"
             className="w-full h-full object-cover"
           >
-            <source src="/pl/hero-pompy.mp4" type="video/mp4" />
+            <source src="/pl/hero-pompy-720.mp4" type="video/mp4" />
           </video>
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
@@ -117,7 +119,7 @@ export default function PompyCiepla() {
             </div>
 
             <div>
-              <img src="/pl/schema-pompy.jpg" alt={t.pompyCieplaSchemaAlt} className="w-full h-auto rounded-xl object-cover" />
+              <img loading="lazy" decoding="async" src="/pl/schema-pompy.webp" alt={t.pompyCieplaSchemaAlt} className="w-full h-auto rounded-xl object-cover" width={1200} height={900} />
             </div>
           </div>
         </div>
@@ -156,7 +158,7 @@ export default function PompyCiepla() {
             </div>
 
             <div className="flex items-center">
-              <img src="/pl/placeholder2tn.jpg" alt={t.pompyCieplaEfficiencyAlt} className="w-full h-auto rounded-2xl" />
+              <img loading="lazy" decoding="async" src="/pl/placeholder2tn.webp" alt={t.pompyCieplaEfficiencyAlt} className="w-full h-auto rounded-2xl" width={1200} height={900} />
             </div>
           </div>
         </div>
@@ -226,7 +228,7 @@ export default function PompyCiepla() {
             </div>
 
             <div>
-              <img src="/pl/placeholder3tn.jpg" alt={t.pompyCieplaProcessAlt} className="w-full h-auto rounded-xl" />
+              <img loading="lazy" decoding="async" src="/pl/placeholder3tn.webp" alt={t.pompyCieplaProcessAlt} className="w-full h-auto rounded-xl" width={1200} height={900} />
             </div>
           </div>
         </div>

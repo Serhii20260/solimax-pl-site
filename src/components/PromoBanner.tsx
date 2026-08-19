@@ -114,7 +114,7 @@ export default function PromoBanner({
     >
       <div className="flex-1 bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center relative overflow-hidden">
         {currentPackage.imageUrl ? (
-          <img
+          <img loading="lazy" decoding="async"
             src={currentPackage.imageUrl}
             alt={currentPackage.title}
             className="w-full h-full object-contain p-2"
@@ -157,7 +157,7 @@ export default function PromoBanner({
       <div className="h-40 bg-gradient-to-r from-slate-100 to-slate-200 flex items-center justify-between px-5 relative overflow-hidden">
         {currentPackage.imageUrl ? (
           <>
-            <img
+            <img loading="lazy" decoding="async"
               src={currentPackage.imageUrl}
               alt={currentPackage.title}
               className="absolute inset-0 w-full h-full object-contain p-2"
@@ -200,7 +200,7 @@ export default function PromoBanner({
       <div className="w-32 bg-gradient-to-br from-slate-100 to-slate-200 flex flex-col items-center justify-center relative overflow-hidden">
         {currentPackage.imageUrl ? (
           <>
-            <img
+            <img loading="lazy" decoding="async"
               src={currentPackage.imageUrl}
               alt={currentPackage.title}
               className="absolute inset-0 w-full h-full object-contain p-1"

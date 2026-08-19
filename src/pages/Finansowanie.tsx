@@ -11,8 +11,8 @@ export default function Finansowanie() {
       <section className="relative w-full min-h-[60vh] md:min-h-[72vh] lg:min-h-[75vh] overflow-hidden">
         <div className="absolute inset-0">
           <picture>
-            <img
-              src="/pl/hero-finansowanie.png"
+            <img loading="lazy" decoding="async"
+              src="/pl/hero-finansowanie.webp"
               alt={t.finansowanieHeroAlt}
               className="w-full h-full object-cover"
             />
@@ -56,7 +56,7 @@ export default function Finansowanie() {
               <p className="text-slate-600 leading-relaxed">{t.finansowanieHowNote}</p>
             </div>
             <div className="md:col-span-5">
-              <img src="/pl/finansowanie-1.png" alt={t.finansowanieAnalysisAlt} className="h-56 md:h-72 w-full rounded-2xl object-cover shadow-sm" />
+              <img loading="lazy" decoding="async" src="/pl/finansowanie-1.webp" alt={t.finansowanieAnalysisAlt} className="h-56 md:h-72 w-full rounded-2xl object-cover shadow-sm" />
             </div>
           </div>
         </section>
@@ -307,7 +307,7 @@ export default function Finansowanie() {
             </p>
           </div>
           <div className="md:col-span-5">
-            <img src="/pl/finansowanie-2.png" alt={t.finansowanieContextAlt} className="aspect-[3/4] w-full rounded-2xl object-cover shadow-sm" />
+            <img loading="lazy" decoding="async" src="/pl/finansowanie-2.webp" alt={t.finansowanieContextAlt} className="aspect-[3/4] w-full rounded-2xl object-cover shadow-sm" />
           </div>
         </section>
 

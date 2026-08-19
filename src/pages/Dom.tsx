@@ -58,12 +58,14 @@ export default function Dom() {
         <div className="absolute inset-0">
           <video
             autoPlay
-            poster="/pl/hero-dom-poster.jpg" loop
             muted
+            loop
             playsInline
+            preload="metadata"
+            poster="/pl/hero-dom-poster.webp"
             className="absolute inset-0 w-full h-full object-cover"
           >
-            <source src="/pl/hero-dom.mp4" type="video/mp4" />
+            <source src="/pl/hero-dom-720.mp4" type="video/mp4" />
           </video>
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
@@ -107,8 +109,8 @@ export default function Dom() {
         <div className="mx-auto max-w-7xl px-6 md:px-10 lg:px-16">
           <div className="grid gap-8 md:grid-cols-2 md:items-center">
             <div className="relative">
-              <img 
-                src="/pl/benefits-dom.png"
+              <img loading="lazy" decoding="async" 
+                src="/pl/benefits-dom.webp"
                 alt={t.domBenefitsAlt}
                 style={{ width: '100%', aspectRatio: '4/3', objectFit: 'cover', borderRadius: '8px' }}
               />
@@ -169,8 +171,8 @@ export default function Dom() {
             </div>
 
             <div className="flex items-center justify-center">
-              <img 
-                src="/pl/steps-dom.jpg"
+              <img loading="lazy" decoding="async" 
+                src="/pl/steps-dom.webp"
                 alt={t.domProcessAlt}
                 className="w-full rounded-2xl"
                 style={{ aspectRatio: '4/3', objectFit: 'cover' }}
@@ -261,11 +263,11 @@ export default function Dom() {
             </div>
 
             <div className="flex">
-              <img 
-                src="/pl/aesthetics-dom.png"
+              <img loading="lazy" decoding="async" 
+                src="/pl/aesthetics-dom.webp"
                 alt={t.domAestheticsAlt}
                 className="w-full rounded-2xl object-contain"
-              />
+              width={1200} height={900} />
             </div>
           </div>
         </div>
@@ -294,8 +296,8 @@ export default function Dom() {
             </div>
 
             <div>
-              <img 
-                src="/pl/sustainability-dom.jpg"
+              <img loading="lazy" decoding="async" 
+                src="/pl/sustainability-dom.webp"
                 alt={t.domSustainabilityAlt}
                 className="w-full rounded-xl object-contain"
                 style={{ aspectRatio: '4/3' }}

@@ -199,7 +199,7 @@ export default function PropozycjeDetails() {
           <div className="space-y-4">
             <div className="bg-white rounded-2xl border border-slate-200 p-6 aspect-square flex items-center justify-center overflow-hidden relative">
               {currentImg ? (
-                <img
+                <img loading="lazy" decoding="async"
                   src={currentImg}
                   alt={pkg.title}
                   className="w-full h-full object-contain"
@@ -228,7 +228,7 @@ export default function PropozycjeDetails() {
               <div className="flex gap-2 overflow-x-auto pb-1">
                 {galleryImgs.map((url, i) => (
                   <button key={i} onClick={() => setImgIndex(i)} className={`shrink-0 w-14 h-14 rounded-lg border-2 overflow-hidden bg-white ${i === imgIndex ? 'border-yellow-400' : 'border-slate-200 hover:border-slate-400'}`}>
-                    <img src={url} alt="" className="w-full h-full object-contain" />
+                    <img loading="lazy" decoding="async" src={url} alt="" className="w-full h-full object-contain" />
                   </button>
                 ))}
               </div>

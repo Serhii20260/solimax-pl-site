@@ -98,7 +98,7 @@ export default function Navbar() {
 
         {/* Logo */}
         <NavLink to="/" className="flex items-center">
-          <img src={logoDark} alt="Solimax" className="h-7 w-auto" />
+          <img loading="eager" decoding="async" fetchPriority="high" src={logoDark} alt="Solimax" className="h-7 w-auto" />
         </NavLink>
 
         {/* Desktop nav */}

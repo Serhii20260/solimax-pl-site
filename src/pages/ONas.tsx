@@ -11,8 +11,8 @@ export default function ONas() {
       <section className="relative w-full min-h-[60vh] md:min-h-[72vh] lg:min-h-[75vh] overflow-hidden">
         <div className="absolute inset-0">
           <picture>
-            <img
-              src="/pl/hero-onas.png"
+            <img loading="lazy" decoding="async"
+              src="/pl/hero-onas.webp"
               alt={t.oNasHeroAlt}
               className="w-full h-full object-cover"
             />
@@ -99,7 +99,7 @@ export default function ONas() {
               </p>
             </div>
             <div>
-              <img src="/pl/onas-1.png" alt={t.oNasCasesIntroAlt} className="h-56 md:h-72 w-full rounded-2xl object-cover shadow-sm" />
+              <img loading="lazy" decoding="async" src="/pl/onas-1.webp" alt={t.oNasCasesIntroAlt} className="h-56 md:h-72 w-full rounded-2xl object-cover shadow-sm" />
             </div>
           </div>
         </section>
@@ -110,7 +110,7 @@ export default function ONas() {
           </h2>
           <div className="grid gap-10 md:grid-cols-12 md:items-start">
             <div className="md:col-span-7">
-              <img src="/pl/projekt-privat.png" alt={t.oNasPrivateCaseAlt} className="w-full rounded-2xl shadow-sm" />
+              <img loading="lazy" decoding="async" src="/pl/projekt-privat.webp" alt={t.oNasPrivateCaseAlt} className="w-full rounded-2xl shadow-sm" />
             </div>
             <div className="md:col-span-5 space-y-4">
               <div className="rounded-2xl border border-slate-200 bg-white p-6 space-y-2 text-slate-700 text-sm sm:text-base shadow-sm">
@@ -163,7 +163,7 @@ export default function ONas() {
               </div>
             </div>
             <div className="md:col-span-7">
-              <img src="/pl/projekt-biznes.png" alt={t.oNasBusinessCaseAlt} className="aspect-[16/9] w-full rounded-2xl object-cover shadow-sm" />
+              <img loading="lazy" decoding="async" src="/pl/projekt-biznes.webp" alt={t.oNasBusinessCaseAlt} className="aspect-[16/9] w-full rounded-2xl object-cover shadow-sm" />
             </div>
           </div>
         </section>
@@ -174,7 +174,7 @@ export default function ONas() {
           </h2>
           <div className="grid gap-10 md:grid-cols-12 md:items-start">
             <div className="md:col-span-7">
-              <img src="/pl/projekt-heatpump.png" alt={t.oNasHeatPumpCaseAlt} className="aspect-[16/9] w-full rounded-2xl object-cover shadow-sm" />
+              <img loading="lazy" decoding="async" src="/pl/projekt-heatpump.webp" alt={t.oNasHeatPumpCaseAlt} className="aspect-[16/9] w-full rounded-2xl object-cover shadow-sm" />
             </div>
             <div className="md:col-span-5 space-y-4">
               <div className="rounded-2xl border border-slate-200 bg-white p-6 space-y-2 text-slate-700 text-sm sm:text-base shadow-sm">

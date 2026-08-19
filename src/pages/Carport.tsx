@@ -13,12 +13,14 @@ export default function Carport() {
       <section className="relative w-full min-h-[60vh] md:min-h-[72vh] lg:min-h-[75vh] overflow-hidden bg-slate-900">
         <video
           autoPlay
-          poster="/pl/hero-carport-poster.jpg" loop
           muted
+          loop
           playsInline
+          preload="metadata"
+          poster="/pl/hero-carport-poster.webp"
           className="absolute inset-0 w-full h-full object-cover"
         >
-          <source src="/pl/hero-carport.mp4" type="video/mp4" />
+          <source src="/pl/hero-carport-720.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
         <div className="relative z-10 flex h-full min-h-[60vh] md:min-h-[72vh] lg:min-h-[75vh] items-center">
@@ -87,21 +89,21 @@ export default function Carport() {
             </div>
 
             <div className="bg-white rounded-2xl overflow-hidden">
-              <img
-                src="/pl/carport-home.png"
+              <img loading="lazy" decoding="async"
+                src="/pl/carport-home.webp"
                 alt={t.carportHomeAlt}
                 className="w-full h-full object-cover"
                 style={{ minHeight: '320px' }}
-              />
+              width={1200} height={835} />
             </div>
 
             <div className="bg-white rounded-2xl overflow-hidden">
-              <img
-                src="/pl/carport-business.png"
+              <img loading="lazy" decoding="async"
+                src="/pl/carport-business.webp"
                 alt={t.carportBusinessAlt}
                 className="w-full h-full object-cover"
                 style={{ minHeight: '320px' }}
-              />
+              width={1200} height={717} />
             </div>
 
             <div className="bg-slate-50 rounded-2xl p-8">

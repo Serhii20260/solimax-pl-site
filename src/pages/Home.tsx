@@ -9,16 +9,16 @@ const brands = [
 ];
 
 const brandLogos: Record<string, string> = {
-  "AIKO": "/pl/logo-aiko.png",
-  "Trina Solar": "/pl/logo-trina.png",
-  "JA Solar": "/pl/logo-jasolar.png",
-  "Deye": "/pl/logo-deye.png",
-  "Sungrow": "/pl/logo-sungrow.png",
-  "Pylontech": "/pl/logo-pylontech.png",
-  "Sigenergy": "/pl/logo-sigenergy.png",
-  "Anker SOLIX": "/pl/logo-anker.jpeg",
-  "Daikin": "/pl/logo-daikin.png",
-  "Vaillant": "/pl/logo-vaillant.png",
+  "AIKO": "/pl/logo-aiko.webp",
+  "Trina Solar": "/pl/logo-trina.webp",
+  "JA Solar": "/pl/logo-jasolar.webp",
+  "Deye": "/pl/logo-deye.webp",
+  "Sungrow": "/pl/logo-sungrow.webp",
+  "Pylontech": "/pl/logo-pylontech.webp",
+  "Sigenergy": "/pl/logo-sigenergy.webp",
+  "Anker SOLIX": "/pl/logo-anker.webp",
+  "Daikin": "/pl/logo-daikin.webp",
+  "Vaillant": "/pl/logo-vaillant.webp",
 };
 
 const darkBgBrands = new Set(["AIKO", "Trina Solar", "Pylontech", "Sigenergy"]);
@@ -65,12 +65,14 @@ export default function Home() {
         <div className="absolute inset-0">
           <video
             autoPlay
-            poster="/pl/hero-poster.jpg" loop
             muted
+            loop
             playsInline
+            preload="metadata"
+            poster="/pl/hero-poster.webp"
             className="absolute inset-0 h-full w-full object-cover"
           >
-            <source src="/pl/hero.mp4" type="video/mp4" />
+            <source src="/pl/hero-720.mp4" type="video/mp4" />
           </video>
         </div>
         
@@ -125,8 +127,8 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-6 md:px-10 lg:px-16">
           <div className="grid gap-8 md:grid-cols-2 md:items-center">
             <div className="relative">
-              <img 
-                src="/pl/home-solutions.png" 
+              <img loading="lazy" decoding="async" 
+                src="/pl/home-solutions.webp" 
                 alt={t.homeSolutionsAlt}
                 className="rounded-2xl w-full"
               />
@@ -151,7 +153,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-6 md:px-10 lg:px-16">
           <div className="grid gap-6 md:grid-cols-2">
             <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
-              <img src="/pl/home-private.jpg" alt={t.homePrivateAlt} className="w-full aspect-[4/3] object-cover rounded-lg mb-4" />
+              <img loading="lazy" decoding="async" src="/pl/home-private.webp" alt={t.homePrivateAlt} className="w-full aspect-[4/3] object-cover rounded-lg mb-4" />
               <h3 className="text-xl font-semibold mb-3">{t.homePrivateTitle}</h3>
               <p className="text-slate-600 mb-4">
                 {t.homePrivateText}
@@ -164,7 +166,7 @@ export default function Home() {
               </Link>
             </div>
             <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
-              <img src="/pl/home-business.jpg" alt={t.homeBusinessAlt} className="w-full aspect-[4/3] object-cover rounded-lg mb-4" />
+              <img loading="lazy" decoding="async" src="/pl/home-business.webp" alt={t.homeBusinessAlt} className="w-full aspect-[4/3] object-cover rounded-lg mb-4" />
               <h3 className="text-xl font-semibold mb-3">{t.homeBusinessTitle}</h3>
               <p className="text-slate-600 mb-4">
                 {t.homeBusinessText}
@@ -222,7 +224,7 @@ export default function Home() {
             </div>
 
             <div className="flex">
-              <img src="/pl/home-energy.jpg" alt={t.homeEnergyAlt} className="w-full min-h-[400px] md:min-h-full rounded-2xl object-cover" />
+              <img loading="lazy" decoding="async" src="/pl/home-energy.webp" alt={t.homeEnergyAlt} className="w-full min-h-[400px] md:min-h-full rounded-2xl object-cover" />
             </div>
           </div>
         </div>
@@ -268,9 +270,9 @@ export default function Home() {
             </div>
 
             <div className="space-y-4">
-              <img src="/pl/team1.png" alt={t.homeTeamAlt} className="h-44 w-full object-cover rounded-xl" />
-              <img src="/pl/team2.png" alt={t.homeInstallAlt} className="h-44 w-full object-cover rounded-xl" />
-              <img src="/pl/office.png" alt={t.homeOfficeAlt} className="h-44 w-full object-cover rounded-xl" />
+              <img loading="lazy" decoding="async" src="/pl/team1.webp" alt={t.homeTeamAlt} className="h-44 w-full object-cover rounded-xl" />
+              <img loading="lazy" decoding="async" src="/pl/team2.webp" alt={t.homeInstallAlt} className="h-44 w-full object-cover rounded-xl" />
+              <img loading="lazy" decoding="async" src="/pl/office.webp" alt={t.homeOfficeAlt} className="h-44 w-full object-cover rounded-xl" />
             </div>
           </div>
 
@@ -279,7 +281,7 @@ export default function Home() {
               {brands.map((brand) => (
                 <span key={brand} className={`rounded-lg text-sm font-medium flex items-center justify-center ${brand === "Anker SOLIX" ? "p-0 border-0 bg-transparent" : `px-5 py-2.5 border min-h-[40px] ${darkBgBrands.has(brand) ? 'bg-slate-900 border-slate-700' : 'bg-slate-100 border-slate-200 text-slate-600'}`}`}>
                   {brandLogos[brand] ? (
-                    <img src={brandLogos[brand]} alt={brand} className={brand === "Anker SOLIX" ? "h-24 w-auto object-contain" : "h-6 object-contain"} />
+                    <img loading="lazy" decoding="async" src={brandLogos[brand]} alt={brand} className={brand === "Anker SOLIX" ? "h-24 w-auto object-contain" : "h-6 object-contain"} />
                   ) : (
                     brand
                   )}

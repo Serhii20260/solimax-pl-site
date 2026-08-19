@@ -16,7 +16,7 @@ export default function PackageCard({ pkg, onClick }: PackageCardProps) {
       {/* Image */}
       <div className="relative aspect-[16/10] bg-slate-100 overflow-hidden">
         {pkg.imageUrl ? (
-          <img
+          <img loading="lazy" decoding="async"
             src={pkg.imageUrl}
             alt={pkg.title}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"

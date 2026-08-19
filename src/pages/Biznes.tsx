@@ -44,12 +44,14 @@ export default function Biznes() {
         <div className="absolute inset-0">
           <video
             autoPlay
-            poster="/pl/hero-biznes-poster.jpg" loop
             muted
+            loop
             playsInline
+            preload="metadata"
+            poster="/pl/hero-biznes-poster.webp"
             className="absolute inset-0 w-full h-full object-cover"
           >
-            <source src="/pl/hero-biznes.mp4" type="video/mp4" />
+            <source src="/pl/hero-biznes-720.mp4" type="video/mp4" />
           </video>
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
@@ -156,8 +158,8 @@ export default function Biznes() {
             </div>
 
             <div>
-              <img 
-                src="/pl/analysis-biznes.jpg"
+              <img loading="lazy" decoding="async" 
+                src="/pl/analysis-biznes.webp"
                 alt={t.biznesAnalysisAlt}
                 className="w-full rounded-xl object-contain"
                 style={{ aspectRatio: '4/3' }}
@@ -171,8 +173,8 @@ export default function Biznes() {
         <div className="mx-auto max-w-7xl px-6 md:px-10 lg:px-16">
           <div className="grid gap-8 md:grid-cols-2 md:items-center">
             <div className="relative order-2 md:order-1">
-              <img 
-                src="/pl/solutions-biznes.jpg"
+              <img loading="lazy" decoding="async" 
+                src="/pl/solutions-biznes.webp"
                 alt={t.biznesSolutionsAlt}
                 className="w-full rounded-2xl object-contain"
                 style={{ aspectRatio: '4/3' }}
@@ -266,7 +268,7 @@ export default function Biznes() {
             </div>
 
             <div>
-              <img src="/pl/team-biznes.jpg" alt={t.biznesTeamAlt} className="w-full h-auto rounded-xl object-cover" />
+              <img loading="lazy" decoding="async" src="/pl/team-biznes.webp" alt={t.biznesTeamAlt} className="w-full h-auto rounded-xl object-cover" width={1200} height={800} />
             </div>
           </div>
         </div>

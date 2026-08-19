@@ -489,7 +489,7 @@ export default function AdminPackages() {
                                 </div>
                                 {uploadError && <p className="text-xs text-red-600 mt-1">{uploadError}</p>}
                                 {editState.imageUrl && (
-                                  <img src={editState.imageUrl} alt="preview" className="mt-2 h-16 rounded border border-slate-200 object-contain bg-slate-50" />
+                                  <img loading="lazy" decoding="async" src={editState.imageUrl} alt="preview" className="mt-2 h-16 rounded border border-slate-200 object-contain bg-slate-50" />
                                 )}
                               </Field>
                             </div>
@@ -502,7 +502,7 @@ export default function AdminPackages() {
                                 <div className="flex flex-wrap gap-2">
                                   {editState.images.map((url, i) => (
                                     <div key={i} className="relative group">
-                                      <img src={url} alt={`img-${i}`} className={`h-16 w-16 object-contain rounded border bg-slate-50 ${i === 0 ? 'border-yellow-400' : 'border-slate-200'}`} />
+                                      <img loading="lazy" decoding="async" src={url} alt={`img-${i}`} className={`h-16 w-16 object-contain rounded border bg-slate-50 ${i === 0 ? 'border-yellow-400' : 'border-slate-200'}`} />
                                       <button
                                         type="button"
                                         onClick={() => handleGalleryDelete(url)}

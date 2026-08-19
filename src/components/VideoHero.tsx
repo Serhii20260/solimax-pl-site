@@ -80,7 +80,7 @@ export default function VideoHero({
           <source src={videoSrc} type="video/mp4" />
         </video>
       ) : posterSrc ? (
-        <img
+        <img loading="eager" decoding="async"
           src={posterSrc}
           alt=""
           className="absolute inset-0 h-full w-full object-cover"

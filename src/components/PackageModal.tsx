@@ -65,7 +65,7 @@ export default function PackageModal({ pkg, isOpen, onClose }: PackageModalProps
           {/* Image header */}
           <div className="relative aspect-[21/9] bg-slate-100">
             {pkg.imageUrl ? (
-              <img
+              <img loading="lazy" decoding="async"
                 src={pkg.imageUrl}
                 alt={pkg.title}
                 className="w-full h-full object-cover"

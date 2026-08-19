@@ -27,7 +27,7 @@ export default function Propozycje() {
     id: 'anker-smart-system',
     title: 'Anker SOLIX Smart System',
     subtitle: 'Power Dock + 3× Solarbank 3 + 3× BP2700 + 12× RS40P',
-    image: '/pl/anker-smart-system.png',
+    image: '/pl/anker-smart-system.webp',
     features: [
       t.propozycjeAnkerSmartFeature1,
       t.propozycjeAnkerSmartFeature2,
@@ -43,7 +43,7 @@ export default function Propozycje() {
       id: 'anker-x1-5kw',
       title: t.propozycjeAnkerX1_5Title,
       subtitle: t.propozycjeAnkerX1_5Subtitle,
-      image: '/pl/anker-x1-5kwh.png',
+      image: '/pl/anker-x1-5kwh.webp',
       features: [
         t.propozycjeAnkerX1_5Feature1,
         t.propozycjeAnkerX1_5Feature2,
@@ -57,7 +57,7 @@ export default function Propozycje() {
       id: 'anker-x1-12kw',
       title: t.propozycjeAnkerX1_12Title,
       subtitle: t.propozycjeAnkerX1_12Subtitle,
-      image: '/pl/anker-x1-15kwh.png',
+      image: '/pl/anker-x1-15kwh.webp',
       features: [
         t.propozycjeAnkerX1_12Feature1,
         t.propozycjeAnkerX1_12Feature2,
@@ -74,7 +74,7 @@ export default function Propozycje() {
       id: 'bazik-8kw',
       kw: '8 kW',
       components: t.propozycjeBazik8Components,
-      image: '/pl/pakiet-deye.png',
+      image: '/pl/pakiet-deye.webp',
       features: [
         '18× Trina Vertex S+ 445W full black glass-glass',
         t.propozycjeBazik8Feature2,
@@ -87,7 +87,7 @@ export default function Propozycje() {
       id: 'bazik-10kw',
       kw: '10 kW',
       components: t.propozycjeBazik10Components,
-      image: '/pl/pakiet-deye.png',
+      image: '/pl/pakiet-deye.webp',
       features: [
         '22× Trina Vertex S+ 445W full black glass-glass',
         t.propozycjeBazik10Feature2,
@@ -100,7 +100,7 @@ export default function Propozycje() {
       id: 'bazik-12kw',
       kw: '12 kW',
       components: t.propozycjeBazik12Components,
-      image: '/pl/pakiet-deye-2.png',
+      image: '/pl/pakiet-deye-2.webp',
       features: [
         '27× Trina Vertex S+ 445W full black glass-glass',
         t.propozycjeBazik12Feature2,
@@ -116,7 +116,7 @@ export default function Propozycje() {
       id: 'premium-8kw',
       kw: '8 kW',
       components: 'Sigenergy 8 kW + 8 kWh + AIKO 475W',
-      image: '/pl/sigenergy-pakiet.png',
+      image: '/pl/sigenergy-pakiet.webp',
       features: [
         t.propozycjePremium8Feature1,
         t.propozycjePremium8Feature2,
@@ -129,7 +129,7 @@ export default function Propozycje() {
       id: 'premium-10kw',
       kw: '10 kW',
       components: 'Sigenergy 8 kW + 16 kWh + AIKO 475W',
-      image: '/pl/sigenergy-pakiet.png',
+      image: '/pl/sigenergy-pakiet.webp',
       features: [
         t.propozycjePremium10Feature1,
         t.propozycjePremium10Feature2,
@@ -142,7 +142,7 @@ export default function Propozycje() {
       id: 'premium-12kw',
       kw: '12 kW',
       components: 'Sigenergy 12 kW + 16 kWh + AIKO 475W',
-      image: '/pl/sigenergy-pakiet.png',
+      image: '/pl/sigenergy-pakiet.webp',
       features: [
         t.propozycjePremium12Feature1,
         t.propozycjePremium12Feature2,
@@ -160,7 +160,7 @@ export default function Propozycje() {
       model: 'Altherma 3 H MT 10 kW',
       tag: t.propozycjeHeatDaikinMtTag,
       temp: t.propozycjeHeatDaikinMtTemp,
-      image: '/pl/daikin-pakiet.png',
+      image: '/pl/daikin-pakiet.webp',
       features: [
         t.propozycjeHeatDaikinMtFeature1,
         t.propozycjeHeatDaikinMtFeature2,
@@ -178,7 +178,7 @@ export default function Propozycje() {
       model: 'Altherma 3 H HT 14 kW',
       tag: t.propozycjeHeatDaikinHtTag,
       temp: t.propozycjeHeatDaikinHtTemp,
-      image: '/pl/daikin-pakiet.png',
+      image: '/pl/daikin-pakiet.webp',
       features: [
         t.propozycjeHeatDaikinHtFeature1,
         t.propozycjeHeatDaikinHtFeature2,
@@ -196,7 +196,7 @@ export default function Propozycje() {
       model: 'aroTHERM Plus 7 kW R290',
       tag: t.propozycjeHeatVaillant7Tag,
       temp: t.propozycjeHeatVaillant7Temp,
-      image: '/pl/vaillant-pakiet.png',
+      image: '/pl/vaillant-pakiet.webp',
       features: [
         'Jednostka zewnętrzna: Vaillant aroTHERM Plus VWL 75/6A',
         t.propozycjeHeatVaillant7Feature2,
@@ -214,7 +214,7 @@ export default function Propozycje() {
       model: 'aroTHERM Plus 12 kW R290',
       tag: t.propozycjeHeatVaillant12Tag,
       temp: t.propozycjeHeatVaillant12Temp,
-      image: '/pl/vaillant-pakiet-12.png',
+      image: '/pl/vaillant-pakiet-12.webp',
       features: [
         'Jednostka zewnętrzna: Vaillant aroTHERM Plus VWL 125/6A',
         t.propozycjeHeatVaillant12Feature2,
@@ -233,7 +233,7 @@ export default function Propozycje() {
       id: 'biznes-30kw',
       kw: '30 kW',
       components: '2× Deye 15 kW + 65× Trina 460W',
-      image: '/pl/biznes-deye-30kw.png',
+      image: '/pl/biznes-deye-30kw.webp',
       features: [
         '65× Trina Vertex S+ 460W',
         t.propozycjeBusiness30Feature2,
@@ -247,7 +247,7 @@ export default function Propozycje() {
       id: 'biznes-100kw',
       kw: '100 kW',
       components: '1× Sungrow SG110CX + 218× Trina 460W',
-      image: '/pl/biznes-sungrow.png',
+      image: '/pl/biznes-sungrow.webp',
       features: [
         '218× Trina Vertex S+ 460W',
         t.propozycjeBusiness100Feature2,
@@ -261,7 +261,7 @@ export default function Propozycje() {
       id: 'biznes-200kw',
       kw: '200 kW',
       components: '2× Sungrow SG110CX + 435× Trina 460W',
-      image: '/pl/biznes-sungrow.png',
+      image: '/pl/biznes-sungrow.webp',
       features: [
         '435× Trina Vertex S+ 460W',
         t.propozycjeBusiness200Feature2,
@@ -278,8 +278,8 @@ export default function Propozycje() {
       {/* ═══ HERO ═══ */}
       <section className="relative w-full min-h-[60vh] md:min-h-[72vh] lg:min-h-[75vh] overflow-hidden">
         <div className="absolute inset-0">
-          <img
-            src="/pl/hero-propozycje.png"
+          <img loading="lazy" decoding="async"
+            src="/pl/hero-propozycje.webp"
             alt={t.propozycjeHeroAlt}
             className="absolute inset-0 w-full h-full object-cover"
           />
@@ -317,7 +317,7 @@ export default function Propozycje() {
               </div>
               <div className="p-5 space-y-4 flex flex-col flex-1">
                 <div className="relative w-full h-64 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden flex flex-col items-center justify-center gap-3 mb-1">
-                  <img src={ankerPakiet.image} alt={ankerPakiet.title} className="w-full h-full object-cover" />
+                  <img loading="lazy" decoding="async" src={ankerPakiet.image} alt={ankerPakiet.title} className="w-full h-full object-cover" />
                   <span className="absolute bottom-2 right-2 bg-yellow-400 text-slate-900 font-medium text-[10px] px-2 py-0.5 rounded">{t.propozycjeDeliveryInstallIncluded}</span>
                 </div>
                 <ul className="space-y-1.5 flex-1">
@@ -346,7 +346,7 @@ export default function Propozycje() {
                 <div className="p-5 space-y-4 flex flex-col flex-1">
                   <div className="relative w-full h-64 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden flex flex-col items-center justify-center gap-3 mb-1">
                     {p.image ? (
-                      <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
+                      <img loading="lazy" decoding="async" src={p.image} alt={p.title} className="w-full h-full object-cover" />
                     ) : (
                       <>
                         <svg width="64" height="64" viewBox="0 0 80 80" fill="none" className="opacity-30">
@@ -402,7 +402,7 @@ export default function Propozycje() {
                 <div className="p-5 space-y-4">
                   <div className="relative w-full h-64 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden flex flex-col items-center justify-center gap-3 mb-1">
                     {p.image ? (
-                      <img src={p.image} alt={p.kw} className="w-full h-full object-cover" />
+                      <img loading="lazy" decoding="async" src={p.image} alt={p.kw} className="w-full h-full object-cover" />
                     ) : (
                       <>
                         <svg width="64" height="64" viewBox="0 0 56 56" fill="none" className="opacity-30">
@@ -460,7 +460,7 @@ export default function Propozycje() {
                 <div className="p-5 space-y-4">
                   <div className="relative w-full h-64 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden flex flex-col items-center justify-center gap-3 mb-1">
                     {p.image ? (
-                      <img src={p.image} alt={p.kw} className="w-full h-full object-cover" />
+                      <img loading="lazy" decoding="async" src={p.image} alt={p.kw} className="w-full h-full object-cover" />
                     ) : (
                       <>
                         <svg width="64" height="64" viewBox="0 0 56 56" fill="none" className="opacity-30">
@@ -526,7 +526,7 @@ export default function Propozycje() {
                 <div className="p-5 space-y-4">
                   <div className="relative w-full h-64 bg-white border border-slate-200 rounded-xl overflow-hidden flex flex-col items-center justify-center gap-3 mb-1">
                     {p.image ? (
-                      <img src={p.image} alt={p.model} className="w-full h-full object-contain" />
+                      <img loading="lazy" decoding="async" src={p.image} alt={p.model} className="w-full h-full object-contain" />
                     ) : (
                       <>
                         <svg width="64" height="64" viewBox="0 0 56 56" fill="none" className="opacity-30">
@@ -589,7 +589,7 @@ export default function Propozycje() {
                 <div className="p-5 space-y-4">
                   <div className="relative w-full h-64 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden flex flex-col items-center justify-center gap-3 mb-1">
                     {p.image ? (
-                      <img src={p.image} alt={p.kw} className="w-full h-full object-cover" />
+                      <img loading="lazy" decoding="async" src={p.image} alt={p.kw} className="w-full h-full object-cover" />
                     ) : (
                       <>
                         <svg width="64" height="64" viewBox="0 0 56 56" fill="none" className="opacity-30">
@@ -641,8 +641,8 @@ export default function Propozycje() {
             {/* Carport Hybrid 3F */}
             <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
               <div className="aspect-[4/3] overflow-hidden">
-                <img
-                  src="/pl/carport-hybrid.png"
+                <img loading="lazy" decoding="async"
+                  src="/pl/carport-hybrid.webp"
                   alt="Carport Hybrid 3F"
                   className="w-full h-full object-cover"
                 />
@@ -674,7 +674,7 @@ export default function Propozycje() {
             {/* Carport Premium DC EV */}
             <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
               <div className="aspect-[4/3] overflow-hidden">
-                <img src="/pl/carport-premium.png" alt="Carport Premium DC EV" className="w-full h-full object-cover"/>
+                <img loading="lazy" decoding="async" src="/pl/carport-premium.webp" alt="Carport Premium DC EV" className="w-full h-full object-cover"/>
               </div>
               <div className="p-6 flex-1">
                 <div className="flex items-center gap-2 mb-3">
@@ -703,7 +703,7 @@ export default function Propozycje() {
             {/* Carport Business Grid */}
             <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
               <div className="aspect-[4/3] overflow-hidden">
-                <img src="/pl/carport-biznes.png" alt="Carport Business Grid" className="w-full h-full object-cover"/>
+                <img loading="lazy" decoding="async" src="/pl/carport-biznes.webp" alt="Carport Business Grid" className="w-full h-full object-cover"/>
               </div>
               <div className="p-6 flex-1">
                 <div className="flex items-center gap-2 mb-3">

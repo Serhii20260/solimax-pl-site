@@ -26,6 +26,25 @@ type PackageCopy = {
 
 const nowIso = () => new Date().toISOString();
 
+/**
+ * Каталог у базі частину картинок зберігає абсолютним URL на старий домен
+ * solimax.xyz (напр. sb3-e2700-pro). Для solimax.pl це зайвий DNS + TLS до
+ * чужого хоста на кожному відкритті сторінки. Той самий шлях /pl/uploads/…
+ * nginx віддає і з solimax.pl, тому досить прибрати хост і лишити відносний
+ * шлях — файл їде з того самого з'єднання. Базу цим не чіпаємо.
+ */
+const localizeImageUrl = (url: string): string => {
+  if (!url) return url;
+  const m = url.match(/^https?:\/\/(?:www\.)?solimax\.(?:xyz|pl)(\/.*)$/i);
+  return m ? m[1] : url;
+};
+
+const withLocalImage = <T extends { imageUrl: string }>(pkg: T): T => {
+  const local = localizeImageUrl(pkg.imageUrl);
+  return local === pkg.imageUrl ? pkg : { ...pkg, imageUrl: local };
+};
+
+
 const packageBase = (
   id: string,
   category: Package['category'],
@@ -50,25 +69,25 @@ const packageBase = (
 });
 
 const BASE_PACKAGES: PackageBase[] = [
-  packageBase('anker-smart', 'home', 'premium', 'Anker SOLIX', '/pl/anker-smart-system.png', '54 500,00 zl', { isPromo: true, isNew: false, sortOrder: 1 }),
-  packageBase('anker-x1-5kw', 'home', 'premium', 'Anker SOLIX', '/pl/anker-x1-5kwh.png', '38 300,00 zl', { isPromo: false, isNew: true, sortOrder: 2 }),
-  packageBase('anker-x1-12kw', 'home', 'premium', 'Anker SOLIX', '/pl/anker-x1-15kwh.png', '71 100,00 zl', { isPromo: false, isNew: true, sortOrder: 3 }),
-  packageBase('pv-standard-8', 'home', 'standard', 'Deye + Trina', '/pl/pakiet-deye.png', '37 000,00 zl netto + VAT', { isPromo: true, isNew: false, sortOrder: 4 }),
-  packageBase('pv-standard-10', 'home', 'standard', 'Deye + Trina', '/pl/pakiet-deye.png', '39 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 5 }),
-  packageBase('pv-standard-12', 'home', 'standard', 'Deye + Trina', '/pl/pakiet-deye-2.png', '43 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 6 }),
-  packageBase('pv-premium-8', 'home', 'premium', 'Sigenergy + AIKO', '/pl/sigenergy-pakiet.png', '50 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 7 }),
-  packageBase('pv-premium-10', 'home', 'premium', 'Sigenergy + AIKO', '/pl/sigenergy-pakiet.png', '66 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 8 }),
-  packageBase('pv-premium-12', 'home', 'premium', 'Sigenergy + AIKO', '/pl/sigenergy-pakiet.png', '73 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 9 }),
-  packageBase('daikin-mt', 'heating', 'standard', 'Daikin', '/pl/daikin-pakiet.png', '72 000,00 zl', { isPromo: true, isNew: false, sortOrder: 10 }),
-  packageBase('daikin-ht', 'heating', 'premium', 'Daikin', '/pl/daikin-pakiet.png', '85 000,00 zl', { isPromo: true, isNew: false, sortOrder: 11 }),
-  packageBase('vaillant-9', 'heating', 'premium', 'Vaillant', '/pl/vaillant-pakiet.png', '83 000,00 zl', { isPromo: false, isNew: true, sortOrder: 12 }),
-  packageBase('vaillant-12', 'heating', 'premium', 'Vaillant', '/pl/vaillant-pakiet-12.png', '98 000,00 zl', { isPromo: false, isNew: true, sortOrder: 13 }),
-  packageBase('biznes-30', 'business', 'standard', 'Deye + Trina', '/pl/biznes-deye-30kw.png', '89 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 14 }),
-  packageBase('biznes-100', 'business', 'standard', 'Sungrow + Trina', '/pl/biznes-sungrow.png', '230 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 15 }),
-  packageBase('biznes-200', 'business', 'premium', 'Sungrow + Trina', '/pl/biznes-sungrow.png', '450 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 16 }),
-  packageBase('carport-hybrid', 'carport', 'standard', 'Deye', '/pl/carport-hybrid.png', '42 600,00 zl netto + VAT', { isPromo: true, isNew: false, sortOrder: 17 }),
-  packageBase('carport-premium', 'carport', 'premium', 'Sigenergy', '/pl/carport-premium.png', '58 500,00 zl netto + VAT', { isPromo: false, isNew: true, sortOrder: 18 }),
-  packageBase('carport-business', 'carport', 'premium', 'Sungrow', '/pl/carport-biznes.png', '35 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 19 }),
+  packageBase('anker-smart', 'home', 'premium', 'Anker SOLIX', '/pl/anker-smart-system.webp', '54 500,00 zl', { isPromo: true, isNew: false, sortOrder: 1 }),
+  packageBase('anker-x1-5kw', 'home', 'premium', 'Anker SOLIX', '/pl/anker-x1-5kwh.webp', '38 300,00 zl', { isPromo: false, isNew: true, sortOrder: 2 }),
+  packageBase('anker-x1-12kw', 'home', 'premium', 'Anker SOLIX', '/pl/anker-x1-15kwh.webp', '71 100,00 zl', { isPromo: false, isNew: true, sortOrder: 3 }),
+  packageBase('pv-standard-8', 'home', 'standard', 'Deye + Trina', '/pl/pakiet-deye.webp', '37 000,00 zl netto + VAT', { isPromo: true, isNew: false, sortOrder: 4 }),
+  packageBase('pv-standard-10', 'home', 'standard', 'Deye + Trina', '/pl/pakiet-deye.webp', '39 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 5 }),
+  packageBase('pv-standard-12', 'home', 'standard', 'Deye + Trina', '/pl/pakiet-deye-2.webp', '43 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 6 }),
+  packageBase('pv-premium-8', 'home', 'premium', 'Sigenergy + AIKO', '/pl/sigenergy-pakiet.webp', '50 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 7 }),
+  packageBase('pv-premium-10', 'home', 'premium', 'Sigenergy + AIKO', '/pl/sigenergy-pakiet.webp', '66 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 8 }),
+  packageBase('pv-premium-12', 'home', 'premium', 'Sigenergy + AIKO', '/pl/sigenergy-pakiet.webp', '73 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 9 }),
+  packageBase('daikin-mt', 'heating', 'standard', 'Daikin', '/pl/daikin-pakiet.webp', '72 000,00 zl', { isPromo: true, isNew: false, sortOrder: 10 }),
+  packageBase('daikin-ht', 'heating', 'premium', 'Daikin', '/pl/daikin-pakiet.webp', '85 000,00 zl', { isPromo: true, isNew: false, sortOrder: 11 }),
+  packageBase('vaillant-9', 'heating', 'premium', 'Vaillant', '/pl/vaillant-pakiet.webp', '83 000,00 zl', { isPromo: false, isNew: true, sortOrder: 12 }),
+  packageBase('vaillant-12', 'heating', 'premium', 'Vaillant', '/pl/vaillant-pakiet-12.webp', '98 000,00 zl', { isPromo: false, isNew: true, sortOrder: 13 }),
+  packageBase('biznes-30', 'business', 'standard', 'Deye + Trina', '/pl/biznes-deye-30kw.webp', '89 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 14 }),
+  packageBase('biznes-100', 'business', 'standard', 'Sungrow + Trina', '/pl/biznes-sungrow.webp', '230 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 15 }),
+  packageBase('biznes-200', 'business', 'premium', 'Sungrow + Trina', '/pl/biznes-sungrow.webp', '450 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 16 }),
+  packageBase('carport-hybrid', 'carport', 'standard', 'Deye', '/pl/carport-hybrid.webp', '42 600,00 zl netto + VAT', { isPromo: true, isNew: false, sortOrder: 17 }),
+  packageBase('carport-premium', 'carport', 'premium', 'Sigenergy', '/pl/carport-premium.webp', '58 500,00 zl netto + VAT', { isPromo: false, isNew: true, sortOrder: 18 }),
+  packageBase('carport-business', 'carport', 'premium', 'Sungrow', '/pl/carport-biznes.webp', '35 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 19 }),
 ];
 
 const PL_COPY: Record<string, PackageCopy> = {
@@ -280,7 +299,7 @@ export function usePackages(filters: PackageFilters = {}) {
     setState(prev => ({ ...prev, loading: true, error: null }));
     try {
       const data = await fetchPackages(filters);
-      setState({ packages: data, loading: false, error: null });
+      setState({ packages: data.map(withLocalImage), loading: false, error: null });
     } catch (err) {
       setState(prev => ({
         ...prev,
@@ -320,7 +339,7 @@ export function useBannerPackages() {
         const data = (await response.json()) as Package[];
         const bannerPackages = data
           .filter((pkg) => pkg.isPromo || pkg.isNew)
-          .map((pkg) => localizeBannerPackage(pkg, language));
+          .map((pkg) => withLocalImage(localizeBannerPackage(pkg, language)));
         const packages = bannerPackages.length > 0 ? bannerPackages : getFallbackPackages(language);
         setState({ packages, loading: false, error: null });
       } catch {

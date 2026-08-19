@@ -97,7 +97,7 @@ export default function AnkerOrder() {
 
                   return (
                   <div key={item.id} className="flex gap-4 p-4 bg-slate-50 rounded-xl">
-                    <img src={item.image} alt={item.name} className="w-20 h-20 object-contain bg-white rounded-lg" />
+                    <img loading="lazy" decoding="async" src={item.image} alt={item.name} className="w-20 h-20 object-contain bg-white rounded-lg" />
                     <div className="flex-1">
                       <h4 className="font-semibold text-slate-900">{item.name}</h4>
                       <div className="text-sm text-slate-500">

@@ -56,7 +56,7 @@ export default function ProductCard({
       <div className="relative w-full" style={{ paddingBottom: "75%" }}>
         <div className="absolute inset-0 bg-white flex items-center justify-center p-4">
           {currentImg ? (
-            <img
+            <img loading="lazy" decoding="async"
               src={currentImg}
               alt={title}
               className="w-full h-full object-contain"

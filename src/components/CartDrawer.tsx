@@ -74,7 +74,7 @@ export default function CartDrawer({ isOpen, onClose }: Props) {
 
               return (
                 <div key={item.id} className="flex gap-3 bg-slate-50 rounded-xl p-3">
-                  <img
+                  <img loading="lazy" decoding="async"
                     src={item.image}
                     alt={item.name}
                     className="w-16 h-16 object-contain bg-white rounded-lg flex-shrink-0"
