@@ -93,11 +93,14 @@ export default function MainLayout({ children }: MainLayoutProps) {
       <Footer />
       <CookieBanner />
 
+      {/* На вузьких екранах довгий підпис («Zostaw zapytanie») переноситься
+          у два рядки. Висота кнопки зафіксована (h-11), тому блок лишається
+          однакового розміру незалежно від довжини тексту й не наповзає на контент. */}
       <div className="fixed left-4 right-4 z-40 grid grid-cols-2 gap-2 sm:left-auto sm:right-4 sm:flex sm:flex-col sm:items-end sm:gap-4" style={ctaStyle}>
         <ConsultantWidget open={consultantOpen} onClose={() => setConsultantOpen(false)} />
         <a
           href={`tel:${CONTACT_PHONE_TEL}`}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-yellow-500 px-3 py-2.5 text-sm font-semibold text-black shadow-lg transition-colors hover:bg-yellow-400 sm:hidden"
+          className="inline-flex h-11 sm:h-auto items-center justify-center gap-2 rounded-xl bg-yellow-500 px-3 py-2.5 text-sm font-semibold leading-tight text-black shadow-lg transition-colors hover:bg-yellow-400 sm:hidden"
           aria-label={t.callButton}
         >
           <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -118,21 +121,21 @@ export default function MainLayout({ children }: MainLayoutProps) {
         <Link
           to="/kontakt#lead-form"
           onClick={handleLeadClick}
-          className="inline-flex min-h-11 items-center justify-center rounded-xl bg-yellow-500 px-3 py-2.5 text-center text-sm font-semibold text-black shadow-lg transition-colors hover:bg-yellow-400 sm:px-6 sm:py-4 sm:text-lg"
+          className="inline-flex h-11 sm:h-auto items-center justify-center rounded-xl bg-yellow-500 px-3 py-2.5 text-center text-sm font-semibold leading-tight text-black shadow-lg transition-colors hover:bg-yellow-400 sm:px-6 sm:py-4 sm:text-lg"
         >
           {t.leaveRequest}
         </Link>
         <Link
           to="/calculator"
           onClick={handleCalculatorClick}
-          className="inline-flex min-h-11 items-center justify-center rounded-xl border-2 border-yellow-500 bg-slate-800 px-3 py-2.5 text-center text-sm font-semibold text-yellow-400 shadow-lg transition-colors hover:bg-slate-700 sm:px-5 sm:py-3.5 sm:text-base"
+          className="inline-flex h-11 sm:h-auto items-center justify-center rounded-xl border-2 border-yellow-500 bg-slate-800 px-3 py-2.5 text-center text-sm font-semibold leading-tight text-yellow-400 shadow-lg transition-colors hover:bg-slate-700 sm:px-5 sm:py-3.5 sm:text-base"
         >
           {t.calculator}
         </Link>
         <button
           type="button"
           onClick={() => setConsultantOpen((prev) => !prev)}
-          className="inline-flex min-h-11 items-center justify-center rounded-xl border-2 border-yellow-500 bg-slate-800 px-3 py-2.5 text-center text-sm font-semibold text-yellow-400 shadow-lg transition-colors hover:bg-slate-700 sm:px-5 sm:py-3.5 sm:text-base"
+          className="inline-flex h-11 sm:h-auto items-center justify-center rounded-xl border-2 border-yellow-500 bg-slate-800 px-3 py-2.5 text-center text-sm font-semibold leading-tight text-yellow-400 shadow-lg transition-colors hover:bg-slate-700 sm:px-5 sm:py-3.5 sm:text-base"
         >
           {t.consultant}
         </button>

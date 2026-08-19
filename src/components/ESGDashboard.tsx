@@ -151,7 +151,6 @@ export default function ESGDashboard() {
       display:"flex", flexDirection:"column", gap:10,
       fontFamily:"system-ui, sans-serif",
     }}>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&display=swap');`}</style>
 
       {/* Header */}
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:8,

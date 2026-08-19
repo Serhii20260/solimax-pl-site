@@ -397,7 +397,7 @@ export default function Propozycje() {
                 <div className="bg-gradient-to-r from-slate-800 to-slate-700 p-5">
                   <span className="text-xs font-semibold tracking-widest text-yellow-400 uppercase">{t.propozycjeStandardLabel}</span>
                   <h3 className="text-xl font-bold text-white mt-1">{p.kw}</h3>
-                  <p className="text-slate-400 text-xs mt-1">{p.components}</p>
+                  <p className="text-slate-400 text-xs mt-1 break-words">{p.components}</p>
                 </div>
                 <div className="p-5 space-y-4">
                   <div className="relative w-full h-64 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden flex flex-col items-center justify-center gap-3 mb-1">
@@ -455,7 +455,7 @@ export default function Propozycje() {
                 <div className="bg-gradient-to-r from-slate-900 to-slate-800 p-5">
                   <span className="text-xs font-semibold tracking-widest text-yellow-400 uppercase">{t.propozycjePremiumLabel}</span>
                   <h3 className="text-xl font-bold text-white mt-1">{p.kw}</h3>
-                  <p className="text-slate-400 text-xs mt-1">{p.components}</p>
+                  <p className="text-slate-400 text-xs mt-1 break-words">{p.components}</p>
                 </div>
                 <div className="p-5 space-y-4">
                   <div className="relative w-full h-64 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden flex flex-col items-center justify-center gap-3 mb-1">
@@ -584,7 +584,7 @@ export default function Propozycje() {
                 <div className="bg-gradient-to-r from-slate-700 to-slate-600 p-5">
                   <span className="text-xs font-semibold tracking-widest text-yellow-400 uppercase">{t.propozycjeBusinessLabel}</span>
                   <h3 className="text-xl font-bold text-white mt-1">{p.kw}</h3>
-                  <p className="text-slate-300 text-xs mt-1">{p.components}</p>
+                  <p className="text-slate-300 text-xs mt-1 break-words">{p.components}</p>
                 </div>
                 <div className="p-5 space-y-4">
                   <div className="relative w-full h-64 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden flex flex-col items-center justify-center gap-3 mb-1">

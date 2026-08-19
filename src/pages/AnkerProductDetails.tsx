@@ -202,16 +202,18 @@ export default function AnkerProductDetails() {
 
             {specs.length > 0 && (
               <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-                <table className="w-full text-sm">
-                  <tbody>
-                    {specs.map((spec, i) => (
-                      <tr key={i} className="border-b border-slate-100 last:border-b-0">
-                        <td className="py-3 px-4 text-slate-500 bg-slate-50 w-1/2">{spec.key}</td>
-                        <td className="py-3 px-4 text-slate-900 font-medium">{spec.value}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <tbody>
+                      {specs.map((spec, i) => (
+                        <tr key={i} className="border-b border-slate-100 last:border-b-0">
+                          <td className="py-3 px-4 text-slate-500 bg-slate-50 w-1/2 break-words">{spec.key}</td>
+                          <td className="py-3 px-4 text-slate-900 font-medium break-words">{spec.value}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             )}
 
@@ -271,16 +273,18 @@ export default function AnkerProductDetails() {
                           <p className="text-sm text-slate-600">{section.content}</p>
                         )}
                         {section.items && section.items.length > 0 && (
-                          <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
-                            <tbody>
-                              {section.items.map((item, itemIdx) => (
-                                <tr key={itemIdx} className="border-b border-slate-100 last:border-b-0">
-                                  <td className="py-2 px-3 text-slate-600 bg-slate-50 w-1/2">{item.key}</td>
-                                  <td className="py-2 px-3 text-slate-900">{item.value}</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
+                          <div className="overflow-x-auto">
+                            <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
+                              <tbody>
+                                {section.items.map((item, itemIdx) => (
+                                  <tr key={itemIdx} className="border-b border-slate-100 last:border-b-0">
+                                    <td className="py-2 px-3 text-slate-600 bg-slate-50 w-1/2">{item.key}</td>
+                                    <td className="py-2 px-3 text-slate-900">{item.value}</td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
                         )}
                       </div>
                     ))}

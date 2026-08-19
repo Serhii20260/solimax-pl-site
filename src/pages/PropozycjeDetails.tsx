@@ -338,16 +338,18 @@ export default function PropozycjeDetails() {
                           )}
 
                           {section.items && section.items.length > 0 && (
-                            <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
-                              <tbody>
-                                {section.items.map((item, itemIdx) => (
-                                  <tr key={itemIdx} className="border-b border-slate-100 last:border-b-0">
-                                    <td className="py-2 px-3 text-slate-600 bg-slate-50 w-1/2">{item.key}</td>
-                                    <td className="py-2 px-3 text-slate-900">{item.value}</td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
+                            <div className="overflow-x-auto">
+                              <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
+                                <tbody>
+                                  {section.items.map((item, itemIdx) => (
+                                    <tr key={itemIdx} className="border-b border-slate-100 last:border-b-0">
+                                      <td className="py-2 px-3 text-slate-600 bg-slate-50 w-1/2 break-words">{item.key}</td>
+                                      <td className="py-2 px-3 text-slate-900 break-words">{item.value}</td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
                           )}
                         </div>
                       ))}

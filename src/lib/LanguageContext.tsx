@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
-import { type Language, type SupportedLanguage, getTranslations, normalizeLanguage } from "./i18n";
+import { type Language, type SupportedLanguage, getTranslations, normalizeLanguage, loadLegacyTranslations } from "./i18n";
 
 const STORAGE_KEY = "solimax_lang";
 
@@ -29,12 +29,19 @@ const detectBrowserLanguage = (): SupportedLanguage => {
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<SupportedLanguage>(detectBrowserLanguage);
+  // Словник ua/de лежить в окремому чанку. Поки він їде, на екрані
+  // лишається попередній переклад — порожнечі не буває.
+  const [legacyTranslations, setLegacyTranslations] = useState<Translations | null>(null);
 
   const setLanguage = (lang: Language) => {
     const normalizedLanguage = normalizeLanguage(lang);
     setLanguageState(normalizedLanguage);
     localStorage.setItem(STORAGE_KEY, normalizedLanguage);
     document.documentElement.lang = normalizedLanguage;
+
+    void loadLegacyTranslations(lang)
+      .then((loaded) => setLegacyTranslations(loaded))
+      .catch(() => setLegacyTranslations(null));
   };
 
   useEffect(() => {
@@ -42,7 +49,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     document.documentElement.lang = language;
   }, [language]);
 
-  const t = getTranslations(language);
+  const t = legacyTranslations ?? getTranslations(language);
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>

@@ -128,7 +128,6 @@ export default function BusinessKPI() {
       display: "flex", flexDirection: "column", gap: 12,
       fontFamily: "system-ui, sans-serif", minHeight: 420,
     }}>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&display=swap');`}</style>
 
       {/* Header */}
       <div style={{

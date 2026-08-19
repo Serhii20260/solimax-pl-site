@@ -359,300 +359,302 @@ export default function AdminPackages() {
 
         {!loading && !fetchError && (
           <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-            <table className="w-full text-sm">
-              <thead className="bg-slate-50 border-b border-slate-200">
-                <tr>
-                  <th className="text-left px-4 py-3 font-semibold text-slate-700">Tytul</th>
-                  <th className="text-left px-4 py-3 font-semibold text-slate-700">Kategoria</th>
-                  <th className="text-left px-4 py-3 font-semibold text-slate-700">Cena</th>
-                  <th className="text-center px-4 py-3 font-semibold text-slate-700">Aktywny</th>
-                  <th className="px-4 py-3"></th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {filtered.length === 0 && (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead className="bg-slate-50 border-b border-slate-200">
                   <tr>
-                    <td colSpan={5} className="px-4 py-6 text-center text-slate-400">Brak pakietow</td>
+                    <th className="text-left px-4 py-3 font-semibold text-slate-700">Tytul</th>
+                    <th className="text-left px-4 py-3 font-semibold text-slate-700">Kategoria</th>
+                    <th className="text-left px-4 py-3 font-semibold text-slate-700">Cena</th>
+                    <th className="text-center px-4 py-3 font-semibold text-slate-700">Aktywny</th>
+                    <th className="px-4 py-3"></th>
                   </tr>
-                )}
-                {filtered.map((pkg) => (
-                  <>
-                    <tr key={pkg.id} className="hover:bg-slate-50 transition-colors">
-                      <td className="px-4 py-3 font-medium text-slate-900">{pkg.title}</td>
-                      <td className="px-4 py-3 text-slate-500">{pkg.category}</td>
-                      <td className="px-4 py-3 text-slate-600">{pkg.priceLabel}</td>
-                      <td className="px-4 py-3 text-center">
-                        <span className={`inline-block w-3 h-3 rounded-full ${pkg.isActive ? "bg-green-500" : "bg-slate-300"}`} />
-                      </td>
-                      <td className="px-4 py-3 text-right">
-                        <button
-                          onClick={() => editId === pkg.id ? cancelEdit() : startEdit(pkg)}
-                          className="px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-semibold hover:bg-slate-700 transition-colors"
-                        >
-                          {editId === pkg.id ? "Zamknij" : "Redaguj"}
-                        </button>
-                      </td>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {filtered.length === 0 && (
+                    <tr>
+                      <td colSpan={5} className="px-4 py-6 text-center text-slate-400">Brak pakietow</td>
                     </tr>
+                  )}
+                  {filtered.map((pkg) => (
+                    <>
+                      <tr key={pkg.id} className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 font-medium text-slate-900">{pkg.title}</td>
+                        <td className="px-4 py-3 text-slate-500">{pkg.category}</td>
+                        <td className="px-4 py-3 text-slate-600">{pkg.priceLabel}</td>
+                        <td className="px-4 py-3 text-center">
+                          <span className={`inline-block w-3 h-3 rounded-full ${pkg.isActive ? "bg-green-500" : "bg-slate-300"}`} />
+                        </td>
+                        <td className="px-4 py-3 text-right">
+                          <button
+                            onClick={() => editId === pkg.id ? cancelEdit() : startEdit(pkg)}
+                            className="px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-semibold hover:bg-slate-700 transition-colors"
+                          >
+                            {editId === pkg.id ? "Zamknij" : "Redaguj"}
+                          </button>
+                        </td>
+                      </tr>
 
-                    {editId === pkg.id && editState && (
-                      <tr key={`${pkg.id}-edit`}>
-                        <td colSpan={5} className="px-4 py-6 bg-slate-50 border-b border-slate-200">
-                          <div className="space-y-4 max-w-3xl">
-                            <h3 className="font-semibold text-slate-900 text-base">Edytuj: {pkg.title}</h3>
+                      {editId === pkg.id && editState && (
+                        <tr key={`${pkg.id}-edit`}>
+                          <td colSpan={5} className="px-4 py-6 bg-slate-50 border-b border-slate-200">
+                            <div className="space-y-4 max-w-3xl">
+                              <h3 className="font-semibold text-slate-900 text-base">Edytuj: {pkg.title}</h3>
 
-                            <div className="grid sm:grid-cols-2 gap-4">
-                              <Field label="Tytul">
-                                <input
-                                  className={inputCls}
-                                  value={editState.title}
-                                  onChange={(e) => setField("title", e.target.value)}
-                                />
-                              </Field>
-                              <Field label="Krotki opis">
-                                <input
-                                  className={inputCls}
-                                  value={editState.shortDescription}
-                                  onChange={(e) => setField("shortDescription", e.target.value)}
-                                />
-                              </Field>
-                            </div>
-
-                            <Field label="Pelny opis">
-                              <textarea
-                                rows={5}
-                                className={inputCls + " resize-none"}
-                                value={editState.fullDescription}
-                                onChange={(e) => setField("fullDescription", e.target.value)}
-                              />
-                            </Field>
-
-                            <div className="grid sm:grid-cols-2 gap-4">
-                              <Field label="Cena (label)">
-                                <input
-                                  className={inputCls}
-                                  value={editState.priceLabel}
-                                  onChange={(e) => setField("priceLabel", e.target.value)}
-                                />
-                              </Field>
-                              <Field label="Cena (liczba, PLN)">
-                                <input
-                                  type="number"
-                                  min={0}
-                                  step={1}
-                                  className={inputCls}
-                                  value={editState.price}
-                                  onChange={(e) => setField("price", e.target.value === "" ? "" : Number(e.target.value))}
-                                />
-                              </Field>
-                            </div>
-
-                            <div className="grid sm:grid-cols-2 gap-4">
-                              <Field label="Podkategoria">
-                                <select
-                                  className={inputCls}
-                                  value={editState.subcategory}
-                                  onChange={(e) => setField("subcategory", e.target.value)}
-                                >
-                                  <option value="">(brak)</option>
-                                  <option value="balcony">balcony</option>
-                                  <option value="accessory">accessory</option>
-                                  <option value="panel">panel</option>
-                                  <option value="powerstation">powerstation</option>
-                                </select>
-                              </Field>
-                              <Field label="URL obrazka">
-                                <div className="flex gap-2 items-center">
+                              <div className="grid sm:grid-cols-2 gap-4">
+                                <Field label="Tytul">
                                   <input
-                                    className={inputCls + " flex-1"}
-                                    value={editState.imageUrl}
-                                    onChange={(e) => setField("imageUrl", e.target.value)}
+                                    className={inputCls}
+                                    value={editState.title}
+                                    onChange={(e) => setField("title", e.target.value)}
                                   />
+                                </Field>
+                                <Field label="Krotki opis">
+                                  <input
+                                    className={inputCls}
+                                    value={editState.shortDescription}
+                                    onChange={(e) => setField("shortDescription", e.target.value)}
+                                  />
+                                </Field>
+                              </div>
+
+                              <Field label="Pelny opis">
+                                <textarea
+                                  rows={5}
+                                  className={inputCls + " resize-none"}
+                                  value={editState.fullDescription}
+                                  onChange={(e) => setField("fullDescription", e.target.value)}
+                                />
+                              </Field>
+
+                              <div className="grid sm:grid-cols-2 gap-4">
+                                <Field label="Cena (label)">
+                                  <input
+                                    className={inputCls}
+                                    value={editState.priceLabel}
+                                    onChange={(e) => setField("priceLabel", e.target.value)}
+                                  />
+                                </Field>
+                                <Field label="Cena (liczba, PLN)">
+                                  <input
+                                    type="number"
+                                    min={0}
+                                    step={1}
+                                    className={inputCls}
+                                    value={editState.price}
+                                    onChange={(e) => setField("price", e.target.value === "" ? "" : Number(e.target.value))}
+                                  />
+                                </Field>
+                              </div>
+
+                              <div className="grid sm:grid-cols-2 gap-4">
+                                <Field label="Podkategoria">
+                                  <select
+                                    className={inputCls}
+                                    value={editState.subcategory}
+                                    onChange={(e) => setField("subcategory", e.target.value)}
+                                  >
+                                    <option value="">(brak)</option>
+                                    <option value="balcony">balcony</option>
+                                    <option value="accessory">accessory</option>
+                                    <option value="panel">panel</option>
+                                    <option value="powerstation">powerstation</option>
+                                  </select>
+                                </Field>
+                                <Field label="URL obrazka">
+                                  <div className="flex gap-2 items-center">
+                                    <input
+                                      className={inputCls + " flex-1"}
+                                      value={editState.imageUrl}
+                                      onChange={(e) => setField("imageUrl", e.target.value)}
+                                    />
+                                    <button
+                                      type="button"
+                                      onClick={() => fileInputRef.current?.click()}
+                                      disabled={uploading}
+                                      className="shrink-0 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm hover:bg-slate-50 disabled:opacity-50"
+                                    >
+                                      {uploading ? "..." : "📁 Завантажити"}
+                                    </button>
+                                    <input
+                                      ref={fileInputRef}
+                                      type="file"
+                                      accept="image/png,image/jpeg,image/webp"
+                                      className="hidden"
+                                      onChange={(e) => {
+                                        const f = e.target.files?.[0];
+                                        if (f) handleImageUpload(f);
+                                        e.target.value = "";
+                                      }}
+                                    />
+                                  </div>
+                                  {uploadError && <p className="text-xs text-red-600 mt-1">{uploadError}</p>}
+                                  {editState.imageUrl && (
+                                    <img loading="lazy" decoding="async" src={editState.imageUrl} alt="preview" className="mt-2 h-16 rounded border border-slate-200 object-contain bg-slate-50" />
+                                  )}
+                                </Field>
+                              </div>
+
+                              <Field label="Галерея зображень">
+                                <div className="space-y-2">
+                                  {editState.images.length === 0 && (
+                                    <p className="text-xs text-slate-400">Немає зображень</p>
+                                  )}
+                                  <div className="flex flex-wrap gap-2">
+                                    {editState.images.map((url, i) => (
+                                      <div key={i} className="relative group">
+                                        <img loading="lazy" decoding="async" src={url} alt={`img-${i}`} className={`h-16 w-16 object-contain rounded border bg-slate-50 ${i === 0 ? 'border-yellow-400' : 'border-slate-200'}`} />
+                                        <button
+                                          type="button"
+                                          onClick={() => handleGalleryDelete(url)}
+                                          className="absolute -top-1.5 -right-1.5 h-5 w-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                                        >✕</button>
+                                        {i === 0 && <span className="absolute bottom-0 left-0 right-0 text-center text-[9px] bg-yellow-400 text-black rounded-b leading-tight">main</span>}
+                                      </div>
+                                    ))}
+                                  </div>
                                   <button
                                     type="button"
-                                    onClick={() => fileInputRef.current?.click()}
-                                    disabled={uploading}
-                                    className="shrink-0 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm hover:bg-slate-50 disabled:opacity-50"
+                                    onClick={() => galleryFileInputRef.current?.click()}
+                                    disabled={galleryUploading}
+                                    className="rounded-lg border border-dashed border-slate-300 px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 disabled:opacity-50"
                                   >
-                                    {uploading ? "..." : "📁 Завантажити"}
+                                    {galleryUploading ? "..." : "+ Додати зображення"}
                                   </button>
                                   <input
-                                    ref={fileInputRef}
+                                    ref={galleryFileInputRef}
                                     type="file"
                                     accept="image/png,image/jpeg,image/webp"
                                     className="hidden"
                                     onChange={(e) => {
                                       const f = e.target.files?.[0];
-                                      if (f) handleImageUpload(f);
+                                      if (f) handleGalleryUpload(f);
                                       e.target.value = "";
                                     }}
                                   />
+                                  {galleryUploadError && <p className="text-xs text-red-600">{galleryUploadError}</p>}
                                 </div>
-                                {uploadError && <p className="text-xs text-red-600 mt-1">{uploadError}</p>}
-                                {editState.imageUrl && (
-                                  <img loading="lazy" decoding="async" src={editState.imageUrl} alt="preview" className="mt-2 h-16 rounded border border-slate-200 object-contain bg-slate-50" />
-                                )}
                               </Field>
-                            </div>
 
-                            <Field label="Галерея зображень">
-                              <div className="space-y-2">
-                                {editState.images.length === 0 && (
-                                  <p className="text-xs text-slate-400">Немає зображень</p>
+                              <div className="flex flex-wrap gap-6">
+                                <label className="flex items-center gap-2 cursor-pointer">
+                                  <input
+                                    type="checkbox"
+                                    checked={editState.isActive}
+                                    onChange={(e) => setField("isActive", e.target.checked)}
+                                    className="w-4 h-4 rounded accent-yellow-500"
+                                  />
+                                  <span className="text-sm text-slate-700">Aktywny</span>
+                                </label>
+                                <label className="flex items-center gap-2 cursor-pointer">
+                                  <input
+                                    type="checkbox"
+                                    checked={editState.isPromo}
+                                    onChange={(e) => setField("isPromo", e.target.checked)}
+                                    className="w-4 h-4 rounded accent-yellow-500"
+                                  />
+                                  <span className="text-sm text-slate-700">Promo</span>
+                                </label>
+                                {editState.isPromo && (
+                                  <div className="flex-1 min-w-[180px]">
+                                    <input
+                                      className={inputCls}
+                                      placeholder="Etykieta promo"
+                                      value={editState.promoLabel}
+                                      onChange={(e) => setField("promoLabel", e.target.value)}
+                                    />
+                                  </div>
                                 )}
-                                <div className="flex flex-wrap gap-2">
-                                  {editState.images.map((url, i) => (
-                                    <div key={i} className="relative group">
-                                      <img loading="lazy" decoding="async" src={url} alt={`img-${i}`} className={`h-16 w-16 object-contain rounded border bg-slate-50 ${i === 0 ? 'border-yellow-400' : 'border-slate-200'}`} />
+                              </div>
+
+                              {/* Specs */}
+                              <div>
+                                <div className="flex items-center justify-between mb-2">
+                                  <span className="text-sm font-medium text-slate-700">Specyfikacje</span>
+                                  <button
+                                    type="button"
+                                    onClick={addSpec}
+                                    className="text-xs px-3 py-1.5 rounded-lg bg-slate-200 hover:bg-slate-300 font-semibold transition-colors"
+                                  >
+                                    + Dodaj
+                                  </button>
+                                </div>
+                                {editState.specs.length === 0 && (
+                                  <p className="text-xs text-slate-400">Brak specyfikacji</p>
+                                )}
+                                <div className="space-y-2">
+                                  {editState.specs.map((s, i) => (
+                                    <div key={i} className="flex gap-2 items-center">
+                                      <input
+                                        className={inputCls + " flex-1"}
+                                        placeholder="Klucz"
+                                        value={s.key}
+                                        onChange={(e) => updateSpec(i, "key", e.target.value)}
+                                      />
+                                      <input
+                                        className={inputCls + " flex-1"}
+                                        placeholder="Wartosc"
+                                        value={s.value}
+                                        onChange={(e) => updateSpec(i, "value", e.target.value)}
+                                      />
                                       <button
                                         type="button"
-                                        onClick={() => handleGalleryDelete(url)}
-                                        className="absolute -top-1.5 -right-1.5 h-5 w-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                                      >✕</button>
-                                      {i === 0 && <span className="absolute bottom-0 left-0 right-0 text-center text-[9px] bg-yellow-400 text-black rounded-b leading-tight">main</span>}
+                                        onClick={() => removeSpec(i)}
+                                        className="text-red-500 hover:text-red-700 text-lg leading-none px-1"
+                                        title="Usun"
+                                      >
+                                        ✕
+                                      </button>
                                     </div>
                                   ))}
                                 </div>
+                              </div>
+
+                              {/* Components JSON */}
+                              <Field label="Components (JSON)">
+                                <textarea
+                                  rows={6}
+                                  className={`${inputCls} font-mono text-xs resize-none ${editState.componentsError ? "border-red-500 focus:ring-red-400" : ""}`}
+                                  value={editState.componentsRaw}
+                                  onChange={(e) => setEditState((prev) => prev ? { ...prev, componentsRaw: e.target.value, componentsError: "" } : prev)}
+                                />
+                                {editState.componentsError && (
+                                  <p className="text-red-600 text-xs mt-1">{editState.componentsError}</p>
+                                )}
+                              </Field>
+
+                              {/* Actions */}
+                              <div className="flex items-center gap-3">
                                 <button
                                   type="button"
-                                  onClick={() => galleryFileInputRef.current?.click()}
-                                  disabled={galleryUploading}
-                                  className="rounded-lg border border-dashed border-slate-300 px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 disabled:opacity-50"
+                                  onClick={handleSave}
+                                  disabled={saving}
+                                  className="px-5 py-2.5 rounded-xl bg-yellow-500 text-black text-sm font-semibold hover:bg-yellow-400 transition-colors disabled:opacity-50"
                                 >
-                                  {galleryUploading ? "..." : "+ Додати зображення"}
+                                  {saving ? "Zapisywanie..." : "Zapisz"}
                                 </button>
-                                <input
-                                  ref={galleryFileInputRef}
-                                  type="file"
-                                  accept="image/png,image/jpeg,image/webp"
-                                  className="hidden"
-                                  onChange={(e) => {
-                                    const f = e.target.files?.[0];
-                                    if (f) handleGalleryUpload(f);
-                                    e.target.value = "";
-                                  }}
-                                />
-                                {galleryUploadError && <p className="text-xs text-red-600">{galleryUploadError}</p>}
-                              </div>
-                            </Field>
-
-                            <div className="flex flex-wrap gap-6">
-                              <label className="flex items-center gap-2 cursor-pointer">
-                                <input
-                                  type="checkbox"
-                                  checked={editState.isActive}
-                                  onChange={(e) => setField("isActive", e.target.checked)}
-                                  className="w-4 h-4 rounded accent-yellow-500"
-                                />
-                                <span className="text-sm text-slate-700">Aktywny</span>
-                              </label>
-                              <label className="flex items-center gap-2 cursor-pointer">
-                                <input
-                                  type="checkbox"
-                                  checked={editState.isPromo}
-                                  onChange={(e) => setField("isPromo", e.target.checked)}
-                                  className="w-4 h-4 rounded accent-yellow-500"
-                                />
-                                <span className="text-sm text-slate-700">Promo</span>
-                              </label>
-                              {editState.isPromo && (
-                                <div className="flex-1 min-w-[180px]">
-                                  <input
-                                    className={inputCls}
-                                    placeholder="Etykieta promo"
-                                    value={editState.promoLabel}
-                                    onChange={(e) => setField("promoLabel", e.target.value)}
-                                  />
-                                </div>
-                              )}
-                            </div>
-
-                            {/* Specs */}
-                            <div>
-                              <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm font-medium text-slate-700">Specyfikacje</span>
                                 <button
                                   type="button"
-                                  onClick={addSpec}
-                                  className="text-xs px-3 py-1.5 rounded-lg bg-slate-200 hover:bg-slate-300 font-semibold transition-colors"
+                                  onClick={cancelEdit}
+                                  className="px-5 py-2.5 rounded-xl bg-slate-200 text-slate-700 text-sm font-semibold hover:bg-slate-300 transition-colors"
                                 >
-                                  + Dodaj
+                                  Anuluj
                                 </button>
-                              </div>
-                              {editState.specs.length === 0 && (
-                                <p className="text-xs text-slate-400">Brak specyfikacji</p>
-                              )}
-                              <div className="space-y-2">
-                                {editState.specs.map((s, i) => (
-                                  <div key={i} className="flex gap-2 items-center">
-                                    <input
-                                      className={inputCls + " flex-1"}
-                                      placeholder="Klucz"
-                                      value={s.key}
-                                      onChange={(e) => updateSpec(i, "key", e.target.value)}
-                                    />
-                                    <input
-                                      className={inputCls + " flex-1"}
-                                      placeholder="Wartosc"
-                                      value={s.value}
-                                      onChange={(e) => updateSpec(i, "value", e.target.value)}
-                                    />
-                                    <button
-                                      type="button"
-                                      onClick={() => removeSpec(i)}
-                                      className="text-red-500 hover:text-red-700 text-lg leading-none px-1"
-                                      title="Usun"
-                                    >
-                                      ✕
-                                    </button>
-                                  </div>
-                                ))}
+                                {saveMsg && (
+                                  <span className={`text-sm ${saveMsg.startsWith("Blad") ? "text-red-600" : "text-green-600"}`}>
+                                    {saveMsg}
+                                  </span>
+                                )}
                               </div>
                             </div>
-
-                            {/* Components JSON */}
-                            <Field label="Components (JSON)">
-                              <textarea
-                                rows={6}
-                                className={`${inputCls} font-mono text-xs resize-none ${editState.componentsError ? "border-red-500 focus:ring-red-400" : ""}`}
-                                value={editState.componentsRaw}
-                                onChange={(e) => setEditState((prev) => prev ? { ...prev, componentsRaw: e.target.value, componentsError: "" } : prev)}
-                              />
-                              {editState.componentsError && (
-                                <p className="text-red-600 text-xs mt-1">{editState.componentsError}</p>
-                              )}
-                            </Field>
-
-                            {/* Actions */}
-                            <div className="flex items-center gap-3">
-                              <button
-                                type="button"
-                                onClick={handleSave}
-                                disabled={saving}
-                                className="px-5 py-2.5 rounded-xl bg-yellow-500 text-black text-sm font-semibold hover:bg-yellow-400 transition-colors disabled:opacity-50"
-                              >
-                                {saving ? "Zapisywanie..." : "Zapisz"}
-                              </button>
-                              <button
-                                type="button"
-                                onClick={cancelEdit}
-                                className="px-5 py-2.5 rounded-xl bg-slate-200 text-slate-700 text-sm font-semibold hover:bg-slate-300 transition-colors"
-                              >
-                                Anuluj
-                              </button>
-                              {saveMsg && (
-                                <span className={`text-sm ${saveMsg.startsWith("Blad") ? "text-red-600" : "text-green-600"}`}>
-                                  {saveMsg}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    )}
-                  </>
-                ))}
-              </tbody>
-            </table>
+                          </td>
+                        </tr>
+                      )}
+                    </>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>

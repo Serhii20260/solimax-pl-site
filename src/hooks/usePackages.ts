@@ -39,9 +39,20 @@ const localizeImageUrl = (url: string): string => {
   return m ? m[1] : url;
 };
 
+/**
+ * Каталог у базі зберігає шляхи з розширенням .png/.jpg — так було до того,
+ * як статику перевели у WebP. Базу ми не редагуємо, тому підміняємо
+ * розширення на льоту. Шляхи /pl/uploads/… не чіпаємо: там лежать
+ * завантажені через адмінку файли, які у WebP не переганялись.
+ */
+const webpImageUrl = (url: string): string =>
+  url.startsWith('/pl/') && !url.startsWith('/pl/uploads/')
+    ? url.replace(/\.(png|jpe?g)$/i, '.webp')
+    : url;
+
 const withLocalImage = <T extends { imageUrl: string }>(pkg: T): T => {
-  const local = localizeImageUrl(pkg.imageUrl);
-  return local === pkg.imageUrl ? pkg : { ...pkg, imageUrl: local };
+  const fixed = webpImageUrl(localizeImageUrl(pkg.imageUrl));
+  return fixed === pkg.imageUrl ? pkg : { ...pkg, imageUrl: fixed };
 };
 
 

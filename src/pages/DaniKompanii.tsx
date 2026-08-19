@@ -27,24 +27,26 @@ export default function DaniKompanii() {
         <div className="space-y-8 text-slate-700 leading-relaxed">
           <section>
             <h2 className="text-lg font-semibold text-slate-900 mb-4">{t.legalCompanyBasicTitle}</h2>
-            <table className="w-full text-sm border-collapse">
-              <tbody>
-                {rows.map(([label, value]) => (
-                  <tr key={label} className="border-b border-slate-100">
-                    <td className="py-3 pr-6 text-slate-500 w-48 align-top">{label}</td>
-                    <td className="py-3">{value}</td>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm border-collapse">
+                <tbody>
+                  {rows.map(([label, value]) => (
+                    <tr key={label} className="border-b border-slate-100">
+                      <td className="py-3 pr-6 text-slate-500 w-48 align-top">{label}</td>
+                      <td className="py-3">{value}</td>
+                    </tr>
+                  ))}
+                  <tr className="border-b border-slate-100">
+                    <td className="py-3 pr-6 text-slate-500 align-top">Email</td>
+                    <td className="py-3">
+                      <a href="mailto:info@solimax.pl" className="text-slate-700 underline hover:no-underline">
+                        info@solimax.pl
+                      </a>
+                    </td>
                   </tr>
-                ))}
-                <tr className="border-b border-slate-100">
-                  <td className="py-3 pr-6 text-slate-500 align-top">Email</td>
-                  <td className="py-3">
-                    <a href="mailto:info@solimax.pl" className="text-slate-700 underline hover:no-underline">
-                      info@solimax.pl
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                </tbody>
+              </table>
+            </div>
           </section>
 
           <section>
