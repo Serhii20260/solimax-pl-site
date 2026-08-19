@@ -294,7 +294,7 @@ export const legacyTranslations = {
     step: "Schritt",
     back: "Zuruck",
     next: "Weiter",
-    currency: "zl",
+    currency: "zł",
 
     // Calculator - Step 1
     calcStep1Title: "Standort und Gebaude",
@@ -315,7 +315,7 @@ export const legacyTranslations = {
     calcStep2Subtitle: "Darauf basierend zeigen wir die reale monatliche Wirkung.",
     calcAdvancedMode: "Ich habe untypischen Verbrauch — Gerate manuell eingeben (erweiterter Modus)",
     calcAdvancedModeHint: "EV, IT/Server, Werkstatt, Maschinen, unregelmasiger Verbrauch.",
-    calcElecCostLabel: "Jahrliche Stromkosten (zl/Jahr)",
+    calcElecCostLabel: "Jahrliche Stromkosten (zł/Jahr)",
     calcElecCostHint: "Aus Rechnung/Portal — Naherung reicht.",
     calcHeatingCurrent: "Aktuelle Heizung",
     calcHeatingGas: "Gas",
@@ -324,7 +324,7 @@ export const legacyTranslations = {
     calcHeatingElectric: "Strom (Heizstabe/Boiler)",
     calcHeatingHeatPump: "Warmepumpe",
     calcHeatingOther: "Andere",
-    calcHeatingCostLabel: "Jahrliche Heizkosten (zl/Jahr)",
+    calcHeatingCostLabel: "Jahrliche Heizkosten (zł/Jahr)",
     calcHeatingCostHint: "Falls unbekannt — 0 eingeben oder 'weiss nicht' wahlen.",
     calcDontKnow: "Weiss nicht",
     calcDontKnowEnabled: "Weiss nicht (aktiviert)",

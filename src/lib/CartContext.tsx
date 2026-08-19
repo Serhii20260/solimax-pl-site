@@ -38,7 +38,7 @@ export function normalizeCartPrice(value: unknown): number | null {
 }
 
 export function formatZlotyAmount(value: number): string {
-  return `${Math.round(value).toLocaleString('pl-PL').replace(/\u00a0/g, ' ')},00 zl`;
+  return `${Math.round(value).toLocaleString('pl-PL').replace(/\u00a0/g, ' ')},00 zł`;
 }
 
 function normalizeQuantity(value: unknown): number {

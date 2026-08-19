@@ -54,33 +54,33 @@ const packageBase = (
 });
 
 const BASE_PACKAGES: PackageBase[] = [
-  packageBase('anker-smart', 'home', 'premium', 'Anker SOLIX', '/pl/anker-smart-system.webp', '54 500,00 zl', { isPromo: true, isNew: false, sortOrder: 1 }),
-  packageBase('anker-x1-5kw', 'home', 'premium', 'Anker SOLIX', '/pl/anker-x1-5kwh.webp', '38 300,00 zl', { isPromo: false, isNew: true, sortOrder: 2 }),
-  packageBase('anker-x1-12kw', 'home', 'premium', 'Anker SOLIX', '/pl/anker-x1-15kwh.webp', '71 100,00 zl', { isPromo: false, isNew: true, sortOrder: 3 }),
-  packageBase('pv-standard-8', 'home', 'standard', 'Deye + Trina', '/pl/pakiet-deye.webp', '37 000,00 zl netto + VAT', { isPromo: true, isNew: false, sortOrder: 4 }),
-  packageBase('pv-standard-10', 'home', 'standard', 'Deye + Trina', '/pl/pakiet-deye.webp', '39 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 5 }),
-  packageBase('pv-standard-12', 'home', 'standard', 'Deye + Trina', '/pl/pakiet-deye-2.webp', '43 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 6 }),
-  packageBase('pv-premium-8', 'home', 'premium', 'Sigenergy + AIKO', '/pl/sigenergy-pakiet.webp', '50 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 7 }),
-  packageBase('pv-premium-10', 'home', 'premium', 'Sigenergy + AIKO', '/pl/sigenergy-pakiet.webp', '66 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 8 }),
-  packageBase('pv-premium-12', 'home', 'premium', 'Sigenergy + AIKO', '/pl/sigenergy-pakiet.webp', '73 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 9 }),
-  packageBase('daikin-mt', 'heating', 'standard', 'Daikin', '/pl/daikin-pakiet.webp', '72 000,00 zl', { isPromo: true, isNew: false, sortOrder: 10 }),
-  packageBase('daikin-ht', 'heating', 'premium', 'Daikin', '/pl/daikin-pakiet.webp', '85 000,00 zl', { isPromo: true, isNew: false, sortOrder: 11 }),
-  packageBase('vaillant-9', 'heating', 'premium', 'Vaillant', '/pl/vaillant-pakiet.webp', '83 000,00 zl', { isPromo: false, isNew: true, sortOrder: 12 }),
-  packageBase('vaillant-12', 'heating', 'premium', 'Vaillant', '/pl/vaillant-pakiet-12.webp', '98 000,00 zl', { isPromo: false, isNew: true, sortOrder: 13 }),
-  packageBase('biznes-30', 'business', 'standard', 'Deye + Trina', '/pl/biznes-deye-30kw.webp', '89 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 14 }),
-  packageBase('biznes-100', 'business', 'standard', 'Sungrow + Trina', '/pl/biznes-sungrow.webp', '230 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 15 }),
-  packageBase('biznes-200', 'business', 'premium', 'Sungrow + Trina', '/pl/biznes-sungrow.webp', '450 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 16 }),
-  packageBase('carport-hybrid', 'carport', 'standard', 'Deye', '/pl/carport-hybrid.webp', '42 600,00 zl netto + VAT', { isPromo: true, isNew: false, sortOrder: 17 }),
-  packageBase('carport-premium', 'carport', 'premium', 'Sigenergy', '/pl/carport-premium.webp', '58 500,00 zl netto + VAT', { isPromo: false, isNew: true, sortOrder: 18 }),
-  packageBase('carport-business', 'carport', 'premium', 'Sungrow', '/pl/carport-biznes.webp', '35 000,00 zl netto + VAT', { isPromo: false, isNew: false, sortOrder: 19 }),
+  packageBase('anker-smart', 'home', 'premium', 'Anker SOLIX', '/pl/anker-smart-system.webp', '54 500,00 zł', { isPromo: true, isNew: false, sortOrder: 1 }),
+  packageBase('anker-x1-5kw', 'home', 'premium', 'Anker SOLIX', '/pl/anker-x1-5kwh.webp', '38 300,00 zł', { isPromo: false, isNew: true, sortOrder: 2 }),
+  packageBase('anker-x1-12kw', 'home', 'premium', 'Anker SOLIX', '/pl/anker-x1-15kwh.webp', '71 100,00 zł', { isPromo: false, isNew: true, sortOrder: 3 }),
+  packageBase('pv-standard-8', 'home', 'standard', 'Deye + Trina', '/pl/pakiet-deye.webp', '35 570,00 zł netto + VAT', { isPromo: true, isNew: false, sortOrder: 4 }),
+  packageBase('pv-standard-10', 'home', 'standard', 'Deye + Trina', '/pl/pakiet-deye.webp', '39 081,00 zł netto + VAT', { isPromo: false, isNew: false, sortOrder: 5 }),
+  packageBase('pv-standard-12', 'home', 'standard', 'Deye + Trina', '/pl/pakiet-deye-2.webp', '49 492,00 zł netto + VAT', { isPromo: false, isNew: false, sortOrder: 6 }),
+  packageBase('pv-premium-8', 'home', 'premium', 'Sigenergy + AIKO', '/pl/sigenergy-pakiet.webp', '50 000,00 zł netto + VAT', { isPromo: false, isNew: false, sortOrder: 7 }),
+  packageBase('pv-premium-10', 'home', 'premium', 'Sigenergy + AIKO', '/pl/sigenergy-pakiet.webp', '66 000,00 zł netto + VAT', { isPromo: false, isNew: false, sortOrder: 8 }),
+  packageBase('pv-premium-12', 'home', 'premium', 'Sigenergy + AIKO', '/pl/sigenergy-pakiet.webp', '73 000,00 zł netto + VAT', { isPromo: false, isNew: false, sortOrder: 9 }),
+  packageBase('daikin-mt', 'heating', 'standard', 'Daikin', '/pl/daikin-pakiet.webp', '72 000,00 zł', { isPromo: true, isNew: false, sortOrder: 10 }),
+  packageBase('daikin-ht', 'heating', 'premium', 'Daikin', '/pl/daikin-pakiet.webp', '85 000,00 zł', { isPromo: true, isNew: false, sortOrder: 11 }),
+  packageBase('vaillant-9', 'heating', 'premium', 'Vaillant', '/pl/vaillant-pakiet.webp', '83 000,00 zł', { isPromo: false, isNew: true, sortOrder: 12 }),
+  packageBase('vaillant-12', 'heating', 'premium', 'Vaillant', '/pl/vaillant-pakiet-12.webp', '98 000,00 zł', { isPromo: false, isNew: true, sortOrder: 13 }),
+  packageBase('biznes-30', 'business', 'standard', 'Deye + Trina', '/pl/biznes-deye-30kw.webp', '89 000,00 zł netto + VAT', { isPromo: false, isNew: false, sortOrder: 14 }),
+  packageBase('biznes-100', 'business', 'standard', 'Sungrow + Trina', '/pl/biznes-sungrow.webp', '230 000,00 zł netto + VAT', { isPromo: false, isNew: false, sortOrder: 15 }),
+  packageBase('biznes-200', 'business', 'premium', 'Sungrow + Trina', '/pl/biznes-sungrow.webp', '450 000,00 zł netto + VAT', { isPromo: false, isNew: false, sortOrder: 16 }),
+  packageBase('carport-hybrid', 'carport', 'standard', 'Deye', '/pl/carport-hybrid.webp', 'od 42 600,00 zł netto + VAT', { isPromo: true, isNew: false, sortOrder: 17 }),
+  packageBase('carport-premium', 'carport', 'premium', 'Sigenergy', '/pl/carport-premium.webp', 'od 58 500,00 zł netto + VAT', { isPromo: false, isNew: true, sortOrder: 18 }),
+  packageBase('carport-business', 'carport', 'premium', 'Sungrow', '/pl/carport-biznes.webp', 'od 42 981,00 zł netto + VAT', { isPromo: false, isNew: false, sortOrder: 19 }),
 ];
 
 const PL_COPY: Record<string, PackageCopy> = {
   'anker-smart': {
     title: 'Anker SOLIX Smart System',
-    shortDescription: 'Power Dock + 3x Solarbank 3 + 3x BP2700 + 12x RS40P - 10.8 kW PV, 13.44 kWh baterii',
+    shortDescription: 'Power Dock + 3x Solarbank 3 + 3x BP2700 + 12x RS40P - 10.8 kW PV, 16.16 kWh baterii',
     fullDescription: 'Modulowy ekosystem Anker SOLIX z Power Dock do podlaczenia do domowej rozdzielnicy. Wyjscie 3,600 W.',
-    specs: [{ key: 'PV', value: '10.8 kW' }, { key: 'Bateria', value: '13.44 kWh' }, { key: 'Wyjscie', value: '3,600 W' }],
+    specs: [{ key: 'PV', value: '10.8 kW' }, { key: 'Bateria', value: '16.16 kWh' }, { key: 'Wyjscie', value: '3,600 W' }],
     promoLabel: 'System modulowy',
   },
   'anker-x1-5kw': {
@@ -214,9 +214,9 @@ const PL_COPY: Record<string, PackageCopy> = {
 const EN_COPY: Record<string, PackageCopy> = {
   'anker-smart': {
     title: 'Anker SOLIX Smart System',
-    shortDescription: 'Power Dock + 3x Solarbank 3 + 3x BP2700 + 12x RS40P - 10.8 kW PV, 13.44 kWh battery',
+    shortDescription: 'Power Dock + 3x Solarbank 3 + 3x BP2700 + 12x RS40P - 10.8 kW PV, 16.16 kWh battery',
     fullDescription: 'Modular Anker SOLIX ecosystem with Power Dock for connection to the home distribution board. 3,600 W output.',
-    specs: [{ key: 'PV', value: '10.8 kW' }, { key: 'Battery', value: '13.44 kWh' }, { key: 'Output', value: '3,600 W' }],
+    specs: [{ key: 'PV', value: '10.8 kW' }, { key: 'Battery', value: '16.16 kWh' }, { key: 'Output', value: '3,600 W' }],
     promoLabel: 'Modular system',
   },
   'anker-x1-5kw': {

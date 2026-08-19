@@ -35,7 +35,7 @@ export default function Propozycje() {
       t.propozycjeAnkerSmartFeature4,
       t.propozycjeAnkerSmartFeature5,
     ],
-    pricePL: '54 500,00 zl netto + VAT',
+    pricePL: '54 500,00 zł netto + VAT',
   }
 
   const ankerX1Pakiety: PackageCard[] = [
@@ -49,9 +49,8 @@ export default function Propozycje() {
         t.propozycjeAnkerX1_5Feature2,
         t.propozycjeAnkerX1_5Feature3,
         t.propozycjeAnkerX1Feature4,
-        t.propozycjeAnkerSmartFeature5,
       ],
-      pricePL: '38 300,00 zl netto + VAT',
+      pricePL: '38 300,00 zł netto + VAT',
     },
     {
       id: 'anker-x1-12kw',
@@ -63,9 +62,8 @@ export default function Propozycje() {
         t.propozycjeAnkerX1_12Feature2,
         t.propozycjeAnkerX1_12Feature3,
         t.propozycjeAnkerX1Feature4,
-        t.propozycjeAnkerSmartFeature5,
       ],
-      pricePL: '71 100,00 zl netto + VAT',
+      pricePL: '71 100,00 zł netto + VAT',
     },
   ]
 
@@ -81,7 +79,7 @@ export default function Propozycje() {
         t.propozycjeBazik8Feature3,
         t.propozycjeRegistrationIncluded,
       ],
-      pricePL: '37 000,00 zl netto + VAT',
+      pricePL: '35 570,00 zł netto + VAT',
     },
     {
       id: 'bazik-10kw',
@@ -94,7 +92,7 @@ export default function Propozycje() {
         t.propozycjeBazik8Feature3,
         t.propozycjeRegistrationIncluded,
       ],
-      pricePL: '39 000,00 zl netto + VAT',
+      pricePL: '39 081,00 zł netto + VAT',
     },
     {
       id: 'bazik-12kw',
@@ -107,7 +105,7 @@ export default function Propozycje() {
         t.propozycjeBazik12Feature3,
         t.propozycjeRegistrationIncluded,
       ],
-      pricePL: '43 000,00 zl netto + VAT',
+      pricePL: '49 492,00 zł netto + VAT',
     },
   ]
 
@@ -123,7 +121,7 @@ export default function Propozycje() {
         t.propozycjePremiumFeature3,
         t.propozycjeRegistrationIncluded,
       ],
-      pricePL: '50 000,00 zl netto + VAT',
+      pricePL: '50 000,00 zł netto + VAT',
     },
     {
       id: 'premium-10kw',
@@ -136,7 +134,7 @@ export default function Propozycje() {
         t.propozycjePremium10Feature3,
         t.propozycjeRegistrationIncluded,
       ],
-      pricePL: '66 000,00 zl netto + VAT',
+      pricePL: '66 000,00 zł netto + VAT',
     },
     {
       id: 'premium-12kw',
@@ -149,7 +147,7 @@ export default function Propozycje() {
         t.propozycjePremium12Feature3,
         t.propozycjeRegistrationIncluded,
       ],
-      pricePL: '73 000,00 zl netto + VAT',
+      pricePL: '73 000,00 zł netto + VAT',
     },
   ]
 
@@ -166,11 +164,11 @@ export default function Propozycje() {
         t.propozycjeHeatDaikinMtFeature2,
         t.propozycjeHeatBuffer80,
         t.propozycjeHeatInstallFeature,
-        'Czyste Powietrze — do 40 000,00 zl',
+        'Czyste Powietrze — do 40 000,00 zł',
         t.propozycjeWarrantyDocsFeature,
       ],
       subsidy: t.propozycjeSubsidyCzyste,
-      pricePL: '72 000,00 zl netto + VAT',
+      pricePL: '72 000,00 zł netto + VAT',
     },
     {
       id: 'daikin-ht-14kw',
@@ -184,11 +182,11 @@ export default function Propozycje() {
         t.propozycjeHeatDaikinHtFeature2,
         t.propozycjeHeatBuffer150,
         t.propozycjeHeatInstallFeature,
-        'Czyste Powietrze — do 40 000,00 zl',
+        'Czyste Powietrze — do 40 000,00 zł',
         t.propozycjeWarrantyDocsFeature,
       ],
       subsidy: t.propozycjeSubsidyCzyste,
-      pricePL: '85 000,00 zl netto + VAT',
+      pricePL: '85 000,00 zł netto + VAT',
     },
     {
       id: 'vaillant-7kw',
@@ -202,11 +200,11 @@ export default function Propozycje() {
         t.propozycjeHeatVaillant7Feature2,
         t.propozycjeHeatBuffer80,
         t.propozycjeHeatR290Feature,
-        'Czyste Powietrze — do 40 000,00 zl',
+        'Czyste Powietrze — do 40 000,00 zł',
         t.propozycjeWarrantyDocsFeature,
       ],
       subsidy: t.propozycjeSubsidyCzyste,
-      pricePL: '83 000,00 zl netto + VAT',
+      pricePL: '83 000,00 zł netto + VAT',
     },
     {
       id: 'vaillant-12kw',
@@ -220,11 +218,11 @@ export default function Propozycje() {
         t.propozycjeHeatVaillant12Feature2,
         t.propozycjeHeatBuffer150,
         t.propozycjeHeatR290Feature,
-        'Czyste Powietrze — do 40 000,00 zl',
+        'Czyste Powietrze — do 40 000,00 zł',
         t.propozycjeWarrantyDocsFeature,
       ],
       subsidy: t.propozycjeSubsidyCzyste,
-      pricePL: '98 000,00 zl netto + VAT',
+      pricePL: '98 000,00 zł netto + VAT',
     },
   ]
 
@@ -240,8 +238,8 @@ export default function Propozycje() {
         t.propozycjeBusiness30Feature3,
         t.propozycjeBusinessDocsFeature,
       ],
-      pricePL: '89 000,00 zl netto + VAT',
-      bessPL: '+42 000,00 zl z BESS',
+      pricePL: '89 000,00 zł netto + VAT',
+      bessPL: '+42 000,00 zł z BESS',
     },
     {
       id: 'biznes-100kw',
@@ -254,8 +252,8 @@ export default function Propozycje() {
         t.propozycjeBusiness100Feature3,
         t.propozycjeBusinessDocsFeature,
       ],
-      pricePL: '230 000,00 zl netto + VAT',
-      bessPL: '+220 000,00 zl z PowerStack',
+      pricePL: '230 000,00 zł netto + VAT',
+      bessPL: '+220 000,00 zł z PowerStack',
     },
     {
       id: 'biznes-200kw',
@@ -268,8 +266,8 @@ export default function Propozycje() {
         t.propozycjeBusiness200Feature3,
         t.propozycjeBusinessDocsFeature,
       ],
-      pricePL: '450 000,00 zl netto + VAT',
-      bessPL: '+440 000,00 zl z PowerStack',
+      pricePL: '450 000,00 zł netto + VAT',
+      bessPL: '+440 000,00 zł z PowerStack',
     },
   ]
 
@@ -661,7 +659,7 @@ export default function Propozycje() {
                   <li>• {t.propozycjeCarportHybridFeature5}</li>
                 </ul>
                 <div className="border-t border-slate-100 pt-4">
-                  <p className="text-2xl font-bold text-slate-900">42 600 <span className="text-base font-normal">{t.propozycjeNetPriceLabel}</span></p>
+                  <p className="text-2xl font-bold text-slate-900">{t.propozycjeFromLabel} 42 600 <span className="text-base font-normal">{t.propozycjeNetPriceLabel}</span></p>
                   <p className="text-sm text-slate-500 mt-1">{t.propozycjeCarportHybridBattery}</p>
                 </div>
               </div>
@@ -690,7 +688,7 @@ export default function Propozycje() {
                   <li>• {t.propozycjeCarportPremiumFeature5}</li>
                 </ul>
                 <div className="border-t border-slate-100 pt-4">
-                  <p className="text-2xl font-bold text-slate-900">58 500 <span className="text-base font-normal">{t.propozycjeNetPriceLabel}</span></p>
+                  <p className="text-2xl font-bold text-slate-900">{t.propozycjeFromLabel} 58 500 <span className="text-base font-normal">{t.propozycjeNetPriceLabel}</span></p>
                   <p className="text-sm text-slate-500 mt-1">{t.propozycjeCarportPremiumBattery}</p>
                 </div>
               </div>
@@ -719,7 +717,7 @@ export default function Propozycje() {
                   <li>• {t.propozycjeCarportBusinessFeature5}</li>
                 </ul>
                 <div className="border-t border-slate-100 pt-4">
-                  <p className="text-2xl font-bold text-slate-900">{t.propozycjeFromLabel} 35 000 <span className="text-base font-normal">{t.propozycjeNetPriceLabel}</span></p>
+                  <p className="text-2xl font-bold text-slate-900">{t.propozycjeFromLabel} 42 981 <span className="text-base font-normal">{t.propozycjeNetPriceLabel}</span></p>
                   <p className="text-sm text-slate-500 mt-1">{t.propozycjeCarportBusinessExtra}</p>
                 </div>
               </div>
