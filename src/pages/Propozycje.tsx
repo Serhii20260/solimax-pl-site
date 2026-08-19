@@ -79,7 +79,7 @@ export default function Propozycje() {
         t.propozycjeBazik8Feature3,
         t.propozycjeRegistrationIncluded,
       ],
-      pricePL: '35 570,00 zł netto + VAT',
+      pricePL: '34 220,00 zł netto + VAT',
     },
     {
       id: 'bazik-10kw',
@@ -168,7 +168,7 @@ export default function Propozycje() {
         t.propozycjeWarrantyDocsFeature,
       ],
       subsidy: t.propozycjeSubsidyCzyste,
-      pricePL: '72 000,00 zł netto + VAT',
+      pricePL: '61 490,00 zł netto + VAT',
     },
     {
       id: 'daikin-ht-14kw',
@@ -186,7 +186,7 @@ export default function Propozycje() {
         t.propozycjeWarrantyDocsFeature,
       ],
       subsidy: t.propozycjeSubsidyCzyste,
-      pricePL: '85 000,00 zł netto + VAT',
+      pricePL: '74 185,00 zł netto + VAT',
     },
     {
       id: 'vaillant-7kw',
@@ -204,7 +204,7 @@ export default function Propozycje() {
         t.propozycjeWarrantyDocsFeature,
       ],
       subsidy: t.propozycjeSubsidyCzyste,
-      pricePL: '83 000,00 zł netto + VAT',
+      pricePL: '69 833,00 zł netto + VAT',
     },
     {
       id: 'vaillant-12kw',
@@ -222,7 +222,7 @@ export default function Propozycje() {
         t.propozycjeWarrantyDocsFeature,
       ],
       subsidy: t.propozycjeSubsidyCzyste,
-      pricePL: '98 000,00 zł netto + VAT',
+      pricePL: '85 296,00 zł netto + VAT',
     },
   ]
 
@@ -655,7 +655,7 @@ export default function Propozycje() {
                   <li>• {t.propozycjeCarportPanels10}</li>
                   <li>• {t.propozycjeCarportHybridFeature2}</li>
                   <li>• {t.propozycjeCarportHybridFeature3}</li>
-                  <li>• Wallbox 7 kW AC (Type 2)</li>
+                  <li>• Wallbox Anker SOLIX V1 7,4 kW AC (Type 2)</li>
                   <li>• {t.propozycjeCarportHybridFeature5}</li>
                 </ul>
                 <div className="border-t border-slate-100 pt-4">
@@ -717,7 +717,7 @@ export default function Propozycje() {
                   <li>• {t.propozycjeCarportBusinessFeature5}</li>
                 </ul>
                 <div className="border-t border-slate-100 pt-4">
-                  <p className="text-2xl font-bold text-slate-900">{t.propozycjeFromLabel} 42 981 <span className="text-base font-normal">{t.propozycjeNetPriceLabel}</span></p>
+                  <p className="text-2xl font-bold text-slate-900">{t.propozycjeFromLabel} 45 850 <span className="text-base font-normal">{t.propozycjeNetPriceLabel}</span></p>
                   <p className="text-sm text-slate-500 mt-1">{t.propozycjeCarportBusinessExtra}</p>
                 </div>
               </div>
