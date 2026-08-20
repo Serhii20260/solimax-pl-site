@@ -4,9 +4,10 @@ import EnergySchema from "../components/EnergySchema";
 import LeadFormSection from "../components/LeadFormSection";
 import PromoBanner from "../components/PromoBanner";
 import { useLanguage } from "../lib/LanguageContext";
+import { COMBOS } from '../lib/prices.generated';
 
 export default function Dom() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const domSolutions = [
     {
@@ -35,19 +36,19 @@ export default function Dom() {
     {
       name: t.domConfigStandardName,
       desc: t.domConfigStandardDesc,
-      price: t.domConfigStandardPrice,
+      price: COMBOS['dom-standard'][language === 'en' ? 'en' : 'pl'],
       link: "/propozycje",
     },
     {
       name: t.domConfigPremiumName,
       desc: t.domConfigPremiumDesc,
-      price: t.domConfigPremiumPrice,
+      price: COMBOS['dom-premium'][language === 'en' ? 'en' : 'pl'],
       link: "/propozycje",
     },
     {
       name: t.domConfigHeatPumpName,
       desc: t.domConfigHeatPumpDesc,
-      price: t.domConfigHeatPumpPrice,
+      price: COMBOS['dom-heatpump'][language === 'en' ? 'en' : 'pl'],
       link: "/propozycje",
     },
   ];
@@ -215,9 +216,12 @@ export default function Dom() {
                   <p className="font-semibold text-slate-900">{c.name}</p>
                   <p className="text-xs text-slate-500 mt-0.5">{c.desc}</p>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-slate-900">{c.price}</span>
-                  <Link to={c.link} className="text-sm text-yellow-600 font-medium hover:text-yellow-500">{t.domConfigDetails}</Link>
+                <div className="flex items-end justify-between gap-2">
+                  <span>
+                    <span className="block text-lg font-bold text-slate-900">{c.price.main}</span>
+                    <span className="block text-[11px] text-slate-500">{c.price.sub}</span>
+                  </span>
+                  <Link to={c.link} className="text-sm text-yellow-600 font-medium hover:text-yellow-500 whitespace-nowrap">{t.domConfigDetails}</Link>
                 </div>
               </div>
             ))}

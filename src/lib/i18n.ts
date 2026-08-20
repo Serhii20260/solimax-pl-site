@@ -344,12 +344,15 @@ export const translations = {
     domConfigsSubtitle: "Gotowe pakiety — sprzęt + montaż + dokumenty",
     domConfigStandardName: "Standard 8 kW",
     domConfigStandardDesc: "Deye 8 kW + 18× Trina S+ FB + Deye RW-M6.1-B",
+    // не використовується з Етапу 7: ціна береться з prices.generated.ts
     domConfigStandardPrice: "od PLN 33,500",
     domConfigPremiumName: "Premium 10 kW",
     domConfigPremiumDesc: "Sigenergy 8 kW + 16 kWh + 21× AIKO Neostar 475W",
+    // не використовується з Етапу 7: ціна береться з prices.generated.ts
     domConfigPremiumPrice: "od PLN 62,000",
     domConfigHeatPumpName: "Dom + pompa ciepła",
     domConfigHeatPumpDesc: "PV 8 kW + Vaillant aroTHERM Plus 12 kW R290",
+    // не використовується з Етапу 7: ціна береться з prices.generated.ts
     domConfigHeatPumpPrice: "od PLN 153,000",
     domConfigDetails: "Szczegóły →",
     domAestheticsTitle: "Dokładność i estetyka",
@@ -685,6 +688,10 @@ export const translations = {
     calcUlgaTermoNote: "Ulga termomodernizacyjna: to rozliczenie podatkowe (nie bezpośrednia dotacja).",
     calcChecklistNote: "Aby wycenić montaż dokładnie, potrzebujemy checklisty technicznej.",
     calcHeatPumpExtra: "Dodatkowe wyposażenie pompy ciepła — do uzgodnienia z menedżerem.",
+    calcCatalogueFromNote: "Cena z katalogu najbliższego pakietu — traktuj jako cenę „od”. Dokładna wycena jest ustalana indywidualnie.",
+    calcAirToAirQuoteNote: "Klimatyzacja z grzaniem nie ma pakietu katalogowego — wyceniamy indywidualnie, nie jest wliczona w sumę.",
+    calcInstallIncludedNote: "Cena pakietu katalogowego zawiera sprzęt, magazyn energii i montaż.",
+    calcSelectedPackage: "Pakiet z katalogu",
 
     // Contact form
     contactFormTitle: "Zostaw zapytanie — przygotujemy rozwiązanie dla Ciebie",
@@ -995,6 +1002,7 @@ export const translations = {
     propozycjeDetailsDatasheetTitle: "Dokumentacja techniczna",
     propozycjeDetailsDatasheetDownload: "Pobierz PDF",
     propozycjePriceIndividualNote: "Dokładna cena jest ustalana indywidualnie na podstawie szczegółowej analizy Twojego obiektu.",
+    propozycjePriceIndicativeNote: "Cena orientacyjna — wyliczana indywidualnie.",
     propozycjeDetailsPriceNote: "Dokładna cena jest ustalana indywidualnie na podstawie szczegółowej analizy Twojego obiektu.",
     propozycjeDetailsOrderCta: "Zamów",
     propozycjeDetailsConsultationCta: "Zamów konsultację",
@@ -1412,12 +1420,15 @@ export const translations = {
     domConfigsSubtitle: "Ready packages — equipment + installation + documents",
     domConfigStandardName: "Standard 8 kW",
     domConfigStandardDesc: "Deye 8 kW + 18× Trina S+ FB + Deye RW-M6.1-B",
+    // не використовується з Етапу 7: ціна береться з prices.generated.ts
     domConfigStandardPrice: "from PLN 33,500",
     domConfigPremiumName: "Premium 10 kW",
     domConfigPremiumDesc: "Sigenergy 8 kW + 16 kWh + 21× AIKO Neostar 475W",
+    // не використовується з Етапу 7: ціна береться з prices.generated.ts
     domConfigPremiumPrice: "from PLN 62,000",
     domConfigHeatPumpName: "Home + heat pump",
     domConfigHeatPumpDesc: "PV 8 kW + Vaillant aroTHERM Plus 12 kW R290",
+    // не використовується з Етапу 7: ціна береться з prices.generated.ts
     domConfigHeatPumpPrice: "from PLN 153,000",
     domConfigDetails: "Details →",
     domAestheticsTitle: "Precision and aesthetics",
@@ -1753,6 +1764,10 @@ export const translations = {
     calcUlgaTermoNote: "Thermomodernization relief: this is a tax deduction (not direct subsidy).",
     calcChecklistNote: "For accurate installation pricing, we need a technical checklist.",
     calcHeatPumpExtra: "Additional heat pump equipment — to be agreed with manager.",
+    calcCatalogueFromNote: "Price of the closest catalogue package — treat it as a \"from\" price. The exact quote is prepared individually.",
+    calcAirToAirQuoteNote: "Air-to-air heating has no catalogue package — quoted individually and not included in the total.",
+    calcInstallIncludedNote: "The catalogue package price covers equipment, energy storage and installation.",
+    calcSelectedPackage: "Catalogue package",
 
     // Contact form
     contactFormTitle: "Leave a request — we'll prepare a solution for you",
@@ -2063,6 +2078,7 @@ export const translations = {
     propozycjeDetailsDatasheetTitle: "Technical documentation",
     propozycjeDetailsDatasheetDownload: "Download PDF",
     propozycjePriceIndividualNote: "The exact price is calculated individually based on a detailed analysis of your property.",
+    propozycjePriceIndicativeNote: "Indicative price — calculated individually.",
     propozycjeDetailsPriceNote: "The exact price is calculated individually based on a detailed analysis of your property.",
     propozycjeDetailsOrderCta: "Order",
     propozycjeDetailsConsultationCta: "Request a consultation",

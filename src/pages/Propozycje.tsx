@@ -2,6 +2,7 @@
 // v3 - Daikin ETVH12/ETVH16 update
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../lib/LanguageContext'
+import { priceLabelOf, PRICES } from '../lib/prices.generated'
 
 type PackageCard = {
   id: string
@@ -15,13 +16,30 @@ type PackageCard = {
   temp?: string
   image: string
   features: string[]
-  pricePL: string
   subsidy?: string
   bessPL?: string
 }
 
+/**
+ * Ціна на картці. Головна цифра й дрібний рядок під нею приходять із
+ * prices.generated.ts — того самого джерела, з якого їх віддає API.
+ * Тут нічого не форматується й не дописується.
+ */
+function CardPrice({ id, lang, note }: { id: string; lang: string; note: string }) {
+  const price = priceLabelOf(id, lang)
+  if (!price) return null
+  const indicative = PRICES[id]?.indicative
+  return (
+    <>
+      <p className="text-2xl font-bold text-slate-900">{price.main}</p>
+      <p className="text-xs text-slate-500 mt-0.5">{price.sub}</p>
+      {indicative && <p className="text-xs text-slate-500 mt-0.5">{note}</p>}
+    </>
+  )
+}
+
 export default function Propozycje() {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
 
   const ankerPakiet: PackageCard = {
     id: 'anker-smart-system',
@@ -35,7 +53,6 @@ export default function Propozycje() {
       t.propozycjeAnkerSmartFeature4,
       t.propozycjeAnkerSmartFeature5,
     ],
-    pricePL: '54 500,00 zł netto + VAT',
   }
 
   const ankerX1Pakiety: PackageCard[] = [
@@ -50,7 +67,6 @@ export default function Propozycje() {
         t.propozycjeAnkerX1_5Feature3,
         t.propozycjeAnkerX1Feature4,
       ],
-      pricePL: '38 300,00 zł netto + VAT',
     },
     {
       id: 'anker-x1-12kw',
@@ -63,7 +79,6 @@ export default function Propozycje() {
         t.propozycjeAnkerX1_12Feature3,
         t.propozycjeAnkerX1Feature4,
       ],
-      pricePL: '71 100,00 zł netto + VAT',
     },
   ]
 
@@ -79,7 +94,6 @@ export default function Propozycje() {
         t.propozycjeBazik8Feature3,
         t.propozycjeRegistrationIncluded,
       ],
-      pricePL: '34 220,00 zł netto + VAT',
     },
     {
       id: 'bazik-10kw',
@@ -92,7 +106,6 @@ export default function Propozycje() {
         t.propozycjeBazik8Feature3,
         t.propozycjeRegistrationIncluded,
       ],
-      pricePL: '39 081,00 zł netto + VAT',
     },
     {
       id: 'bazik-12kw',
@@ -105,7 +118,6 @@ export default function Propozycje() {
         t.propozycjeBazik12Feature3,
         t.propozycjeRegistrationIncluded,
       ],
-      pricePL: '49 492,00 zł netto + VAT',
     },
   ]
 
@@ -121,7 +133,6 @@ export default function Propozycje() {
         t.propozycjePremiumFeature3,
         t.propozycjeRegistrationIncluded,
       ],
-      pricePL: '50 000,00 zł netto + VAT',
     },
     {
       id: 'premium-10kw',
@@ -134,7 +145,6 @@ export default function Propozycje() {
         t.propozycjePremium10Feature3,
         t.propozycjeRegistrationIncluded,
       ],
-      pricePL: '66 000,00 zł netto + VAT',
     },
     {
       id: 'premium-12kw',
@@ -147,7 +157,6 @@ export default function Propozycje() {
         t.propozycjePremium12Feature3,
         t.propozycjeRegistrationIncluded,
       ],
-      pricePL: '73 000,00 zł netto + VAT',
     },
   ]
 
@@ -168,7 +177,6 @@ export default function Propozycje() {
         t.propozycjeWarrantyDocsFeature,
       ],
       subsidy: t.propozycjeSubsidyCzyste,
-      pricePL: '61 490,00 zł netto + VAT',
     },
     {
       id: 'daikin-ht-14kw',
@@ -186,7 +194,6 @@ export default function Propozycje() {
         t.propozycjeWarrantyDocsFeature,
       ],
       subsidy: t.propozycjeSubsidyCzyste,
-      pricePL: '74 185,00 zł netto + VAT',
     },
     {
       id: 'vaillant-7kw',
@@ -204,7 +211,6 @@ export default function Propozycje() {
         t.propozycjeWarrantyDocsFeature,
       ],
       subsidy: t.propozycjeSubsidyCzyste,
-      pricePL: '69 833,00 zł netto + VAT',
     },
     {
       id: 'vaillant-12kw',
@@ -222,7 +228,6 @@ export default function Propozycje() {
         t.propozycjeWarrantyDocsFeature,
       ],
       subsidy: t.propozycjeSubsidyCzyste,
-      pricePL: '85 296,00 zł netto + VAT',
     },
   ]
 
@@ -238,7 +243,6 @@ export default function Propozycje() {
         t.propozycjeBusiness30Feature3,
         t.propozycjeBusinessDocsFeature,
       ],
-      pricePL: '89 000,00 zł netto + VAT',
       bessPL: '+42 000,00 zł z BESS',
     },
     {
@@ -252,7 +256,6 @@ export default function Propozycje() {
         t.propozycjeBusiness100Feature3,
         t.propozycjeBusinessDocsFeature,
       ],
-      pricePL: '230 000,00 zł netto + VAT',
       bessPL: '+220 000,00 zł z PowerStack',
     },
     {
@@ -266,7 +269,6 @@ export default function Propozycje() {
         t.propozycjeBusiness200Feature3,
         t.propozycjeBusinessDocsFeature,
       ],
-      pricePL: '450 000,00 zł netto + VAT',
       bessPL: '+440 000,00 zł z PowerStack',
     },
   ]
@@ -326,7 +328,7 @@ export default function Propozycje() {
                   ))}
                 </ul>
                 <div className="pt-3 border-t border-slate-100 mt-auto">
-                  <p className="text-2xl font-bold text-slate-900">{ankerPakiet.pricePL}</p>
+                  <CardPrice id={ankerPakiet.id} lang={language} note={t.propozycjePriceIndicativeNote} />
                 </div>
                 <Link to={`/propozycje/${ankerPakiet.id}`} className="block w-full text-center bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2.5 rounded-xl transition-colors text-sm">
                   {t.propozycjeDetailsButton}
@@ -369,7 +371,7 @@ export default function Propozycje() {
                     ))}
                   </ul>
                   <div className="pt-3 border-t border-slate-100 mt-auto">
-                    <p className="text-2xl font-bold text-slate-900">{p.pricePL}</p>
+                    <CardPrice id={p.id} lang={language} note={t.propozycjePriceIndicativeNote} />
                   </div>
                   <Link to={`/propozycje/${p.id}`} className="block w-full text-center bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2.5 rounded-xl transition-colors text-sm">
                     {t.propozycjeDetailsButton}
@@ -427,7 +429,7 @@ export default function Propozycje() {
                     ))}
                   </ul>
                   <div className="pt-3 border-t border-slate-100">
-                    <p className="text-2xl font-bold text-slate-900">{p.pricePL}</p>
+                    <CardPrice id={p.id} lang={language} note={t.propozycjePriceIndicativeNote} />
                   </div>
                   <Link to={`/propozycje/${p.id}`} className="block w-full text-center bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2.5 rounded-xl transition-colors text-sm">
                     {t.propozycjeDetailsButton}
@@ -485,7 +487,7 @@ export default function Propozycje() {
                     ))}
                   </ul>
                 <div className="pt-3 border-t border-slate-100">
-                  <p className="text-2xl font-bold text-slate-900">{p.pricePL}</p>
+                  <CardPrice id={p.id} lang={language} note={t.propozycjePriceIndicativeNote} />
                 </div>
                   <Link to={`/propozycje/${p.id}`} className="block w-full text-center bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2.5 rounded-xl transition-colors text-sm">
                     {t.propozycjeDetailsButton}
@@ -555,7 +557,7 @@ export default function Propozycje() {
                   </div>
                   <div className="pt-2 border-t border-slate-100 flex items-end justify-between">
                     <div>
-                      <p className="text-2xl font-bold text-slate-900">{p.pricePL}</p>
+                      <CardPrice id={p.id} lang={language} note={t.propozycjePriceIndicativeNote} />
                     </div>
                     <Link to={`/propozycje/${p.id}`} className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 px-5 rounded-xl transition-colors text-sm">
                       {t.propozycjeDetailsButton}
@@ -614,7 +616,7 @@ export default function Propozycje() {
                     ))}
                   </ul>
                   <div className="pt-3 border-t border-slate-100">
-                    <p className="text-2xl font-bold text-slate-900">{p.pricePL}</p>
+                    <CardPrice id={p.id} lang={language} note={t.propozycjePriceIndicativeNote} />
                     <p className="text-xs text-yellow-600 mt-1 font-medium">{p.bessPL}</p>
                   </div>
                   <Link to={`/propozycje/${p.id}`} className="block w-full text-center bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2.5 rounded-xl transition-colors text-sm">

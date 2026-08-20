@@ -42,7 +42,16 @@ export default function AdminPricing() {
         <div>
           <h1 className="text-2xl font-semibold">Admin — Cennik</h1>
           <p className="text-slate-600 text-sm mt-1">
-            Tu ustawiasz ceny i założenia kalkulatora (zapis w localStorage).
+            Założenia energetyczne i finansowe kalkulatora (zapis w localStorage).
+          </p>
+          {/* Etap 7: kalkulator liczy z katalogu, nie z tej strony. Bez tego
+              ostrzeżenia właściciel zmieniałby tu ceny i nic by się nie działo. */}
+          <p className="mt-2 text-sm rounded-md border border-amber-300 bg-amber-50 px-3 py-2 text-amber-900">
+            <strong>Ceny pakietów nie pochodzą z tej strony.</strong> Kalkulator
+            i karty pakietów biorą ceny z katalogu (price-source.json →
+            <code className="mx-1">calculator-prices.generated.ts</code>), żeby
+            klient widział wszędzie tę samą kwotę. Zmiana cen tutaj nie wpływa na
+            wyliczenia.
           </p>
         </div>
 

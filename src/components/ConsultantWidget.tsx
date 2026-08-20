@@ -122,11 +122,15 @@ export default function ConsultantWidget({ open, onClose }: ConsultantWidgetProp
       });
 
       if (!res.ok) {
+        // Тіло помилки лишається в статусі для діагностики, але користувачеві
+        // показуємо звичайний текст: раніше сюди потрапляв сирий JSON бекенда
+        // на кшталт {"error":"http_500"}.
         setStatusInfo(`HTTP ${res.status}`);
         const raw = await res.text();
         if (raw) {
-          setError(raw);
+          console.warn("[consultant] відповідь сервера:", raw);
         }
+        setError(t.connectionError);
         throw new Error("REQUEST_FAILED");
       }
       const data = (await res.json()) as {

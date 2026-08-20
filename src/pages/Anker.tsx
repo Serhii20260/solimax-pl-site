@@ -17,6 +17,7 @@ interface AnkerProduct {
   title: string;
   shortDescription: string;
   priceLabel: string;
+  priceNote?: string | null;
   price: number | string | null | undefined;
   imageUrl: string;
   isActive: boolean;
@@ -106,6 +107,7 @@ export default function Anker() {
                     shortDescription={p.shortDescription}
                     imageUrl={p.imageUrl}
                     priceLabel={p.priceLabel}
+                    priceNote={p.priceNote}
                     price={p.price}
                     onBuy={handleAddToCart}
                     onDetails={(slug) => navigate("/anker/" + slug)}
@@ -135,6 +137,7 @@ export default function Anker() {
                     shortDescription={p.shortDescription}
                     imageUrl={p.imageUrl}
                     priceLabel={p.priceLabel}
+                    priceNote={p.priceNote}
                     price={p.price}
                     onBuy={handleAddToCart}
                     onDetails={(slug) => navigate("/anker/" + slug)}
@@ -164,6 +167,7 @@ export default function Anker() {
                     shortDescription={p.shortDescription}
                     imageUrl={p.imageUrl}
                     priceLabel={p.priceLabel}
+                    priceNote={p.priceNote}
                     price={p.price}
                     onBuy={handleAddToCart}
                     onDetails={(slug) => navigate("/anker/" + slug)}
@@ -193,6 +197,7 @@ export default function Anker() {
                     shortDescription={p.shortDescription}
                     imageUrl={p.imageUrl}
                     priceLabel={p.priceLabel}
+                    priceNote={p.priceNote}
                     price={p.price}
                     onBuy={handleAddToCart}
                     onDetails={(slug) => navigate("/anker/" + slug)}

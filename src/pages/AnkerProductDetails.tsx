@@ -35,6 +35,7 @@ interface Product {
   components?: Component[] | string | null;
   price?: number;
   priceLabel: string | null;
+  priceNote?: string | null;
   promoLabel: string | null;
   imageUrl: string | null;
   images?: string[] | string | null;
@@ -220,7 +221,12 @@ export default function AnkerProductDetails() {
             {/* Price and CTA */}
             <div className="bg-white rounded-xl border border-slate-200 p-6">
               {product.priceLabel && (
-                <p className="text-3xl font-bold text-slate-900 mb-2">{product.priceLabel}</p>
+                <>
+                  <p className="text-3xl font-bold text-slate-900 mb-1">{product.priceLabel}</p>
+                  {product.priceNote && (
+                    <p className="text-xs text-slate-500 mb-2">{product.priceNote}</p>
+                  )}
+                </>
               )}
               <p className="text-xs text-slate-500 mb-5">{t.ankerDetailsPriceNote}</p>
               <div className="space-y-3">

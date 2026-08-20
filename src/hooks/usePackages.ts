@@ -2,6 +2,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { Package, PackageFilters, PackageSpec } from '../lib/api';
 import { apiUrl, fetchPackages, fetchPackageById, normalizePackageAssets } from '../lib/api';
+import { priceLabelOf, PRICES } from '../lib/prices.generated';
 import { useLanguage } from '../lib/LanguageContext';
 import type { SupportedLanguage } from '../lib/i18n';
 
@@ -54,25 +55,25 @@ const packageBase = (
 });
 
 const BASE_PACKAGES: PackageBase[] = [
-  packageBase('anker-smart', 'home', 'premium', 'Anker SOLIX', '/pl/anker-smart-system.webp', '54 500,00 zł', { isPromo: true, isNew: false, sortOrder: 1 }),
-  packageBase('anker-x1-5kw', 'home', 'premium', 'Anker SOLIX', '/pl/anker-x1-5kwh.webp', '38 300,00 zł', { isPromo: false, isNew: true, sortOrder: 2 }),
-  packageBase('anker-x1-12kw', 'home', 'premium', 'Anker SOLIX', '/pl/anker-x1-15kwh.webp', '71 100,00 zł', { isPromo: false, isNew: true, sortOrder: 3 }),
-  packageBase('pv-standard-8', 'home', 'standard', 'Deye + Trina', '/pl/pakiet-deye.webp', '34 220,00 zł netto + VAT', { isPromo: true, isNew: false, sortOrder: 4 }),
-  packageBase('pv-standard-10', 'home', 'standard', 'Deye + Trina', '/pl/pakiet-deye.webp', '39 081,00 zł netto + VAT', { isPromo: false, isNew: false, sortOrder: 5 }),
-  packageBase('pv-standard-12', 'home', 'standard', 'Deye + Trina', '/pl/pakiet-deye-2.webp', '49 492,00 zł netto + VAT', { isPromo: false, isNew: false, sortOrder: 6 }),
-  packageBase('pv-premium-8', 'home', 'premium', 'Sigenergy + AIKO', '/pl/sigenergy-pakiet.webp', '50 000,00 zł netto + VAT', { isPromo: false, isNew: false, sortOrder: 7 }),
-  packageBase('pv-premium-10', 'home', 'premium', 'Sigenergy + AIKO', '/pl/sigenergy-pakiet.webp', '66 000,00 zł netto + VAT', { isPromo: false, isNew: false, sortOrder: 8 }),
-  packageBase('pv-premium-12', 'home', 'premium', 'Sigenergy + AIKO', '/pl/sigenergy-pakiet.webp', '73 000,00 zł netto + VAT', { isPromo: false, isNew: false, sortOrder: 9 }),
-  packageBase('daikin-mt', 'heating', 'standard', 'Daikin', '/pl/daikin-pakiet.webp', '61 490,00 zł', { isPromo: true, isNew: false, sortOrder: 10 }),
-  packageBase('daikin-ht', 'heating', 'premium', 'Daikin', '/pl/daikin-pakiet.webp', '74 185,00 zł', { isPromo: true, isNew: false, sortOrder: 11 }),
-  packageBase('vaillant-9', 'heating', 'premium', 'Vaillant', '/pl/vaillant-pakiet.webp', '69 833,00 zł', { isPromo: false, isNew: true, sortOrder: 12 }),
-  packageBase('vaillant-12', 'heating', 'premium', 'Vaillant', '/pl/vaillant-pakiet-12.webp', '85 296,00 zł', { isPromo: false, isNew: true, sortOrder: 13 }),
-  packageBase('biznes-30', 'business', 'standard', 'Deye + Trina', '/pl/biznes-deye-30kw.webp', '89 000,00 zł netto + VAT', { isPromo: false, isNew: false, sortOrder: 14 }),
-  packageBase('biznes-100', 'business', 'standard', 'Sungrow + Trina', '/pl/biznes-sungrow.webp', '230 000,00 zł netto + VAT', { isPromo: false, isNew: false, sortOrder: 15 }),
-  packageBase('biznes-200', 'business', 'premium', 'Sungrow + Trina', '/pl/biznes-sungrow.webp', '450 000,00 zł netto + VAT', { isPromo: false, isNew: false, sortOrder: 16 }),
-  packageBase('carport-hybrid', 'carport', 'standard', 'Deye', '/pl/carport-hybrid.webp', 'od 42 600,00 zł netto + VAT', { isPromo: true, isNew: false, sortOrder: 17 }),
-  packageBase('carport-premium', 'carport', 'premium', 'Sigenergy', '/pl/carport-premium.webp', 'od 58 500,00 zł netto + VAT', { isPromo: false, isNew: true, sortOrder: 18 }),
-  packageBase('carport-business', 'carport', 'premium', 'Sungrow', '/pl/carport-biznes.webp', 'od 45 850,00 zł netto + VAT', { isPromo: false, isNew: false, sortOrder: 19 }),
+  packageBase('anker-smart', 'home', 'premium', 'Anker SOLIX', '/pl/anker-smart-system.webp', null, { isPromo: true, isNew: false, sortOrder: 1 }),
+  packageBase('anker-x1-5kw', 'home', 'premium', 'Anker SOLIX', '/pl/anker-x1-5kwh.webp', null, { isPromo: false, isNew: true, sortOrder: 2 }),
+  packageBase('anker-x1-12kw', 'home', 'premium', 'Anker SOLIX', '/pl/anker-x1-15kwh.webp', null, { isPromo: false, isNew: true, sortOrder: 3 }),
+  packageBase('pv-standard-8', 'home', 'standard', 'Deye + Trina', '/pl/pakiet-deye.webp', null, { isPromo: true, isNew: false, sortOrder: 4 }),
+  packageBase('pv-standard-10', 'home', 'standard', 'Deye + Trina', '/pl/pakiet-deye.webp', null, { isPromo: false, isNew: false, sortOrder: 5 }),
+  packageBase('pv-standard-12', 'home', 'standard', 'Deye + Trina', '/pl/pakiet-deye-2.webp', null, { isPromo: false, isNew: false, sortOrder: 6 }),
+  packageBase('pv-premium-8', 'home', 'premium', 'Sigenergy + AIKO', '/pl/sigenergy-pakiet.webp', null, { isPromo: false, isNew: false, sortOrder: 7 }),
+  packageBase('pv-premium-10', 'home', 'premium', 'Sigenergy + AIKO', '/pl/sigenergy-pakiet.webp', null, { isPromo: false, isNew: false, sortOrder: 8 }),
+  packageBase('pv-premium-12', 'home', 'premium', 'Sigenergy + AIKO', '/pl/sigenergy-pakiet.webp', null, { isPromo: false, isNew: false, sortOrder: 9 }),
+  packageBase('daikin-mt', 'heating', 'standard', 'Daikin', '/pl/daikin-pakiet.webp', null, { isPromo: true, isNew: false, sortOrder: 10 }),
+  packageBase('daikin-ht', 'heating', 'premium', 'Daikin', '/pl/daikin-pakiet.webp', null, { isPromo: true, isNew: false, sortOrder: 11 }),
+  packageBase('vaillant-9', 'heating', 'premium', 'Vaillant', '/pl/vaillant-pakiet.webp', null, { isPromo: false, isNew: true, sortOrder: 12 }),
+  packageBase('vaillant-12', 'heating', 'premium', 'Vaillant', '/pl/vaillant-pakiet-12.webp', null, { isPromo: false, isNew: true, sortOrder: 13 }),
+  packageBase('biznes-30', 'business', 'standard', 'Deye + Trina', '/pl/biznes-deye-30kw.webp', null, { isPromo: false, isNew: false, sortOrder: 14 }),
+  packageBase('biznes-100', 'business', 'standard', 'Sungrow + Trina', '/pl/biznes-sungrow.webp', null, { isPromo: false, isNew: false, sortOrder: 15 }),
+  packageBase('biznes-200', 'business', 'premium', 'Sungrow + Trina', '/pl/biznes-sungrow.webp', null, { isPromo: false, isNew: false, sortOrder: 16 }),
+  packageBase('carport-hybrid', 'carport', 'standard', 'Deye', '/pl/carport-hybrid.webp', null, { isPromo: true, isNew: false, sortOrder: 17 }),
+  packageBase('carport-premium', 'carport', 'premium', 'Sigenergy', '/pl/carport-premium.webp', null, { isPromo: false, isNew: true, sortOrder: 18 }),
+  packageBase('carport-business', 'carport', 'premium', 'Sungrow', '/pl/carport-biznes.webp', null, { isPromo: false, isNew: false, sortOrder: 19 }),
 ];
 
 const PL_COPY: Record<string, PackageCopy> = {
@@ -256,11 +257,48 @@ const FALLBACK_COPY: Record<SupportedLanguage, Record<string, PackageCopy>> = {
   en: EN_COPY,
 };
 
+// Ідентифікатори у фолбеку історичні й не збігаються зі slug каталогу.
+// Ціну беремо з того самого генерованого джерела, що й решта сайту, — інакше
+// фолбек став би ще одним місцем, де ціна живе власним життям.
+const FALLBACK_SLUG: Record<string, string> = {
+  'anker-smart': 'anker-smart-system',
+  'anker-x1-5kw': 'anker-x1-5kw',
+  'anker-x1-12kw': 'anker-x1-12kw',
+  'pv-standard-8': 'bazik-8kw',
+  'pv-standard-10': 'bazik-10kw',
+  'pv-standard-12': 'bazik-12kw',
+  'pv-premium-8': 'premium-8kw',
+  'pv-premium-10': 'premium-10kw',
+  'pv-premium-12': 'premium-12kw',
+  'daikin-mt': 'daikin-mt-10kw',
+  'daikin-ht': 'daikin-ht-14kw',
+  'vaillant-9': 'vaillant-7kw',
+  'vaillant-12': 'vaillant-12kw',
+  'biznes-30': 'biznes-30kw',
+  'biznes-100': 'biznes-100kw',
+  'biznes-200': 'biznes-200kw',
+  'carport-hybrid': 'carport-hybrid-3f',
+  'carport-premium': 'carport-premium-dc-ev',
+  'carport-business': 'carport-business-grid',
+};
+
+const withFallbackPrice = (pkg: Package, language: SupportedLanguage): Package => {
+  const slug = FALLBACK_SLUG[pkg.id];
+  const price = slug ? priceLabelOf(slug, language) : null;
+  if (!price) return pkg;
+  return {
+    ...pkg,
+    priceLabel: price.main,
+    priceNote: price.sub,
+    priceIndicative: Boolean(slug && PRICES[slug]?.indicative),
+  };
+};
+
 const getFallbackPackages = (language: SupportedLanguage): Package[] =>
-  BASE_PACKAGES.map((base) => ({
+  BASE_PACKAGES.map((base) => withFallbackPrice({
     ...base,
     ...FALLBACK_COPY[language][base.id],
-  }));
+  } as Package, language));
 
 const localizeBannerPackage = (
   pkg: Package,

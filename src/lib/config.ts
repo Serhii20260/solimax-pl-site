@@ -66,6 +66,19 @@ export type PricingConfig = {
   };
 };
 
+/**
+ * УВАГА (Етап 7). Ціни звідси НЕ використовуються.
+ *
+ * CalculatorWizard читає cfg?.prices?.* і cfg?.energy?.*, а тут структура
+ * інша (meta, pvPackages, batteryOptions). Тобто всі ці числа роками
+ * поверталися undefined, і рахунок ішов на запасних значеннях у коді.
+ * Тепер ціни калькулятора беруться з каталогу
+ * (src/lib/calculator-prices.generated.ts <- price-source.json).
+ *
+ * Блок лишено як є, бо нічого не видаляємо, і тому що з нього ще читаються
+ * energy/finance-параметри в майбутньому. Перш ніж на нього спиратись —
+ * привести структуру до тієї, яку справді читає калькулятор.
+ */
 export const DEFAULT_CONFIG: PricingConfig = {
   meta: {
     currency: "PLN",

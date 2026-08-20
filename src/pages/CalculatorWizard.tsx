@@ -1,10 +1,12 @@
 ﻿// src/pages/CalculatorWizard.tsx
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { DEFAULT_CONFIG, type PricingConfig } from "../lib/config";
 import { loadJSON, saveJSON } from "../lib/storage";
 import { checklistAsTextBlock } from "../lib/checklist";
 import { useLanguage } from "../lib/LanguageContext";
 import type { Language } from "../lib/i18n";
+import { nearestPv, nearestHeatPump, isExactPvMatch } from '../lib/calculator-prices.generated';
 
 const PRICING_KEY = "solimax_pl_pricing_config_v1";
 
@@ -107,7 +109,8 @@ type WizardData = {
 };
 
 type HeatingType = "no_change" | "air_to_water" | "air_to_air_backup" | "modernization";
-type NoteKey = "autoConsumption" | "dayProfile" | "batteryAuto" | "ulgaTermo" | "checklist" | "heatPumpExtra";
+type NoteKey = "autoConsumption" | "dayProfile" | "batteryAuto" | "ulgaTermo" | "checklist" | "heatPumpExtra"
+  | "catalogueFrom" | "airToAirQuote" | "installIncluded";
 
 type CalcResult = {
   pvKwp: number;
@@ -116,11 +119,20 @@ type CalcResult = {
   withInstall: boolean;
   checklistNeeded: boolean;
 
-  // NEW: Pricing model fields
+  // Ціни приходять із каталогу (calculator-prices.generated.ts), а не з
+  // власної лінійки калькулятора. pvPackageSlug дає посилання на ту саму
+  // картку, щоб клієнт бачив однакову цифру в обох місцях.
   pricePvPLN: number;
   priceHpPLN: number;
   heatPumpPowerKw: number;
   packageType: PackageType;
+  pvPackageSlug: string;
+  pvPackageName: { pl: string; en: string };
+  pvPackageFrom: { pl: string; en: string };
+  pvPackageSub: { pl: string; en: string };
+  pvExactMatch: boolean;
+  hpPackageSlug: string | null;
+  hpPackageName: { pl: string; en: string } | null;
 
   capexPLN: number;
   dotacjaPLN: number;
@@ -230,19 +242,10 @@ function defaultWizardData(): WizardData {
  * STUB PRICING CONFIG
  * TODO: Replace with admin panel values later
  * --------------------------*/
-const STUB_PRICING = {
-  pv: {
-    perKwp: 500,           // PLN per kWp
-    perBatteryKwh: 300,    // PLN per kWh battery
-    fixedCost: 3000,       // PLN fixed
-    premiumMultiplier: 1.5,
-  },
-  heatPump: {
-    perKw: 1000,           // PLN per kW
-    fixedCost: 10000,      // PLN fixed
-    premiumMultiplier: 1.5,
-  },
-};
+// Тут стояв STUB_PRICING: 500 zł за кВтп, 300 zł за кВтг магазину, 3 000 zł
+// фіксовано. Ці цифри показувались клієнту як ціна PV — виходило близько
+// 9 500 zł за систему 9.9 кВтп. Замінено на каталог: калькулятор добирає
+// найближчий пакет із price-source і показує його ціну, ту саму, що на картці.
 
 /** ---------------------------
  * Compute (simple v1)
@@ -263,18 +266,13 @@ function computeResult(d: WizardData, cfgTyped: PricingConfig): CalcResult {
   const fixedFeesMonthly = cfg?.energy?.fixedFeesMonthlyPLN ?? 35;
 
   // Pricing packages (fallbacks)
-  const pvPricePerKwp = cfg?.prices?.pvPricePerKwpPLN ?? 4200;
   const pvMinKwp = cfg?.prices?.pvMinKwp ?? 3;
 
-  const batteryPrices = cfg?.prices?.batteryPLN ?? { 5: 12000, 10: 20000, 15: 26000 };
-  const emsPrice = cfg?.prices?.emsPLN ?? 4500;
-
-  const hpAirToWaterPackage = cfg?.prices?.heat_airToWaterPLN ?? 60000;
-  const hpAirToAirPackage = cfg?.prices?.heat_airToAir4RoomsPLN ?? 24000;
-
-  const installBasePV = cfg?.prices?.installBasePVPLN ?? 9000;
-  const installPerKwp = cfg?.prices?.installPerKwpPLN ?? 250;
-  const installHeatExtra = cfg?.prices?.installHeatExtraPLN ?? 8000;
+  // Тут стояли власні ціни калькулятора: 4 200 zł за кВтп, батарея за
+  // 12/20/26 тис., EMS 4 500, монтаж 9 000 + 250 за кВтп, тепловий насос
+  // 60 000 / 24 000. Це була четверта копія прайсу — і вона не збігалася з
+  // каталогом. Ціни тепер приходять із calculator-prices.generated.ts,
+  // тобто з того самого price-source.json, що й картки.
 
   // Dotacje caps (fallbacks)
   const dotMP_PV = cfg?.dotations?.mojPrad_pvPLN ?? 6000;
@@ -330,10 +328,40 @@ function computeResult(d: WizardData, cfgTyped: PricingConfig): CalcResult {
   let heatingType: HeatingType = "no_change";
   let heatingAddsCapex = 0;
 
+  // Потужність теплового насоса рахуємо тут же, бо саме тут відоме теплове
+  // споживання. Ціна далі береться з каталогу, а не з формули за кВт.
+  // emittersFactor: підлогівка ефективніша за радіатори
+  const emittersFactor =
+    d.emittersType === "podlogowka" ? 0.9 :
+    d.emittersType === "grzejniki" ? 1.15 :
+    d.emittersType === "mieszane" ? 1.0 :
+    1.0;
+  // climateFactor: холодніший регіон потребує більшої потужності
+  const climateFactor =
+    d.climateZone === "cold" ? 1.2 :
+    d.climateZone === "normal" ? 1.0 :
+    1.1;
+
+  let heatPumpPowerKw = 0;
+  let priceHpPLN = 0;
+  let hpPackage: ReturnType<typeof nearestHeatPump> | null = null;
+  let airToAirNeedsQuote = false;
+
   if (d.upgradeHeating !== "nie") {
     if (d.targetHeating === "air_to_water") {
       heatingType = "air_to_water";
-      heatingAddsCapex = hpAirToWaterPackage;
+
+      const thermalKwh = gasPriceAllIn > 0 ? heatYear / gasPriceAllIn : 0;
+      heatPumpPowerKw = round(
+        Math.max(5, Math.min(16, (thermalKwh / 2000) * emittersFactor * climateFactor)),
+        1
+      );
+      // Найближчий каталожний насос. Далі показуємо саме його потужність,
+      // щоб не обіцяти 9.3 кВт, коли продаємо 10 кВт.
+      hpPackage = nearestHeatPump(heatPumpPowerKw);
+      heatPumpPowerKw = hpPackage.kw;
+      priceHpPLN = hpPackage.brutto;
+      heatingAddsCapex = priceHpPLN;
 
       // shift part of heating costs to electricity (roughly)
       // If user provided heating PLN, assume it's current fuel cost and convert to thermal kWh (placeholder),
@@ -346,7 +374,10 @@ function computeResult(d: WizardData, cfgTyped: PricingConfig): CalcResult {
       dayShare = clamp(dayShare + 0.10, 0.2, 0.95);
     } else if (d.targetHeating === "air_to_air_gas_backup") {
       heatingType = "air_to_air_backup";
-      heatingAddsCapex = hpAirToAirPackage;
+      // Повітря-повітря з газовим резервом у каталозі немає. Ціну не вигадуємо
+      // і в підсумок не підмішуємо — виносимо окремою приміткою.
+      heatingAddsCapex = 0;
+      airToAirNeedsQuote = true;
 
       // move part of heating to electricity, keep gas minimal
       const shareToElec = d.emittersType === "podlogowka" ? 0.75 : 0.55;
@@ -372,31 +403,44 @@ function computeResult(d: WizardData, cfgTyped: PricingConfig): CalcResult {
     pvKwp = Math.min(pvKwp, maxKwp);
   }
   pvKwp = clamp(pvKwp, pvMinKwp, 20);
-  // nicer marketing tiers
-  const tiers = [3.3, 4.4, 6.6, 7.7, 9.9, 12.0, 15.0, 20.0];
-  pvKwp = tiers.reduce((best, t) => (Math.abs(t - pvKwp) < Math.abs(best - pvKwp) ? t : best), tiers[0]);
+  const requestedKwp = round(pvKwp, 1);
 
-  // 5) Battery selection
-  let batteryKwh = 0;
+  // 5) Скільки магазину просив клієнт — це звужує вибір пакета
+  let requestedStorageKwh = 0;
   if (d.batteryMode === "none") {
-    batteryKwh = 0;
+    requestedStorageKwh = 0;
   } else if (d.batteryMode === "manual") {
-    batteryKwh = d.batteryKwhManual;
+    requestedStorageKwh = d.batteryKwhManual;
   } else {
-    // auto
     const hasEV = d.evNow || d.evPlan !== "nie";
     const hasHeat = d.upgradeHeating !== "nie" && (d.targetHeating === "air_to_water" || d.targetHeating === "air_to_air_gas_backup");
-    if (hasEV && hasHeat) batteryKwh = 15;
-    else if (hasEV || hasHeat) batteryKwh = 10;
-    else batteryKwh = 5;
+    if (hasEV && hasHeat) requestedStorageKwh = 15;
+    else if (hasEV || hasHeat) requestedStorageKwh = 10;
+    else requestedStorageKwh = 5;
   }
+
+  // 5a) КАТАЛОГ. Калькулятор не має власного прайсу: він добирає найближчий
+  // каталожний пакет і бере його ціну. Далі всі розрахунки йдуть по тому,
+  // що справді входить у цей пакет, а не по абстрактних кВтп.
+  const pvPackage = nearestPv(requestedKwp, {
+    tier: d.packageType === "premium" ? "premium" : "standard",
+    minStorageKwh: requestedStorageKwh,
+  });
+  const pvExactMatch = isExactPvMatch(pvPackage, requestedKwp, {
+    tier: d.packageType === "premium" ? "premium" : "standard",
+    minStorageKwh: requestedStorageKwh,
+  });
+  pvKwp = pvPackage.kwp;
+  const batteryKwh = pvPackage.storageKwh;
 
   // 6) Self-consumption model (simple)
   // base depends on dayShare; battery increases; EMS adds small bonus
   let selfRate = clamp(0.35 + (dayShare - 0.5) * 0.4, 0.25, 0.65);
-  if (batteryKwh === 5) selfRate += 0.10;
-  if (batteryKwh === 10) selfRate += 0.18;
-  if (batteryKwh === 15) selfRate += 0.24;
+  // Ємність тепер приходить із каталогу (6.14, 9.04, 18.08 ...), тому пороги,
+  // а не рівність трьом круглим числам, як було до переходу на пакети.
+  if (batteryKwh >= 12) selfRate += 0.24;
+  else if (batteryKwh >= 8) selfRate += 0.18;
+  else if (batteryKwh > 0) selfRate += 0.10;
   const hasEMS = true; // we include EMS by default (can be made toggle later)
   if (hasEMS) selfRate += 0.06;
   selfRate = clamp(selfRate, 0.20, 0.90);
@@ -423,17 +467,12 @@ function computeResult(d: WizardData, cfgTyped: PricingConfig): CalcResult {
 
   const monthlyAfterBills = Math.max(0, elecBillMonthAfter + gasMonthAfter);
 
-  // 7) CAPEX
-  const pvCapex = pvKwp * pvPricePerKwp;
-  const batteryCapex = batteryKwh === 0 ? 0 : batteryPrices?.[batteryKwh] ?? 0;
-  const emsCapex = hasEMS ? emsPrice : 0;
-
-  const installCapex =
-    d.installationMode === "with_install"
-      ? installBasePV + pvKwp * installPerKwp + (heatingAddsCapex > 0 ? installHeatExtra : 0)
-      : 0;
-
-  const capex = pvCapex + batteryCapex + emsCapex + heatingAddsCapex + installCapex;
+  // 7) CAPEX — з каталогу.
+  // Каталожна ціна пакета вже включає обладнання, магазин енергії й монтаж,
+  // тому окремих доданків за батарею, EMS і монтаж більше немає: раніше вони
+  // накладались поверх пакета й давали суму, якої немає на жодній картці.
+  const pvCapex = pvPackage.brutto;
+  const capex = pvCapex + heatingAddsCapex;
 
   // 8) Dotacje (simplified estimate)
   let dot = 0;
@@ -466,50 +505,13 @@ function computeResult(d: WizardData, cfgTyped: PricingConfig): CalcResult {
   if (d.dot_ulga_termo) noteKeys.push("ulgaTermo");
   if (checklistNeeded) noteKeys.push("checklist");
 
-  // ========== ЕТАП 1: Stub pricing model ==========
-  const premiumMult = d.packageType === "premium" ? 1.5 : 1.0;
-  
-  // PV price: pvKwp * perKwp + battery * perKwh + fixed
-  const pricePvPLN = round(
-    (pvKwp * STUB_PRICING.pv.perKwp + batteryKwh * STUB_PRICING.pv.perBatteryKwh + STUB_PRICING.pv.fixedCost) * premiumMult
-  );
+  // Ціна PV — каталожна, брутто. Та сама цифра, що на картці пакета.
+  const pricePvPLN = pvPackage.brutto;
 
-  // ========== ЕТАП 2: Heat pump power calculation ==========
-  // emittersFactor: floor heating (podlogowka) is more efficient
-  const emittersFactor = 
-    d.emittersType === "podlogowka" ? 0.9 : 
-    d.emittersType === "grzejniki" ? 1.15 : 
-    d.emittersType === "mieszane" ? 1.0 : 
-    1.0; // nie_wiem -> neutral
-  
-  // climateFactor: cold regions need more power
-  const climateFactor = 
-    d.climateZone === "cold" ? 1.2 : 
-    d.climateZone === "normal" ? 1.0 : 
-    1.1; // auto -> assume slightly elevated average for Poland
-  
-  let heatPumpPowerKw = 0;
-  let priceHpPLN = 0;
-  
-  if (d.upgradeHeating !== "nie" && (d.targetHeating === "air_to_water" || d.targetHeating === "air_to_air_gas_backup")) {
-    // Estimate thermal demand from heating costs
-    const heatThermalKwh = gasPriceAllIn > 0 ? heatYear / gasPriceAllIn : 0;
-    
-    // Base HP power calculation: thermal demand / 2000 hours heating season
-    // Then apply emitters and climate factors
-    const basePower = heatThermalKwh / 2000;
-    heatPumpPowerKw = round(
-      Math.max(5, Math.min(16, basePower * emittersFactor * climateFactor)), 
-      1
-    );
-    
-    priceHpPLN = round(
-      (heatPumpPowerKw * STUB_PRICING.heatPump.perKw + STUB_PRICING.heatPump.fixedCost) * premiumMult
-    );
-    
-    noteKeys.push("heatPumpExtra");
-  }
-  // ========== END ЕТАП 2 ==========
+  if (heatPumpPowerKw > 0) noteKeys.push("heatPumpExtra");
+  if (airToAirNeedsQuote) noteKeys.push("airToAirQuote");
+  if (!pvExactMatch) noteKeys.push("catalogueFrom");
+  if (withInstall) noteKeys.push("installIncluded");
 
   return {
     pvKwp,
@@ -532,6 +534,13 @@ function computeResult(d: WizardData, cfgTyped: PricingConfig): CalcResult {
     priceHpPLN,
     heatPumpPowerKw,
     packageType: d.packageType,
+    pvPackageSlug: pvPackage.slug,
+    pvPackageName: pvPackage.name,
+    pvPackageFrom: pvPackage.from,
+    pvPackageSub: pvPackage.sub,
+    pvExactMatch,
+    hpPackageSlug: hpPackage ? hpPackage.slug : null,
+    hpPackageName: hpPackage ? hpPackage.name : null,
 
     selfRate,
     dayShare,
@@ -1304,6 +1313,9 @@ export default function CalculatorWizard() {
                 key === "ulgaTermo" ? t.calcUlgaTermoNote :
                 key === "checklist" ? t.calcChecklistNote :
                 key === "heatPumpExtra" ? t.calcHeatPumpExtra :
+                key === "catalogueFrom" ? t.calcCatalogueFromNote :
+                key === "airToAirQuote" ? t.calcAirToAirQuoteNote :
+                key === "installIncluded" ? t.calcInstallIncludedNote :
                 "";
               return <div key={i}>• {noteText}</div>;
             })}
@@ -1359,20 +1371,46 @@ export default function CalculatorWizard() {
             <Field label={t.calcPackage}>
               <Select value={data.packageType} onChange={(e: any) => patch({ packageType: e.target.value as PackageType })}>
                 <option value="standard">{t.calcPackageStandard}</option>
-                <option value="premium">Premium (×1.5)</option>
+                <option value="premium">Premium</option>
               </Select>
             </Field>
 
             {/* Show new pricing breakdown */}
-            <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 text-sm space-y-1">
-              <div className="flex justify-between">
-                <span className="text-slate-600">{t.calcPvStoragePrice}</span>
-                <span className="font-medium">{fmtPLN(computed.pricePvPLN, language)}</span>
+            <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 text-sm space-y-2">
+              <div>
+                <div className="flex justify-between">
+                  <span className="text-slate-600">{t.calcPvStoragePrice}</span>
+                  <span className="font-medium">{fmtPLN(computed.pricePvPLN, language)}</span>
+                </div>
+                <div className="text-[11px] text-slate-500">
+                  {t.calcSelectedPackage}:{" "}
+                  <Link
+                    to={`/propozycje/${computed.pvPackageSlug}`}
+                    className="text-yellow-600 hover:text-yellow-500"
+                  >
+                    {language === "en" ? computed.pvPackageName.en : computed.pvPackageName.pl}
+                  </Link>
+                  {" · "}
+                  {language === "en" ? computed.pvPackageSub.en : computed.pvPackageSub.pl}
+                </div>
               </div>
               {computed.priceHpPLN > 0 && (
-                <div className="flex justify-between">
-                  <span className="text-slate-600">{t.calcHeatPumpPrice} ({computed.heatPumpPowerKw} kW)</span>
-                  <span className="font-medium">{fmtPLN(computed.priceHpPLN, language)}</span>
+                <div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-600">{t.calcHeatPumpPrice} ({computed.heatPumpPowerKw} kW)</span>
+                    <span className="font-medium">{fmtPLN(computed.priceHpPLN, language)}</span>
+                  </div>
+                  {computed.hpPackageSlug && computed.hpPackageName && (
+                    <div className="text-[11px] text-slate-500">
+                      {t.calcSelectedPackage}:{" "}
+                      <Link
+                        to={`/propozycje/${computed.hpPackageSlug}`}
+                        className="text-yellow-600 hover:text-yellow-500"
+                      >
+                        {language === "en" ? computed.hpPackageName.en : computed.hpPackageName.pl}
+                      </Link>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

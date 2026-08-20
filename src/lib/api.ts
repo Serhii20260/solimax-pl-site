@@ -66,7 +66,13 @@ export interface Package {
   manufacturerUrl: string;
   imageUrl: string;
   datasheetUrl: string | null;
+  // priceLabel — головна цифра, priceNote — дрібний рядок під нею.
+  // Обидва приходять готовими з API (buildPriceLabel), тут їх не збирають.
   priceLabel: string | null;
+  priceNote?: string | null;
+  priceIndicative?: boolean;
+  priceNetto?: number | null;
+  priceBrutto?: number | null;
   specs: PackageSpec[] | null;
   isActive: boolean;
   isPromo: boolean;

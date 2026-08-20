@@ -10,6 +10,7 @@ interface ProductCardProps {
   imageUrl?: string;
   images?: string[];
   priceLabel: string;
+  priceNote?: string | null;
   price: number | string | null | undefined;
   onBuy: (id: string, title: string, price: number | string | null | undefined, priceLabel: string, imageUrl: string) => void;
   onDetails: (slug: string) => void;
@@ -23,6 +24,7 @@ export default function ProductCard({
   imageUrl,
   images,
   priceLabel,
+  priceNote,
   price,
   onBuy,
   onDetails,
@@ -97,7 +99,10 @@ export default function ProductCard({
           )}
         </div>
 
-        <div className="text-xl font-bold text-slate-900 mt-auto">{priceLabel}</div>
+        <div className="mt-auto">
+          <div className="text-xl font-bold text-slate-900">{priceLabel}</div>
+          {priceNote && <div className="text-[11px] text-slate-500">{priceNote}</div>}
+        </div>
 
         {/* Buttons */}
         <div className="flex gap-2 pt-1 border-t border-slate-200">
