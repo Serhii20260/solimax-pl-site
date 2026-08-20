@@ -217,10 +217,7 @@ export default function Dom() {
                   <p className="text-xs text-slate-500 mt-0.5">{c.desc}</p>
                 </div>
                 <div className="flex items-end justify-between gap-2">
-                  <span>
-                    <span className="block text-lg font-bold text-slate-900">{c.price.main}</span>
-                    <span className="block text-[11px] text-slate-500">{c.price.sub}</span>
-                  </span>
+                  <span className="text-lg font-bold text-slate-900">{c.price}</span>
                   <Link to={c.link} className="text-sm text-yellow-600 font-medium hover:text-yellow-500 whitespace-nowrap">{t.domConfigDetails}</Link>
                 </div>
               </div>

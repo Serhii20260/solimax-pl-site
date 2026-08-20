@@ -120,9 +120,6 @@ export default function PackageModal({ pkg, isOpen, onClose }: PackageModalProps
               <div className="py-4 px-5 rounded-xl bg-slate-50 border border-slate-200">
                 <div className="text-sm text-slate-500 mb-1">Cena orientacyjna</div>
                 <div className="text-xl font-semibold text-slate-900">{pkg.priceLabel}</div>
-                {pkg.priceNote && (
-                  <div className="text-xs text-slate-500 mt-1">{pkg.priceNote}</div>
-                )}
               </div>
             )}
 

@@ -1,5 +1,6 @@
 // src/lib/CartContext.tsx
 import { createContext, useContext, useState, useEffect } from 'react';
+import { NETTO_SUFFIX } from './prices.generated';
 
 export interface CartItem {
   id: string;
@@ -38,7 +39,19 @@ export function normalizeCartPrice(value: unknown): number | null {
 }
 
 export function formatZlotyAmount(value: number): string {
-  return `${Math.round(value).toLocaleString('pl-PL').replace(/\u00a0/g, ' ')},00 zł`;
+  // Копійки не відкидаємо: ціни в кошику тепер нетто (наприклад 4 552,03 zł),
+  // і округлення до злотого розійшлося б із підписом на картці.
+  return value
+    .toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    .replace(/\u00a0/g, ' ') + ' zł';
+}
+
+/**
+ * Сума в кошику з тим самим суфіксом, що й скрізь на сайті.
+ * Товари в кошику лежать у НЕТТО, тому підсумок теж нетто.
+ */
+export function formatCartAmount(value: number, lang?: string): string {
+  return `${formatZlotyAmount(value)} ${lang === 'en' ? NETTO_SUFFIX.en : NETTO_SUFFIX.pl}`;
 }
 
 function normalizeQuantity(value: unknown): number {

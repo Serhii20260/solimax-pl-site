@@ -1,14 +1,14 @@
 // src/pages/AnkerOrder.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { formatZlotyAmount, normalizeCartPrice, useCart } from "../lib/CartContext";
+import { formatZlotyAmount, formatCartAmount, normalizeCartPrice, useCart } from "../lib/CartContext";
 import { apiUrl } from "../lib/api";
 import { useLanguage } from "../lib/LanguageContext";
 
 export default function AnkerOrder() {
   const navigate = useNavigate();
   const { cart, updateQuantity, removeFromCart, clearCart } = useCart();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({ name: "", phone: "", email: "", address: "" });
@@ -121,7 +121,7 @@ export default function AnkerOrder() {
               <div className="p-6 bg-slate-100 border-t border-slate-200">
                 <div className="flex justify-between items-center mb-6">
                   <span className="text-lg font-semibold text-slate-900">{t.orderTotal}</span>
-                  <span className="text-2xl font-bold text-slate-900">{formatZlotyAmount(total)}</span>
+                  <span className="text-2xl font-bold text-slate-900">{formatCartAmount(total, language)}</span>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">

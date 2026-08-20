@@ -1,5 +1,5 @@
 // src/components/CartDrawer.tsx
-import { formatZlotyAmount, normalizeCartPrice, useCart } from '../lib/CartContext';
+import { formatZlotyAmount, formatCartAmount, normalizeCartPrice, useCart } from '../lib/CartContext';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../lib/LanguageContext';
 
@@ -11,7 +11,7 @@ interface Props {
 export default function CartDrawer({ isOpen, onClose }: Props) {
   const { cart, removeFromCart, updateQuantity } = useCart();
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const total = cart.reduce((sum, item) => {
     const price = normalizeCartPrice(item.price);
@@ -125,7 +125,7 @@ export default function CartDrawer({ isOpen, onClose }: Props) {
           <div className="p-4 border-t border-slate-200 space-y-3 bg-white">
             <div className="flex justify-between items-center">
               <span className="font-semibold text-slate-700">{t.cartTotal}</span>
-              <span className="text-xl font-bold text-slate-900">{formatZlotyAmount(total)}</span>
+              <span className="text-xl font-bold text-slate-900">{formatCartAmount(total, language)}</span>
             </div>
             <button
               onClick={() => { onClose(); navigate('/zamow'); }}

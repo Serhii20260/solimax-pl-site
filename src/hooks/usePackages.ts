@@ -284,12 +284,12 @@ const FALLBACK_SLUG: Record<string, string> = {
 
 const withFallbackPrice = (pkg: Package, language: SupportedLanguage): Package => {
   const slug = FALLBACK_SLUG[pkg.id];
-  const price = slug ? priceLabelOf(slug, language) : null;
-  if (!price) return pkg;
+  const label = slug ? priceLabelOf(slug, language) : null;
+  if (!label) return pkg;
   return {
     ...pkg,
-    priceLabel: price.main,
-    priceNote: price.sub,
+    priceLabel: label,
+    priceNetto: slug ? PRICES[slug]?.netto ?? null : null,
     priceIndicative: Boolean(slug && PRICES[slug]?.indicative),
   };
 };

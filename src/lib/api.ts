@@ -66,13 +66,13 @@ export interface Package {
   manufacturerUrl: string;
   imageUrl: string;
   datasheetUrl: string | null;
-  // priceLabel — головна цифра, priceNote — дрібний рядок під нею.
-  // Обидва приходять готовими з API (buildPriceLabel), тут їх не збирають.
+  // priceLabel — готовий підпис «X zł netto + VAT», зібраний у бекенді.
+  // priceNetto — те саме число окремо, потрібне кошику, щоб суми збігалися
+  // з підписами. Ставки ПДВ і брутто в API немає: вона визначається під
+  // клієнта й об'єкт, а не під пакет.
   priceLabel: string | null;
-  priceNote?: string | null;
   priceIndicative?: boolean;
   priceNetto?: number | null;
-  priceBrutto?: number | null;
   specs: PackageSpec[] | null;
   isActive: boolean;
   isPromo: boolean;

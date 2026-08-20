@@ -90,13 +90,8 @@ export default function PackageCard({ pkg, onClick }: PackageCardProps) {
         {/* Price & CTA */}
         <div className="mt-4 flex items-center justify-between">
           {pkg.priceLabel && (
-            <div>
-              <div className="text-sm font-semibold text-slate-900">
-                {pkg.priceLabel}
-              </div>
-              {pkg.priceNote && (
-                <div className="text-[11px] text-slate-500">{pkg.priceNote}</div>
-              )}
+            <div className="text-sm font-semibold text-slate-900">
+              {pkg.priceLabel}
             </div>
           )}
           <button className="ml-auto inline-flex items-center gap-1 text-sm font-medium text-yellow-600 hover:text-yellow-700 transition">

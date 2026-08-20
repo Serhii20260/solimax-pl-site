@@ -36,7 +36,6 @@ interface Package {
   specs: Spec[] | string | null;
   components?: Component[] | string | null;
   priceLabel: string | null;
-  priceNote?: string | null;
   priceIndicative?: boolean;
   promoLabel: string | null;
   imageUrl: string | null;
@@ -258,9 +257,6 @@ export default function PropozycjeDetails() {
               {pkg.priceLabel && (
                 <>
                   <p className="text-2xl font-bold text-slate-900 mt-3">{pkg.priceLabel}</p>
-                  {pkg.priceNote && (
-                    <p className="text-xs text-slate-500 mt-1">{pkg.priceNote}</p>
-                  )}
                   <p className="text-xs text-slate-500 mt-1">
                     {pkg.priceIndicative
                       ? t.propozycjePriceIndicativeNote
@@ -385,12 +381,7 @@ export default function PropozycjeDetails() {
           {/* Price and CTA */}
           <div className="bg-white rounded-xl border border-slate-200 p-6">
             {pkg.priceLabel && (
-              <>
-                <p className="text-3xl font-bold text-slate-900 mb-1">{pkg.priceLabel}</p>
-                {pkg.priceNote && (
-                  <p className="text-xs text-slate-500 mb-4">{pkg.priceNote}</p>
-                )}
-              </>
+              <p className="text-3xl font-bold text-slate-900 mb-4">{pkg.priceLabel}</p>
             )}
             <p className="text-xs text-slate-500 mb-6">
               {t.propozycjeDetailsPriceNote}

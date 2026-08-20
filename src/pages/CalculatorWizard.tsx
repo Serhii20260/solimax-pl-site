@@ -7,6 +7,7 @@ import { checklistAsTextBlock } from "../lib/checklist";
 import { useLanguage } from "../lib/LanguageContext";
 import type { Language } from "../lib/i18n";
 import { nearestPv, nearestHeatPump, isExactPvMatch } from '../lib/calculator-prices.generated';
+import { NETTO_SUFFIX } from '../lib/prices.generated';
 
 const PRICING_KEY = "solimax_pl_pricing_config_v1";
 
@@ -129,7 +130,6 @@ type CalcResult = {
   pvPackageSlug: string;
   pvPackageName: { pl: string; en: string };
   pvPackageFrom: { pl: string; en: string };
-  pvPackageSub: { pl: string; en: string };
   pvExactMatch: boolean;
   hpPackageSlug: string | null;
   hpPackageName: { pl: string; en: string } | null;
@@ -161,7 +161,14 @@ function round(n: number, digits = 0) {
 function fmtPLN(n: number, lang: Language = "pl") {
   const v = isFinite(n) ? n : 0;
   const locale = lang === "ua" ? "uk-UA" : lang === "de" ? "de-DE" : lang === "en" ? "en-GB" : "pl-PL";
-  return v.toLocaleString(locale) + " zł";
+  // Два знаки — щоб суми калькулятора виглядали так само, як підписи на
+  // картках («34 219,63 zł»), а не «34 220».
+  return v.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " zł";
+}
+
+/** Наша ціна: те саме число плюс єдиний на весь сайт суфікс. */
+function fmtNetto(n: number, lang: Language = "pl") {
+  return `${fmtPLN(n, lang)} ${lang === "en" ? NETTO_SUFFIX.en : NETTO_SUFFIX.pl}`;
 }
 function fmtNum(n: number, digits = 1) {
   return n.toFixed(digits);
@@ -360,7 +367,7 @@ function computeResult(d: WizardData, cfgTyped: PricingConfig): CalcResult {
       // щоб не обіцяти 9.3 кВт, коли продаємо 10 кВт.
       hpPackage = nearestHeatPump(heatPumpPowerKw);
       heatPumpPowerKw = hpPackage.kw;
-      priceHpPLN = hpPackage.brutto;
+      priceHpPLN = hpPackage.netto;
       heatingAddsCapex = priceHpPLN;
 
       // shift part of heating costs to electricity (roughly)
@@ -467,11 +474,13 @@ function computeResult(d: WizardData, cfgTyped: PricingConfig): CalcResult {
 
   const monthlyAfterBills = Math.max(0, elecBillMonthAfter + gasMonthAfter);
 
-  // 7) CAPEX — з каталогу.
+  // 7) CAPEX — з каталогу, НЕТТО.
   // Каталожна ціна пакета вже включає обладнання, магазин енергії й монтаж,
   // тому окремих доданків за батарею, EMS і монтаж більше немає: раніше вони
   // накладались поверх пакета й давали суму, якої немає на жодній картці.
-  const pvCapex = pvPackage.brutto;
+  // Показуємо нетто з підписом «netto + VAT», як і скрізь на сайті: ставка
+  // залежить від об'єкта клієнта, а не від пакета.
+  const pvCapex = pvPackage.netto;
   const capex = pvCapex + heatingAddsCapex;
 
   // 8) Dotacje (simplified estimate)
@@ -505,8 +514,8 @@ function computeResult(d: WizardData, cfgTyped: PricingConfig): CalcResult {
   if (d.dot_ulga_termo) noteKeys.push("ulgaTermo");
   if (checklistNeeded) noteKeys.push("checklist");
 
-  // Ціна PV — каталожна, брутто. Та сама цифра, що на картці пакета.
-  const pricePvPLN = pvPackage.brutto;
+  // Ціна PV — каталожна, нетто. Та сама цифра, що на картці пакета.
+  const pricePvPLN = pvPackage.netto;
 
   if (heatPumpPowerKw > 0) noteKeys.push("heatPumpExtra");
   if (airToAirNeedsQuote) noteKeys.push("airToAirQuote");
@@ -537,7 +546,6 @@ function computeResult(d: WizardData, cfgTyped: PricingConfig): CalcResult {
     pvPackageSlug: pvPackage.slug,
     pvPackageName: pvPackage.name,
     pvPackageFrom: pvPackage.from,
-    pvPackageSub: pvPackage.sub,
     pvExactMatch,
     hpPackageSlug: hpPackage ? hpPackage.slug : null,
     hpPackageName: hpPackage ? hpPackage.name : null,
@@ -1329,7 +1337,7 @@ export default function CalculatorWizard() {
           <div className="mt-4 space-y-3">
             <div className="flex items-center justify-between">
               <div className="text-slate-600">{t.calcGrossPrice}</div>
-              <div className="font-semibold">{fmtPLN(computed.capexPLN, language)}</div>
+              <div className="font-semibold">{fmtNetto(computed.capexPLN, language)}</div>
             </div>
 
             <Toggle
@@ -1364,7 +1372,7 @@ export default function CalculatorWizard() {
 
             <div className="flex items-center justify-between">
               <div className="text-slate-600">{t.calcAmountToFinance}</div>
-              <div className="font-semibold">{fmtPLN(computed.financePLN, language)}</div>
+              <div className="font-semibold">{fmtNetto(computed.financePLN, language)}</div>
             </div>
 
             {/* ЕТАП 1: Package type selection */}
@@ -1380,7 +1388,7 @@ export default function CalculatorWizard() {
               <div>
                 <div className="flex justify-between">
                   <span className="text-slate-600">{t.calcPvStoragePrice}</span>
-                  <span className="font-medium">{fmtPLN(computed.pricePvPLN, language)}</span>
+                  <span className="font-medium">{fmtNetto(computed.pricePvPLN, language)}</span>
                 </div>
                 <div className="text-[11px] text-slate-500">
                   {t.calcSelectedPackage}:{" "}
@@ -1390,15 +1398,13 @@ export default function CalculatorWizard() {
                   >
                     {language === "en" ? computed.pvPackageName.en : computed.pvPackageName.pl}
                   </Link>
-                  {" · "}
-                  {language === "en" ? computed.pvPackageSub.en : computed.pvPackageSub.pl}
                 </div>
               </div>
               {computed.priceHpPLN > 0 && (
                 <div>
                   <div className="flex justify-between">
                     <span className="text-slate-600">{t.calcHeatPumpPrice} ({computed.heatPumpPowerKw} kW)</span>
-                    <span className="font-medium">{fmtPLN(computed.priceHpPLN, language)}</span>
+                    <span className="font-medium">{fmtNetto(computed.priceHpPLN, language)}</span>
                   </div>
                   {computed.hpPackageSlug && computed.hpPackageName && (
                     <div className="text-[11px] text-slate-500">
@@ -1579,12 +1585,12 @@ export default function CalculatorWizard() {
                   ``,
                   `${t.calcPackage}: ${computed.packageType}`,
                   `PV ${fmtNum(computed.pvKwp)} kWp, ${t.calcStorage.toLowerCase()} ${computed.batteryKwh} kWh`,
-                  `${t.calcPvStoragePrice}: ${fmtPLN(computed.pricePvPLN, language)}`,
-                  computed.priceHpPLN > 0 ? `${t.calcHeatPumpPrice}: ${computed.heatPumpPowerKw} kW - ${fmtPLN(computed.priceHpPLN, language)}` : "",
+                  `${t.calcPvStoragePrice}: ${fmtNetto(computed.pricePvPLN, language)}`,
+                  computed.priceHpPLN > 0 ? `${t.calcHeatPumpPrice}: ${computed.heatPumpPowerKw} kW - ${fmtNetto(computed.priceHpPLN, language)}` : "",
                   `${t.calcHeating}: ${heatingLabelText}`,
                   `${t.calcInstallOption}: ${installLabelText}`,
                   ``,
-                  `${t.calcGrossPrice}: ${fmtPLN(computed.capexPLN, language)}`,
+                  `${t.calcGrossPrice}: ${fmtNetto(computed.capexPLN, language)}`,
                   `${t.calcEstimatedDotation}: ${fmtPLN(computed.dotacjaPLN, language)}`,
                   `${t.calcBefore}: ${fmtPLN(computed.monthlyBeforePLN, language)}`,
                   `${t.calcTotalAfter}: ${fmtPLN(computed.monthlyTotalAfterPLN, language)}`,

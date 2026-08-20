@@ -143,12 +143,7 @@ export default function PromoBanner({
         <h3 className="text-lg font-semibold text-slate-900 line-clamp-1">{currentPackage.title}</h3>
         <p className="mt-1 text-sm text-slate-600 line-clamp-2">{currentPackage.shortDescription}</p>
         {currentPackage.priceLabel && (
-          <div className="mt-2">
-            <div className="text-sm font-medium text-slate-900">{currentPackage.priceLabel}</div>
-            {currentPackage.priceNote && (
-              <div className="text-[11px] text-slate-500">{currentPackage.priceNote}</div>
-            )}
-          </div>
+          <div className="mt-2 text-sm font-medium text-slate-900">{currentPackage.priceLabel}</div>
         )}
       </div>
     </div>
@@ -187,12 +182,7 @@ export default function PromoBanner({
         <h3 className="text-xl font-semibold text-slate-900 mb-2">{currentPackage.title}</h3>
         <p className="text-sm text-slate-600 line-clamp-3">{currentPackage.shortDescription}</p>
         {currentPackage.priceLabel && (
-          <div className="mt-4">
-            <div className="text-base font-semibold text-slate-900">{currentPackage.priceLabel}</div>
-            {currentPackage.priceNote && (
-              <div className="text-[11px] text-slate-500">{currentPackage.priceNote}</div>
-            )}
-          </div>
+          <div className="mt-4 text-base font-semibold text-slate-900">{currentPackage.priceLabel}</div>
         )}
       </div>
 
@@ -238,9 +228,6 @@ export default function PromoBanner({
           {currentPackage.priceLabel && (
             <div className="mt-4 pt-4 border-t border-slate-200">
               <span className="text-lg font-bold text-slate-900">{currentPackage.priceLabel}</span>
-              {currentPackage.priceNote && (
-                <div className="text-[11px] text-slate-500">{currentPackage.priceNote}</div>
-              )}
             </div>
           )}
         </div>

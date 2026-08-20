@@ -21,18 +21,17 @@ type PackageCard = {
 }
 
 /**
- * Ціна на картці. Головна цифра й дрібний рядок під нею приходять із
- * prices.generated.ts — того самого джерела, з якого їх віддає API.
- * Тут нічого не форматується й не дописується.
+ * Ціна на картці. Готовий підпис приходить із prices.generated.ts — того
+ * самого джерела, з якого його віддає API. Тут нічого не форматується
+ * й не дописується.
  */
 function CardPrice({ id, lang, note }: { id: string; lang: string; note: string }) {
-  const price = priceLabelOf(id, lang)
-  if (!price) return null
+  const label = priceLabelOf(id, lang)
+  if (!label) return null
   const indicative = PRICES[id]?.indicative
   return (
     <>
-      <p className="text-2xl font-bold text-slate-900">{price.main}</p>
-      <p className="text-xs text-slate-500 mt-0.5">{price.sub}</p>
+      <p className="text-2xl font-bold text-slate-900">{label}</p>
       {indicative && <p className="text-xs text-slate-500 mt-0.5">{note}</p>}
     </>
   )
@@ -661,7 +660,7 @@ export default function Propozycje() {
                   <li>• {t.propozycjeCarportHybridFeature5}</li>
                 </ul>
                 <div className="border-t border-slate-100 pt-4">
-                  <p className="text-2xl font-bold text-slate-900">{t.propozycjeFromLabel} 42 600 <span className="text-base font-normal">{t.propozycjeNetPriceLabel}</span></p>
+                  <CardPrice id="carport-hybrid-3f" lang={language} note={t.propozycjePriceIndicativeNote} />
                   <p className="text-sm text-slate-500 mt-1">{t.propozycjeCarportHybridBattery}</p>
                 </div>
               </div>
@@ -690,7 +689,7 @@ export default function Propozycje() {
                   <li>• {t.propozycjeCarportPremiumFeature5}</li>
                 </ul>
                 <div className="border-t border-slate-100 pt-4">
-                  <p className="text-2xl font-bold text-slate-900">{t.propozycjeFromLabel} 58 500 <span className="text-base font-normal">{t.propozycjeNetPriceLabel}</span></p>
+                  <CardPrice id="carport-premium-dc-ev" lang={language} note={t.propozycjePriceIndicativeNote} />
                   <p className="text-sm text-slate-500 mt-1">{t.propozycjeCarportPremiumBattery}</p>
                 </div>
               </div>
@@ -719,7 +718,7 @@ export default function Propozycje() {
                   <li>• {t.propozycjeCarportBusinessFeature5}</li>
                 </ul>
                 <div className="border-t border-slate-100 pt-4">
-                  <p className="text-2xl font-bold text-slate-900">{t.propozycjeFromLabel} 45 850 <span className="text-base font-normal">{t.propozycjeNetPriceLabel}</span></p>
+                  <CardPrice id="carport-business-grid" lang={language} note={t.propozycjePriceIndicativeNote} />
                   <p className="text-sm text-slate-500 mt-1">{t.propozycjeCarportBusinessExtra}</p>
                 </div>
               </div>
