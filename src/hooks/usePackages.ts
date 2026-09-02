@@ -100,7 +100,7 @@ const PL_COPY: Record<string, PackageCopy> = {
   },
   'pv-standard-8': {
     title: 'PV Standard 8 kW',
-    shortDescription: 'DEYE SUN-6K-SG03LP1-EU + 18x Trina 445W + bateria 6 kWh',
+    shortDescription: 'DEYE SUN-8K-SG05LP3-EU-SM2 + 18x Trina 445W + bateria 6 kWh',
     fullDescription: 'Kompletny system z hybrydowym falownikiem Deye i bateria.',
     specs: [{ key: 'PV', value: '8 kW' }, { key: 'Bateria', value: '6 kWh' }, { key: 'Panele', value: '18x Trina 445W' }],
     promoLabel: 'Bestseller',
@@ -234,7 +234,7 @@ const EN_COPY: Record<string, PackageCopy> = {
     specs: [{ key: 'PV', value: '11.4 kW' }, { key: 'Battery', value: '15 kWh' }, { key: 'Inverter', value: '12 kW 3F' }],
     promoLabel: null,
   },
-  'pv-standard-8': { ...PL_COPY['pv-standard-8'], title: 'PV Standard 8 kW', shortDescription: 'DEYE SUN-6K-SG03LP1-EU + 18x Trina 445W + 6 kWh battery', fullDescription: 'Complete system with Deye hybrid inverter and battery.', specs: [{ key: 'PV', value: '8 kW' }, { key: 'Battery', value: '6 kWh' }, { key: 'Panels', value: '18x Trina 445W' }] },
+  'pv-standard-8': { ...PL_COPY['pv-standard-8'], title: 'PV Standard 8 kW', shortDescription: 'DEYE SUN-8K-SG05LP3-EU-SM2 + 18x Trina 445W + 6 kWh battery', fullDescription: 'Complete system with Deye hybrid inverter and battery.', specs: [{ key: 'PV', value: '8 kW' }, { key: 'Battery', value: '6 kWh' }, { key: 'Panels', value: '18x Trina 445W' }] },
   'pv-standard-10': { ...PL_COPY['pv-standard-10'], title: 'PV Standard 10 kW', shortDescription: 'DEYE SUN-10K-SG05LP3-EU + 22x Trina 445W + 6 kWh battery', fullDescription: 'Expanded system with Deye 10 kW hybrid inverter.', specs: [{ key: 'PV', value: '10 kW' }, { key: 'Battery', value: '6 kWh' }, { key: 'Panels', value: '22x Trina 445W' }] },
   'pv-standard-12': { ...PL_COPY['pv-standard-12'], title: 'PV Standard 12 kW', shortDescription: 'DEYE SUN-12K-SG05LP3-EU + 27x Trina 445W + 2x 12 kWh battery', fullDescription: 'Maximum system with Deye 12 kW hybrid inverter and dual battery.', specs: [{ key: 'PV', value: '12 kW' }, { key: 'Battery', value: '12 kWh' }, { key: 'Panels', value: '27x Trina 445W' }] },
   'pv-premium-8': { ...PL_COPY['pv-premium-8'], title: 'PV Premium 8 kW', shortDescription: 'Sigenergy 8 kW + 8 kWh + 17x AIKO 475W - AI optimization', fullDescription: 'Premium system with Sigenergy SigenStor all-in-one and AIKO Neostar panels.', specs: [{ key: 'PV', value: '8 kW' }, { key: 'Battery', value: '8 kWh' }, { key: 'Panels', value: '17x AIKO 475W' }] },

@@ -1,7 +1,7 @@
 // ЗГЕНЕРОВАНО — не редагувати руками.
 // Каталог для калькулятора: ті самі пакети й ті самі ціни, що на /pl/propozycje.
 // Джерело: /home/pricing/price-source.json -> export_price_display.py -> gen_prices.js
-// price-source версія: 1.5.0
+// price-source версія: 1.6.0
 //
 // kwp і storageKwh пораховані зі СКЛАДУ пакета (панель x кількість,
 // батарея x кількість), а не вписані окремо.
@@ -45,8 +45,8 @@ export const CATALOGUE_PV: CataloguePv[] = [
     tier: "standard",
     kwp: 8.01,
     storageKwh: 6.14,
-    netto: 34219.63,
-    from: { pl: "od 34 219,63 zł netto + VAT", en: "from 34 219,63 zł net + VAT" },
+    netto: 35570.31,
+    from: { pl: "od 35 570,31 zł netto + VAT", en: "from 35 570,31 zł net + VAT" },
   },
   {
     slug: "premium-8kw",

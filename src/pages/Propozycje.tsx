@@ -656,7 +656,7 @@ export default function Propozycje() {
                   <li>• {t.propozycjeCarportPanels10}</li>
                   <li>• {t.propozycjeCarportHybridFeature2}</li>
                   <li>• {t.propozycjeCarportHybridFeature3}</li>
-                  <li>• Wallbox Anker SOLIX V1 7,4 kW AC (Type 2)</li>
+                  <li>• {t.propozycjeCarportHybridFeature4}</li>
                   <li>• {t.propozycjeCarportHybridFeature5}</li>
                 </ul>
                 <div className="border-t border-slate-100 pt-4">

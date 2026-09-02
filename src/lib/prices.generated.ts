@@ -5,7 +5,7 @@
 // (solimax-pl-backend-site/src/services/priceLabel.js), тож сторінка
 // /pl/propozycje і відповіді API не можуть розійтись.
 //
-// price-source версія: 1.5.0
+// price-source версія: 1.6.0
 // Одна форма для всіх типів пакетів: нетто + підпис «netto + VAT».
 // Ставка ПДВ на сайті не вказується — вона визначається під клієнта й об'єкт.
 
@@ -50,9 +50,9 @@ export const PRICES: Record<string, PriceEntry> = {
     indicative: false,
   },
   "bazik-8kw": {
-    pl: "34 219,63 zł netto + VAT",
-    en: "34 219,63 zł net + VAT",
-    netto: 34219.63,
+    pl: "35 570,31 zł netto + VAT",
+    en: "35 570,31 zł net + VAT",
+    netto: 35570.31,
     indicative: false,
   },
   "biznes-100kw": {
@@ -243,9 +243,9 @@ export const PRICES: Record<string, PriceEntry> = {
 // PLN-суми без ставки ПДВ і без зв'язку з каталогом.
 export const COMBOS: Record<string, PriceEntry> = {
   "dom-standard": {
-    pl: "34 219,63 zł netto + VAT",
-    en: "34 219,63 zł net + VAT",
-    netto: 34219.63,
+    pl: "35 570,31 zł netto + VAT",
+    en: "35 570,31 zł net + VAT",
+    netto: 35570.31,
     indicative: false,
   },
   "dom-premium": {
@@ -255,9 +255,9 @@ export const COMBOS: Record<string, PriceEntry> = {
     indicative: false,
   },
   "dom-heatpump": {
-    pl: "119 515,93 zł netto + VAT",
-    en: "119 515,93 zł net + VAT",
-    netto: 119515.93,
+    pl: "120 866,61 zł netto + VAT",
+    en: "120 866,61 zł net + VAT",
+    netto: 120866.61,
     indicative: false,
   },
 };
