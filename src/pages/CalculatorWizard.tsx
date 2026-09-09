@@ -1407,7 +1407,11 @@ export default function CalculatorWizard() {
                 key === "catalogueFrom" ? t.calcCatalogueFromNote :
                 key === "airToAirQuote" ? t.calcAirToAirQuoteNote :
                 key === "installIncluded" ? t.calcInstallIncludedNote :
+                key === "engineeringSelection" ? t.calcEngineeringSelectionShort :
                 "";
+              // Порожній текст не рендеримо: інакше нерозпізнаний ключ дає
+              // голу кулю без пояснення.
+              if (!noteText) return null;
               return <div key={i}>• {noteText}</div>;
             })}
           </div>
