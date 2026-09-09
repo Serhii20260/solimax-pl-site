@@ -138,17 +138,14 @@ export const CATALOGUE_HEAT_PUMPS: CatalogueHeatPump[] = [
 /**
  * Найближчий каталожний пакет за потужністю.
  *
- * ПРАВИЛО БЛИЗЬКОСТІ (рішення власника 2026-09-09). Спершу звужуємо вибір тим,
- * що просив клієнт: лінійка (standard/premium) і мінімальний магазин енергії.
- * Якщо під ці умови не підходить жоден пакет — повертаємо null. Готові пакети
- * тоді не пропонуються взагалі: потреба йде на інженерний підбір.
+ * Добір ЗАВЖДИ повертає пакет (рішення власника 2026-09-09): готовий комплект
+ * називається як орієнтир навіть тоді, коли потреба виходить за межі лінійки.
+ * Мовчазних фолбеків немає — чужий ярус не підставляється, а якщо потреба в
+ * ємності вища за всю лінійку, беремо пакет із найбільшою ємністю, і це видно
+ * в pvFit(), а не ховається.
  *
- * Мовчазних фолбеків тут більше немає: раніше порожній фільтр скасовувався
- * сам собою і клієнт отримував пакет із чужої лінійки або з меншою ємністю,
- * ніж просив.
- *
- * Ті самі константи діють у pricegate (sizing.py) — телефонний консьєрж і
- * калькулятор мусять відповідати однаково на однакових входах.
+ * Те саме правило й ті самі константи діють у pricegate (sizing.py):
+ * калькулятор і телефонний консьєрж мусять відповідати однаково.
  */
 export const PV_POWER_TOLERANCE = 0.40;
 export const PV_STORAGE_TOLERANCE_BELOW = 0.10;
@@ -164,21 +161,75 @@ export function nearestPv(
 
   let pool = byTier;
   if (opts.minStorageKwh) {
-    // Поріг — від нижнього допуску, а не рівно minStorageKwh: інакше
-    // PV_STORAGE_TOLERANCE_BELOW був би мертвою константою.
     const floor = (opts.minStorageKwh as number) * (1 - PV_STORAGE_TOLERANCE_BELOW);
-    pool = pool.filter((p) => p.storageKwh >= floor);
-    if (!pool.length) return null;
+    const covering = pool.filter((p) => p.storageKwh >= floor);
+    if (covering.length) {
+      pool = covering;
+    } else {
+      const top = Math.max(...pool.map((p) => p.storageKwh));
+      pool = pool.filter((p) => p.storageKwh === top);
+    }
   }
-
-  const best = pool.reduce((b, p) =>
+  return pool.reduce((b, p) =>
     Math.abs(p.kwp - kwp) < Math.abs(b.kwp - kwp) ? p : b
   , pool[0]);
+}
 
-  // Верхньої межі по ємності немає свідомо: більший накопичувач клієнту
-  // не шкодить, а межа зверху відсікала за те, що ми даємо БІЛЬШЕ.
-  if (kwp > 0 && Math.abs(best.kwp - kwp) / kwp > PV_POWER_TOLERANCE) return null;
-  return best;
+/**
+ * Наскільки підібраний пакет відповідає потребі. На добір НЕ впливає —
+ * керує лише поясненням, яке бачить клієнт. Дзеркало sizing.pv_fit().
+ * inTolerance=false, коли потреба лежить ПОЗА діапазоном лінійки.
+ * PV_POWER_TOLERANCE — запобіжник на випадок зміни каталогу; зараз він ні на
+ * що не впливає, бо найгірше відхилення всередині діапазону близько 11 %.
+ */
+export type PvFit = {
+  inTolerance: boolean;
+  parameter: "power_kwp" | "storage_kwh" | "tier" | null;
+  direction: "below" | "above" | null;
+  requested: number;
+  lineEdge: number | null;
+  pickedKwp: number | null;
+  pickedStorage: number | null;
+};
+
+export function pvFit(
+  kwp: number,
+  opts: { tier?: string; minStorageKwh?: number } = {},
+): PvFit {
+  const pool = opts.tier
+    ? CATALOGUE_PV.filter((p) => p.tier === opts.tier)
+    : CATALOGUE_PV.slice();
+  const best = nearestPv(kwp, opts);
+  if (!pool.length || !best) {
+    return { inTolerance: false, parameter: "tier", direction: null,
+             requested: kwp, lineEdge: null, pickedKwp: null, pickedStorage: null };
+  }
+  const lineMin = Math.min(...pool.map((p) => p.kwp));
+  const lineMax = Math.max(...pool.map((p) => p.kwp));
+  const lineMaxStorage = Math.max(...pool.map((p) => p.storageKwh));
+  const base: PvFit = { inTolerance: true, parameter: null, direction: null,
+                        requested: kwp, lineEdge: null,
+                        pickedKwp: best.kwp, pickedStorage: best.storageKwh };
+
+  if (opts.minStorageKwh &&
+      best.storageKwh < (opts.minStorageKwh as number) * (1 - PV_STORAGE_TOLERANCE_BELOW)) {
+    return { ...base, inTolerance: false, parameter: "storage_kwh",
+             direction: "above", requested: opts.minStorageKwh as number,
+             lineEdge: lineMaxStorage };
+  }
+  if (kwp < lineMin) {
+    return { ...base, inTolerance: false, parameter: "power_kwp",
+             direction: "below", lineEdge: lineMin };
+  }
+  if (kwp > lineMax) {
+    return { ...base, inTolerance: false, parameter: "power_kwp",
+             direction: "above", lineEdge: lineMax };
+  }
+  if (kwp > 0 && Math.abs(best.kwp - kwp) / kwp > PV_POWER_TOLERANCE) {
+    return { ...base, inTolerance: false, parameter: "power_kwp",
+             direction: best.kwp < kwp ? "below" : "above", lineEdge: best.kwp };
+  }
+  return base;
 }
 
 /** Чи є вибраний пакет точним попаданням у запит клієнта. */
