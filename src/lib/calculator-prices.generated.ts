@@ -138,27 +138,47 @@ export const CATALOGUE_HEAT_PUMPS: CatalogueHeatPump[] = [
 /**
  * Найближчий каталожний пакет за потужністю.
  *
- * Спершу звужуємо вибір тим, що просив клієнт: лінійка (standard/premium)
- * і мінімальний магазин енергії. Якщо під ці умови не підходить жоден пакет —
- * не вигадуємо конфігурацію, а беремо найближчий з усіх і показуємо ціну
- * як «від» з приміткою про індивідуальний розрахунок.
+ * ПРАВИЛО БЛИЗЬКОСТІ (рішення власника 2026-09-09). Спершу звужуємо вибір тим,
+ * що просив клієнт: лінійка (standard/premium) і мінімальний магазин енергії.
+ * Якщо під ці умови не підходить жоден пакет — повертаємо null. Готові пакети
+ * тоді не пропонуються взагалі: потреба йде на інженерний підбір.
+ *
+ * Мовчазних фолбеків тут більше немає: раніше порожній фільтр скасовувався
+ * сам собою і клієнт отримував пакет із чужої лінійки або з меншою ємністю,
+ * ніж просив.
+ *
+ * Ті самі константи діють у pricegate (sizing.py) — телефонний консьєрж і
+ * калькулятор мусять відповідати однаково на однакових входах.
  */
+export const PV_POWER_TOLERANCE = 0.40;
+export const PV_STORAGE_TOLERANCE_BELOW = 0.10;
+
 export function nearestPv(
   kwp: number,
   opts: { tier?: string; minStorageKwh?: number } = {},
-): CataloguePv {
-  const narrow = (list: CataloguePv[]) => (list.length ? list : null);
+): CataloguePv | null {
   const byTier = opts.tier
-    ? narrow(CATALOGUE_PV.filter((p) => p.tier === opts.tier))
-    : null;
-  const base = byTier ?? CATALOGUE_PV;
-  const byStorage = opts.minStorageKwh
-    ? narrow(base.filter((p) => p.storageKwh >= (opts.minStorageKwh as number)))
-    : null;
-  const pool = byStorage ?? base;
-  return pool.reduce((best, p) =>
-    Math.abs(p.kwp - kwp) < Math.abs(best.kwp - kwp) ? p : best
+    ? CATALOGUE_PV.filter((p) => p.tier === opts.tier)
+    : CATALOGUE_PV.slice();
+  if (!byTier.length) return null;
+
+  let pool = byTier;
+  if (opts.minStorageKwh) {
+    // Поріг — від нижнього допуску, а не рівно minStorageKwh: інакше
+    // PV_STORAGE_TOLERANCE_BELOW був би мертвою константою.
+    const floor = (opts.minStorageKwh as number) * (1 - PV_STORAGE_TOLERANCE_BELOW);
+    pool = pool.filter((p) => p.storageKwh >= floor);
+    if (!pool.length) return null;
+  }
+
+  const best = pool.reduce((b, p) =>
+    Math.abs(p.kwp - kwp) < Math.abs(b.kwp - kwp) ? p : b
   , pool[0]);
+
+  // Верхньої межі по ємності немає свідомо: більший накопичувач клієнту
+  // не шкодить, а межа зверху відсікала за те, що ми даємо БІЛЬШЕ.
+  if (kwp > 0 && Math.abs(best.kwp - kwp) / kwp > PV_POWER_TOLERANCE) return null;
+  return best;
 }
 
 /** Чи є вибраний пакет точним попаданням у запит клієнта. */

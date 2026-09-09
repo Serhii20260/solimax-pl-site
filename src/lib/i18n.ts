@@ -629,6 +629,8 @@ export const translations = {
     // Calculator - Step 7 (Final)
     calcFinalTitle: "Wynik + finansowanie + zapytanie",
     calcFinalSubtitle: "To szacunek na bazie podanych danych. Oferta będzie dopasowana dokładnie.",
+    calcEngineeringSelection: "Dla podanych parametrów dobierzemy konfigurację indywidualnie. Nasz dział techniczny przygotuje najbardziej efektywne rozwiązanie, a specjalista skontaktuje się w najbliższym czasie w godzinach pracy. Prosimy zostawić kontakt poniżej.",
+    calcEngineeringSelectionShort: "Dobór indywidualny",
     calcRecommendedConfig: "Rekomendowana konfiguracja",
     calcStorage: "Magazyn",
     calcNoStorage: "Bez magazynu",
@@ -1707,6 +1709,8 @@ export const translations = {
     // Calculator - Step 7 (Final)
     calcFinalTitle: "Result + financing + request",
     calcFinalSubtitle: "This is an estimate based on provided data. The offer will be precisely tailored.",
+    calcEngineeringSelection: "For these parameters we will put together a configuration individually. Our engineering team will prepare the most efficient solution, and a specialist will contact you shortly during working hours. Please leave your contact details below.",
+    calcEngineeringSelectionShort: "Individual selection",
     calcRecommendedConfig: "Recommended configuration",
     calcStorage: "Storage",
     calcNoStorage: "No storage",

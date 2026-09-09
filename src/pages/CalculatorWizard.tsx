@@ -111,9 +111,18 @@ type WizardData = {
 
 type HeatingType = "no_change" | "air_to_water" | "air_to_air_backup" | "modernization";
 type NoteKey = "autoConsumption" | "dayProfile" | "batteryAuto" | "ulgaTermo" | "checklist" | "heatPumpExtra"
-  | "catalogueFrom" | "airToAirQuote" | "installIncluded";
+  | "catalogueFrom" | "airToAirQuote" | "installIncluded" | "engineeringSelection";
 
 type CalcResult = {
+  // ПРАВИЛО БЛИЗЬКОСТІ: якщо готового пакета під потребу немає, pvAvailable
+  // = false, і ВСЯ PV-частина результату недійсна. Дискримінатор, а не нулі:
+  // нуль мовчки протік би в економію, ціну й заявку і дав би цифри, яких ми
+  // не рахували. Потреба клієнта зберігається в requested* — вона потрібна
+  // техвідділу і йде в заявку.
+  pvAvailable: boolean;
+  requestedKwp: number;
+  requestedStorageKwh: number;
+
   pvKwp: number;
   batteryKwh: number;
   heatingType: HeatingType;
@@ -127,9 +136,9 @@ type CalcResult = {
   priceHpPLN: number;
   heatPumpPowerKw: number;
   packageType: PackageType;
-  pvPackageSlug: string;
-  pvPackageName: { pl: string; en: string };
-  pvPackageFrom: { pl: string; en: string };
+  pvPackageSlug: string | null;
+  pvPackageName: { pl: string; en: string } | null;
+  pvPackageFrom: { pl: string; en: string } | null;
   pvExactMatch: boolean;
   hpPackageSlug: string | null;
   hpPackageName: { pl: string; en: string } | null;
@@ -429,12 +438,74 @@ function computeResult(d: WizardData, cfgTyped: PricingConfig): CalcResult {
   // 5a) КАТАЛОГ. Калькулятор не має власного прайсу: він добирає найближчий
   // каталожний пакет і бере його ціну. Далі всі розрахунки йдуть по тому,
   // що справді входить у цей пакет, а не по абстрактних кВтп.
+  const pvTier = d.packageType === "premium" ? "premium" : "standard";
   const pvPackage = nearestPv(requestedKwp, {
-    tier: d.packageType === "premium" ? "premium" : "standard",
+    tier: pvTier,
     minStorageKwh: requestedStorageKwh,
   });
+
+  // ПРАВИЛО БЛИЗЬКОСТІ: готового пакета під цю потребу немає. Виходимо
+  // РАНО, з окремою гілкою результату, а не з нулями посеред обчислень:
+  // pvKwp і batteryKwh далі читаються в десятку місць (самоспоживання,
+  // виробіток, рахунки, CAPEX, дотації, заявка), і нуль там дав би цифри,
+  // яких ми не рахували.
+  //
+  // Тепловий насос при цьому лишається: якщо він підібрався, його ціну
+  // показуємо (рішення власника 2026-09-09). Ховається блок PV, не екран.
+  // Економія не рахується — без PV її нема від чого рахувати.
+  if (!pvPackage) {
+    const dotHpOnly =
+      d.includeDotacje && d.dot_czyste_powietrze && d.targetHeating === "air_to_water"
+        ? dotCP_A2W_basic
+        : 0;
+    const capexHpOnly = heatingAddsCapex;
+    const dotHp = Math.min(dotHpOnly, capexHpOnly * 0.60);
+    const financeHp = Math.max(0, capexHpOnly - dotHp);
+    const engineeringNotes: NoteKey[] = ["engineeringSelection"];
+    if (heatPumpPowerKw > 0) engineeringNotes.push("heatPumpExtra");
+    if (airToAirNeedsQuote) engineeringNotes.push("airToAirQuote");
+    if (d.installationMode === "without_install") engineeringNotes.push("checklist");
+    return {
+      pvAvailable: false,
+      requestedKwp,
+      requestedStorageKwh,
+
+      pvKwp: 0,
+      batteryKwh: 0,
+      heatingType,
+      withInstall: d.installationMode === "with_install",
+      checklistNeeded: d.installationMode === "without_install",
+
+      pricePvPLN: 0,
+      priceHpPLN,
+      heatPumpPowerKw,
+      packageType: d.packageType,
+      pvPackageSlug: null,
+      pvPackageName: null,
+      pvPackageFrom: null,
+      pvExactMatch: false,
+      hpPackageSlug: hpPackage ? hpPackage.slug : null,
+      hpPackageName: hpPackage ? hpPackage.name : null,
+
+      capexPLN: round(capexHpOnly),
+      dotacjaPLN: round(dotHp),
+      financePLN: round(financeHp),
+      monthlyPaymentPLN: round(
+        d.payMode === "credit" ? annuityPayment(financeHp, d.creditYears, creditRateAnnual) : 0
+      ),
+
+      monthlyBeforePLN: round(monthlyBefore),
+      monthlyAfterBillsPLN: 0,
+      monthlyTotalAfterPLN: 0,
+
+      selfRate: 0,
+      dayShare,
+      noteKeys: engineeringNotes,
+    };
+  }
+
   const pvExactMatch = isExactPvMatch(pvPackage, requestedKwp, {
-    tier: d.packageType === "premium" ? "premium" : "standard",
+    tier: pvTier,
     minStorageKwh: requestedStorageKwh,
   });
   pvKwp = pvPackage.kwp;
@@ -523,6 +594,10 @@ function computeResult(d: WizardData, cfgTyped: PricingConfig): CalcResult {
   if (withInstall) noteKeys.push("installIncluded");
 
   return {
+    pvAvailable: true,
+    requestedKwp,
+    requestedStorageKwh,
+
     pvKwp,
     batteryKwh,
     heatingType,
@@ -1282,10 +1357,18 @@ export default function CalculatorWizard() {
         {/* Offer */}
         <div className="p-5 rounded-2xl border border-slate-200">
           <div className="text-sm text-slate-500">{t.calcRecommendedConfig}</div>
-          <div className="mt-2 text-xl font-semibold">PV {fmtNum(computed.pvKwp)} kWp</div>
-          <div className="mt-2 text-slate-700">
-            {t.calcStorage}: <span className="font-medium">{computed.batteryKwh === 0 ? t.calcNoStorage : `${computed.batteryKwh} kWh`}</span>
-          </div>
+          {computed.pvAvailable ? (
+            <>
+              <div className="mt-2 text-xl font-semibold">PV {fmtNum(computed.pvKwp)} kWp</div>
+              <div className="mt-2 text-slate-700">
+                {t.calcStorage}: <span className="font-medium">{computed.batteryKwh === 0 ? t.calcNoStorage : `${computed.batteryKwh} kWh`}</span>
+              </div>
+            </>
+          ) : (
+            <div className="mt-2 p-3 rounded-xl bg-amber-50 border border-amber-200 text-sm text-amber-900">
+              {t.calcEngineeringSelection}
+            </div>
+          )}
           <div className="mt-1 text-slate-700">
             {t.calcHeating}: <span className="font-medium">{
               computed.heatingType === "no_change" ? t.calcHeatingNoChange2 :
@@ -1385,21 +1468,23 @@ export default function CalculatorWizard() {
 
             {/* Show new pricing breakdown */}
             <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 text-sm space-y-2">
-              <div>
-                <div className="flex justify-between">
-                  <span className="text-slate-600">{t.calcPvStoragePrice}</span>
-                  <span className="font-medium">{fmtNetto(computed.pricePvPLN, language)}</span>
+              {computed.pvAvailable && computed.pvPackageSlug && computed.pvPackageName && (
+                <div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-600">{t.calcPvStoragePrice}</span>
+                    <span className="font-medium">{fmtNetto(computed.pricePvPLN, language)}</span>
+                  </div>
+                  <div className="text-[11px] text-slate-500">
+                    {t.calcSelectedPackage}:{" "}
+                    <Link
+                      to={`/propozycje/${computed.pvPackageSlug}`}
+                      className="text-yellow-600 hover:text-yellow-500"
+                    >
+                      {language === "en" ? computed.pvPackageName.en : computed.pvPackageName.pl}
+                    </Link>
+                  </div>
                 </div>
-                <div className="text-[11px] text-slate-500">
-                  {t.calcSelectedPackage}:{" "}
-                  <Link
-                    to={`/propozycje/${computed.pvPackageSlug}`}
-                    className="text-yellow-600 hover:text-yellow-500"
-                  >
-                    {language === "en" ? computed.pvPackageName.en : computed.pvPackageName.pl}
-                  </Link>
-                </div>
-              </div>
+              )}
               {computed.priceHpPLN > 0 && (
                 <div>
                   <div className="flex justify-between">
@@ -1441,6 +1526,7 @@ export default function CalculatorWizard() {
               </Field>
             ) : null}
 
+            {computed.pvAvailable && (
             <div className="mt-2 p-4 rounded-xl bg-emerald-50 border border-emerald-200">
               <div className="text-sm text-emerald-900">{t.calcMonthlyComparison}</div>
               <div className="mt-2 space-y-2 text-sm">
@@ -1464,6 +1550,7 @@ export default function CalculatorWizard() {
                 </div>
               </div>
             </div>
+            )}
           </div>
         </div>
       </div>
@@ -1530,8 +1617,11 @@ export default function CalculatorWizard() {
                 packageType: computed.packageType,
                 
                 // Key calculated values
-                pvPower: computed.pvKwp,
-                batteryCapacity: computed.batteryKwh,
+                // Коли готового пакета немає, у заявку йде ПОТРЕБА клієнта:
+                // нуль означав би, що PV не потрібне, а це не так.
+                pvPower: computed.pvAvailable ? computed.pvKwp : computed.requestedKwp,
+                batteryCapacity: computed.pvAvailable ? computed.batteryKwh : computed.requestedStorageKwh,
+                engineeringSelection: !computed.pvAvailable,
                 heatPumpPower: computed.heatPumpPowerKw,
                 
                 // Pricing
@@ -1584,7 +1674,9 @@ export default function CalculatorWizard() {
                   `${t.calcEmailLabel}: ${data.leadEmail}`,
                   ``,
                   `${t.calcPackage}: ${computed.packageType}`,
-                  `PV ${fmtNum(computed.pvKwp)} kWp, ${t.calcStorage.toLowerCase()} ${computed.batteryKwh} kWh`,
+                  computed.pvAvailable
+                    ? `PV ${fmtNum(computed.pvKwp)} kWp, ${t.calcStorage.toLowerCase()} ${computed.batteryKwh} kWh`
+                    : `${t.calcEngineeringSelectionShort}: PV ~${fmtNum(computed.requestedKwp)} kWp, ${t.calcStorage.toLowerCase()} ~${computed.requestedStorageKwh} kWh`,
                   `${t.calcPvStoragePrice}: ${fmtNetto(computed.pricePvPLN, language)}`,
                   computed.priceHpPLN > 0 ? `${t.calcHeatPumpPrice}: ${computed.heatPumpPowerKw} kW - ${fmtNetto(computed.priceHpPLN, language)}` : "",
                   `${t.calcHeating}: ${heatingLabelText}`,
