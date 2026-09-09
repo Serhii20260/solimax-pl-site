@@ -29,6 +29,7 @@ const DaniKompanii = lazy(() => import("./pages/DaniKompanii"));
 const CalculatorWizard = lazy(() => import("./pages/CalculatorWizard"));
 const AdminPricing = lazy(() => import("./pages/AdminPricing"));
 const AdminPackages = lazy(() => import("./pages/AdminPackages"));
+const AdminLeads = lazy(() => import("./pages/AdminLeads"));
 
 function RequireAdmin({ children }: { children: React.ReactNode }) {
   const token = sessionStorage.getItem('admin_token');
@@ -64,6 +65,7 @@ export default function App() {
         <Route path="calculator" element={<Suspense fallback={<RouteFallback />}><CalculatorWizard /></Suspense>} />
         <Route path="admin" element={<RequireAdmin><Suspense fallback={<RouteFallback />}><AdminPricing /></Suspense></RequireAdmin>} />
         <Route path="admin/packages" element={<Suspense fallback={<RouteFallback />}><AdminPackages /></Suspense>} />
+        <Route path="admin/leads" element={<RequireAdmin><Suspense fallback={<RouteFallback />}><AdminLeads /></Suspense></RequireAdmin>} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>

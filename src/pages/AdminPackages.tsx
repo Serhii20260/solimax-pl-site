@@ -329,6 +329,7 @@ export default function AdminPackages() {
       <div className="mx-auto max-w-6xl space-y-6">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold text-slate-900">Admin — Pakiety</h1>
+          <a href="/pl/admin/leads" className="text-sm text-slate-600 underline hover:text-slate-900">Leady</a>
           <button
             onClick={() => { sessionStorage.removeItem(TOKEN_KEY); sessionStorage.removeItem(SESSION_KEY); setAuthed(false); }}
             className="text-sm text-slate-500 hover:text-slate-700"
