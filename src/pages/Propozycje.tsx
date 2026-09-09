@@ -299,89 +299,6 @@ export default function Propozycje() {
         </div>
       </section>
 
-      {/* ═══ ANKER ═══ */}
-      <section className="py-16 bg-white border-b border-slate-100">
-        <div className="mx-auto max-w-7xl px-6 md:px-10 lg:px-16">
-          <div className="flex items-center gap-3 mb-2">
-            <span className="text-2xl">⚡</span>
-            <h2 className="text-2xl font-semibold">{t.propozycjeAnkerSectionTitle}</h2>
-          </div>
-          <p className="text-slate-500 text-sm mb-8">{t.propozycjeAnkerSectionSubtitle}</p>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:border-yellow-400 transition-colors flex flex-col">
-              <div className="bg-gradient-to-r from-slate-800 to-slate-700 p-5">
-                <span className="text-xs font-semibold tracking-widest text-yellow-400 uppercase">Anker SOLIX</span>
-                <h3 className="text-xl font-bold text-white mt-1">Smart System</h3>
-                <p className="text-slate-400 text-xs mt-1">{ankerPakiet.subtitle}</p>
-              </div>
-              <div className="p-5 space-y-4 flex flex-col flex-1">
-                <div className="relative w-full h-64 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden flex flex-col items-center justify-center gap-3 mb-1">
-                  <img loading="lazy" decoding="async" src={ankerPakiet.image} alt={ankerPakiet.title} className="w-full h-full object-cover" />
-                  <span className="absolute bottom-2 right-2 bg-yellow-400 text-slate-900 font-medium text-[10px] px-2 py-0.5 rounded">{t.propozycjeDeliveryInstallIncluded}</span>
-                </div>
-                <ul className="space-y-1.5 flex-1">
-                  {ankerPakiet.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-sm text-slate-700">
-                      <span className="text-yellow-500 mt-0.5">✓</span> {f}
-                    </li>
-                  ))}
-                </ul>
-                <div className="pt-3 border-t border-slate-100 mt-auto">
-                  <CardPrice id={ankerPakiet.id} lang={language} note={t.propozycjePriceIndicativeNote} />
-                </div>
-                <Link to={`/propozycje/${ankerPakiet.id}`} className="block w-full text-center bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2.5 rounded-xl transition-colors text-sm">
-                  {t.propozycjeDetailsButton}
-                </Link>
-              </div>
-            </div>
-            {/* Anker X1 packages */}
-            {ankerX1Pakiety.map((p) => (
-              <div key={p.id} className="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:border-yellow-400 transition-colors flex flex-col">
-                <div className="bg-gradient-to-r from-slate-800 to-slate-700 p-5">
-                  <span className="text-xs font-semibold tracking-widest text-yellow-400 uppercase">Anker SOLIX</span>
-                  <h3 className="text-xl font-bold text-white mt-1">{p.title}</h3>
-                  <p className="text-slate-400 text-xs mt-1">{p.subtitle}</p>
-                </div>
-                <div className="p-5 space-y-4 flex flex-col flex-1">
-                  <div className="relative w-full h-64 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden flex flex-col items-center justify-center gap-3 mb-1">
-                    {p.image ? (
-                      <img loading="lazy" decoding="async" src={p.image} alt={p.title} className="w-full h-full object-cover" />
-                    ) : (
-                      <>
-                        <svg width="64" height="64" viewBox="0 0 80 80" fill="none" className="opacity-30">
-                          <rect x="8" y="20" width="64" height="40" rx="4" stroke="#475569" strokeWidth="2"/>
-                          <line x1="8" y1="32" x2="72" y2="32" stroke="#475569" strokeWidth="1.5"/>
-                          <line x1="8" y1="44" x2="72" y2="44" stroke="#475569" strokeWidth="1.5"/>
-                          <line x1="24" y1="20" x2="24" y2="60" stroke="#475569" strokeWidth="1.5"/>
-                          <line x1="40" y1="20" x2="40" y2="60" stroke="#475569" strokeWidth="1.5"/>
-                          <line x1="56" y1="20" x2="56" y2="60" stroke="#475569" strokeWidth="1.5"/>
-                          <rect x="32" y="62" width="16" height="8" rx="2" stroke="#475569" strokeWidth="1.5"/>
-                        </svg>
-                        <span className="text-xs text-slate-400 uppercase tracking-widest">{t.propozycjePackagePhoto}</span>
-                      </>
-                    )}
-                    <span className="absolute bottom-2 right-2 bg-yellow-400 text-slate-900 font-medium text-[10px] px-2 py-0.5 rounded">{t.propozycjeDeliveryInstallIncluded}</span>
-                  </div>
-                  <ul className="space-y-1.5 flex-1">
-                    {p.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2 text-sm text-slate-700">
-                        <span className="text-yellow-500 mt-0.5">✓</span> {f}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="pt-3 border-t border-slate-100 mt-auto">
-                    <CardPrice id={p.id} lang={language} note={t.propozycjePriceIndicativeNote} />
-                  </div>
-                  <Link to={`/propozycje/${p.id}`} className="block w-full text-center bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2.5 rounded-xl transition-colors text-sm">
-                    {t.propozycjeDetailsButton}
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ═══ PV STANDARD ═══ */}
       <section className="py-16 bg-slate-50">
         <div className="mx-auto max-w-7xl px-6 md:px-10 lg:px-16">
@@ -488,6 +405,89 @@ export default function Propozycje() {
                 <div className="pt-3 border-t border-slate-100">
                   <CardPrice id={p.id} lang={language} note={t.propozycjePriceIndicativeNote} />
                 </div>
+                  <Link to={`/propozycje/${p.id}`} className="block w-full text-center bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2.5 rounded-xl transition-colors text-sm">
+                    {t.propozycjeDetailsButton}
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ ANKER ═══ */}
+      <section className="py-16 bg-white border-b border-slate-100">
+        <div className="mx-auto max-w-7xl px-6 md:px-10 lg:px-16">
+          <div className="flex items-center gap-3 mb-2">
+            <span className="text-2xl">⚡</span>
+            <h2 className="text-2xl font-semibold">{t.propozycjeAnkerSectionTitle}</h2>
+          </div>
+          <p className="text-slate-500 text-sm mb-8">{t.propozycjeAnkerSectionSubtitle}</p>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:border-yellow-400 transition-colors flex flex-col">
+              <div className="bg-gradient-to-r from-slate-800 to-slate-700 p-5">
+                <span className="text-xs font-semibold tracking-widest text-yellow-400 uppercase">Anker SOLIX</span>
+                <h3 className="text-xl font-bold text-white mt-1">Smart System</h3>
+                <p className="text-slate-400 text-xs mt-1">{ankerPakiet.subtitle}</p>
+              </div>
+              <div className="p-5 space-y-4 flex flex-col flex-1">
+                <div className="relative w-full h-64 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden flex flex-col items-center justify-center gap-3 mb-1">
+                  <img loading="lazy" decoding="async" src={ankerPakiet.image} alt={ankerPakiet.title} className="w-full h-full object-cover" />
+                  <span className="absolute bottom-2 right-2 bg-yellow-400 text-slate-900 font-medium text-[10px] px-2 py-0.5 rounded">{t.propozycjeDeliveryInstallIncluded}</span>
+                </div>
+                <ul className="space-y-1.5 flex-1">
+                  {ankerPakiet.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2 text-sm text-slate-700">
+                      <span className="text-yellow-500 mt-0.5">✓</span> {f}
+                    </li>
+                  ))}
+                </ul>
+                <div className="pt-3 border-t border-slate-100 mt-auto">
+                  <CardPrice id={ankerPakiet.id} lang={language} note={t.propozycjePriceIndicativeNote} />
+                </div>
+                <Link to={`/propozycje/${ankerPakiet.id}`} className="block w-full text-center bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2.5 rounded-xl transition-colors text-sm">
+                  {t.propozycjeDetailsButton}
+                </Link>
+              </div>
+            </div>
+            {/* Anker X1 packages */}
+            {ankerX1Pakiety.map((p) => (
+              <div key={p.id} className="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:border-yellow-400 transition-colors flex flex-col">
+                <div className="bg-gradient-to-r from-slate-800 to-slate-700 p-5">
+                  <span className="text-xs font-semibold tracking-widest text-yellow-400 uppercase">Anker SOLIX</span>
+                  <h3 className="text-xl font-bold text-white mt-1">{p.title}</h3>
+                  <p className="text-slate-400 text-xs mt-1">{p.subtitle}</p>
+                </div>
+                <div className="p-5 space-y-4 flex flex-col flex-1">
+                  <div className="relative w-full h-64 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden flex flex-col items-center justify-center gap-3 mb-1">
+                    {p.image ? (
+                      <img loading="lazy" decoding="async" src={p.image} alt={p.title} className="w-full h-full object-cover" />
+                    ) : (
+                      <>
+                        <svg width="64" height="64" viewBox="0 0 80 80" fill="none" className="opacity-30">
+                          <rect x="8" y="20" width="64" height="40" rx="4" stroke="#475569" strokeWidth="2"/>
+                          <line x1="8" y1="32" x2="72" y2="32" stroke="#475569" strokeWidth="1.5"/>
+                          <line x1="8" y1="44" x2="72" y2="44" stroke="#475569" strokeWidth="1.5"/>
+                          <line x1="24" y1="20" x2="24" y2="60" stroke="#475569" strokeWidth="1.5"/>
+                          <line x1="40" y1="20" x2="40" y2="60" stroke="#475569" strokeWidth="1.5"/>
+                          <line x1="56" y1="20" x2="56" y2="60" stroke="#475569" strokeWidth="1.5"/>
+                          <rect x="32" y="62" width="16" height="8" rx="2" stroke="#475569" strokeWidth="1.5"/>
+                        </svg>
+                        <span className="text-xs text-slate-400 uppercase tracking-widest">{t.propozycjePackagePhoto}</span>
+                      </>
+                    )}
+                    <span className="absolute bottom-2 right-2 bg-yellow-400 text-slate-900 font-medium text-[10px] px-2 py-0.5 rounded">{t.propozycjeDeliveryInstallIncluded}</span>
+                  </div>
+                  <ul className="space-y-1.5 flex-1">
+                    {p.features.map((f) => (
+                      <li key={f} className="flex items-start gap-2 text-sm text-slate-700">
+                        <span className="text-yellow-500 mt-0.5">✓</span> {f}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="pt-3 border-t border-slate-100 mt-auto">
+                    <CardPrice id={p.id} lang={language} note={t.propozycjePriceIndicativeNote} />
+                  </div>
                   <Link to={`/propozycje/${p.id}`} className="block w-full text-center bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2.5 rounded-xl transition-colors text-sm">
                     {t.propozycjeDetailsButton}
                   </Link>

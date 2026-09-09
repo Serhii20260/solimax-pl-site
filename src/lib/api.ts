@@ -58,7 +58,7 @@ export interface PackageSpec {
 export interface Package {
   id: string;
   category: 'home' | 'business' | 'heatpumps' | 'heating' | 'carport';
-  tier: 'standard' | 'premium';
+  tier: 'standard' | 'premium' | 'anker';
   title: string;
   shortDescription: string;
   fullDescription: string;
@@ -85,7 +85,7 @@ export interface Package {
 
 export interface PackageFilters {
   category?: 'home' | 'business' | 'heatpumps' | 'heating' | 'carport';
-  tier?: 'standard' | 'premium';
+  tier?: 'standard' | 'premium' | 'anker';
   promoOnly?: boolean;
   newOnly?: boolean;
   activeOnly?: boolean;
@@ -154,4 +154,5 @@ export const CATEGORY_LABELS: Record<Package['category'], string> = {
 export const TIER_LABELS: Record<Package['tier'], string> = {
   standard: 'Standard',
   premium: 'Premium',
+  anker: 'Anker',
 };

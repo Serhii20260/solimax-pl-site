@@ -169,6 +169,7 @@ export default function PropozycjeDetails() {
     standard: t.propozycjeDetailsTierStandard,
     premium: t.propozycjeDetailsTierPremium,
     basic: t.propozycjeDetailsTierBasic,
+    anker: t.propozycjeDetailsTierAnker,
   };
   const categoryLabel = categoryLabels[pkg.category] || pkg.category;
   const tierLabel = tierLabels[pkg.tier] || pkg.tier;

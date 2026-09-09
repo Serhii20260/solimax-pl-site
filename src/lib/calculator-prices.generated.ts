@@ -24,7 +24,7 @@ export const CATALOGUE_PV: CataloguePv[] = [
   {
     slug: "anker-smart-system",
     name: { pl: "Anker SOLIX Smart System", en: "Anker SOLIX Smart System" },
-    tier: "premium",
+    tier: "anker",
     kwp: 5.34,
     storageKwh: 16.14,
     netto: 54500,
@@ -33,7 +33,7 @@ export const CATALOGUE_PV: CataloguePv[] = [
   {
     slug: "anker-x1-5kw",
     name: { pl: "Anker SOLIX X1 5 kW", en: "Anker SOLIX X1 5 kW" },
-    tier: "premium",
+    tier: "anker",
     kwp: 5.7,
     storageKwh: 5,
     netto: 38300,
@@ -78,7 +78,7 @@ export const CATALOGUE_PV: CataloguePv[] = [
   {
     slug: "anker-x1-12kw",
     name: { pl: "Anker SOLIX X1 12 kW", en: "Anker SOLIX X1 12 kW" },
-    tier: "premium",
+    tier: "anker",
     kwp: 11.4,
     storageKwh: 15,
     netto: 71100,
