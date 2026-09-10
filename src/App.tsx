@@ -28,6 +28,7 @@ const Cookies = lazy(() => import("./pages/Cookies"));
 const DaniKompanii = lazy(() => import("./pages/DaniKompanii"));
 const CalculatorWizard = lazy(() => import("./pages/CalculatorWizard"));
 const AdminPricing = lazy(() => import("./pages/AdminPricing"));
+const AdminUstawienia = lazy(() => import("./pages/AdminUstawienia"));
 const AdminPackages = lazy(() => import("./pages/AdminPackages"));
 const AdminLeads = lazy(() => import("./pages/AdminLeads"));
 
@@ -66,6 +67,7 @@ export default function App() {
         <Route path="admin" element={<RequireAdmin><Suspense fallback={<RouteFallback />}><AdminPricing /></Suspense></RequireAdmin>} />
         <Route path="admin/packages" element={<Suspense fallback={<RouteFallback />}><AdminPackages /></Suspense>} />
         <Route path="admin/leads" element={<RequireAdmin><Suspense fallback={<RouteFallback />}><AdminLeads /></Suspense></RequireAdmin>} />
+        <Route path="admin/ustawienia" element={<RequireAdmin><Suspense fallback={<RouteFallback />}><AdminUstawienia /></Suspense></RequireAdmin>} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
