@@ -39,6 +39,10 @@ type Lead = {
   notifyStatus: string | null;
   notifyError: string | null;
   notifyAtLocal: string | null;
+  // Stan każdego kanału osobno. Klucz to nazwa kanału: "email", "telegram".
+  // Kolumna notifyStatus wyżej niesie PODSUMOWANIE (doszło cokolwiek / nic),
+  // a tu są szczegóły. Puste dla leadów starszych niż tabela prób.
+  notifications?: Record<string, { status: string; error: string | null; at: string | null }>;
   processedAt: string | null;
   processedAtLocal: string | null;
   comment: string | null;
@@ -58,11 +62,36 @@ type LeadsResponse = {
   unprocessed: number;
 };
 
-type MailStatus = { ok: boolean; error: string | null; user: string | null; to: string | null };
+type ChannelStatus = {
+  ok: boolean;
+  error: string | null;
+  enabled?: boolean;   // tylko Telegram: kanał bez tokenu jest WYŁĄCZONY, nie zepsuty
+  user?: string | null;
+  to?: string | null;
+  bot?: string | null;
+  chatId?: string | null;
+};
+
+type MailStatus = {
+  ok: boolean;
+  error: string | null;
+  user: string | null;
+  to: string | null;
+  channels?: { email: ChannelStatus; telegram: ChannelStatus };
+  // Kanał działa, jeśli działa CHOĆ JEDEN: to właśnie znaczy, że
+  // właściciel dowie się o leadzie.
+  anyWorking?: boolean;
+};
 
 type RowState = { busy: boolean; error: string };
 
 const PAGE_SIZES = [25, 50, 100, 200];
+
+// Kolejność kanałów na liście. Nazwa techniczna -> podpis dla człowieka.
+const CHANNELS = [
+  { key: "email", label: "poczta" },
+  { key: "telegram", label: "Telegram" },
+] as const;
 
 // Polski dzień kalendarzowy, nie doba UTC. Format sv-SE daje od razu
 // „RRRR-MM-DD”, czyli dokładnie to, czego oczekuje <input type="date">.
@@ -394,19 +423,53 @@ export default function AdminLeads() {
             Powiadomienia niewysłane: <strong>{data?.undelivered}</strong>
           </span>
         )}
-        {mail && (
-          <span
-            className={`rounded-md border px-3 py-1.5 ${
-              mail.ok
-                ? "border-emerald-300 bg-emerald-50 text-emerald-900"
-                : "border-red-300 bg-red-50 text-red-900"
-            }`}
-            title={mail.error ?? ""}
-          >
-            Kanał powiadomień: <strong>{mail.ok ? "działa" : "nie działa"}</strong>
-            {!mail.ok && mail.error ? ` — ${mail.error}` : ""}
-          </span>
-        )}
+        {mail && (() => {
+          // Kanały pokazujemy OSOBNO. Wyłączony Telegram to nie awaria —
+          // to stan, i wygląda inaczej niż zepsuta poczta.
+          const chans = mail.channels;
+          const anyOk = mail.anyWorking ?? mail.ok;
+          if (!chans) {
+            return (
+              <span
+                className={`rounded-md border px-3 py-1.5 ${
+                  mail.ok
+                    ? "border-emerald-300 bg-emerald-50 text-emerald-900"
+                    : "border-red-300 bg-red-50 text-red-900"
+                }`}
+                title={mail.error ?? ""}
+              >
+                Kanał powiadomień: <strong>{mail.ok ? "działa" : "nie działa"}</strong>
+                {!mail.ok && mail.error ? ` — ${mail.error}` : ""}
+              </span>
+            );
+          }
+          const cell = (label: string, st: ChannelStatus) => {
+            const off = st.enabled === false;
+            const look = st.ok
+              ? "border-emerald-300 bg-emerald-50 text-emerald-900"
+              : off
+                ? "border-slate-300 bg-slate-50 text-slate-600"
+                : "border-red-300 bg-red-50 text-red-900";
+            const word = st.ok ? "działa" : off ? "wyłączony" : "nie działa";
+            return (
+              <span key={label} className={`rounded-md border px-3 py-1.5 ${look}`} title={st.error ?? ""}>
+                {label}: <strong>{word}</strong>
+                {!st.ok && !off && st.error ? ` — ${st.error}` : ""}
+              </span>
+            );
+          };
+          return (
+            <>
+              {cell("Poczta", chans.email)}
+              {cell("Telegram", chans.telegram)}
+              {!anyOk && (
+                <span className="rounded-md border border-red-300 bg-red-50 px-3 py-1.5 text-red-900">
+                  <strong>Żaden kanał nie działa</strong> — o nowych leadach nie przyjdzie powiadomienie
+                </span>
+              )}
+            </>
+          );
+        })()}
       </div>
 
       {/* Szybkie filtry */}
@@ -639,25 +702,61 @@ export default function AdminLeads() {
                     )}
                   </td>
                   <td className="px-3 py-2 whitespace-nowrap">
-                    {lead.notifyStatus === "sent" && (
-                      <span className="rounded px-2 py-0.5 text-xs bg-emerald-100 text-emerald-800">
-                        wysłane
-                      </span>
+                    {/* Stan KAŻDEGO kanału osobno, nie jedną etykietą.
+                        Najważniejszy przypadek: poczta padła, a Telegram
+                        doszedł — właściciel i tak się dowiedział. Jedna
+                        etykieta tego nie pokaże. */}
+                    {lead.notifications && Object.keys(lead.notifications).length > 0 ? (
+                      <div className="flex flex-col gap-1">
+                        {CHANNELS.map((ch) => {
+                          const st = lead.notifications?.[ch.key];
+                          if (!st) return null;
+                          const look =
+                            st.status === "sent"
+                              ? "bg-emerald-100 text-emerald-800"
+                              : st.status === "failed"
+                                ? "bg-red-100 text-red-800"
+                                : "bg-slate-100 text-slate-500";
+                          const label =
+                            st.status === "sent"
+                              ? "wysłane"
+                              : st.status === "failed"
+                                ? "błąd"
+                                : "wyłączony";
+                          return (
+                            <span
+                              key={ch.key}
+                              className={`rounded px-2 py-0.5 text-xs whitespace-nowrap ${look}`}
+                              title={st.error ?? ""}
+                            >
+                              {ch.label}: {label}
+                            </span>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <>
+                        {lead.notifyStatus === "sent" && (
+                          <span className="rounded px-2 py-0.5 text-xs bg-emerald-100 text-emerald-800">
+                            wysłane
+                          </span>
+                        )}
+                        {lead.notifyStatus === "failed" && (
+                          <span
+                            className="rounded px-2 py-0.5 text-xs bg-red-100 text-red-800"
+                            title={lead.notifyError ?? ""}
+                          >
+                            błąd
+                          </span>
+                        )}
+                        {lead.notifyStatus === "pending" && (
+                          <span className="rounded px-2 py-0.5 text-xs bg-slate-200 text-slate-700">
+                            w toku
+                          </span>
+                        )}
+                        {!lead.notifyStatus && <span className="text-slate-400">—</span>}
+                      </>
                     )}
-                    {lead.notifyStatus === "failed" && (
-                      <span
-                        className="rounded px-2 py-0.5 text-xs bg-red-100 text-red-800"
-                        title={lead.notifyError ?? ""}
-                      >
-                        błąd
-                      </span>
-                    )}
-                    {lead.notifyStatus === "pending" && (
-                      <span className="rounded px-2 py-0.5 text-xs bg-slate-200 text-slate-700">
-                        w toku
-                      </span>
-                    )}
-                    {!lead.notifyStatus && <span className="text-slate-400">—</span>}
                   </td>
                   <td className="px-3 py-2">
                     <button
