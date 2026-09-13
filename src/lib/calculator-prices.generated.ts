@@ -28,7 +28,7 @@ export const CATALOGUE_PV: CataloguePv[] = [
     kwp: 5.34,
     storageKwh: 16.14,
     netto: 54500,
-    from: { pl: "od 54 500,00 zł netto + VAT", en: "from 54 500,00 zł net + VAT" },
+    from: { pl: "od 54 500 zł netto + VAT", en: "from 54 500 zł net + VAT" },
   },
   {
     slug: "anker-x1-5kw",
@@ -37,7 +37,7 @@ export const CATALOGUE_PV: CataloguePv[] = [
     kwp: 5.7,
     storageKwh: 5,
     netto: 38300,
-    from: { pl: "od 38 300,00 zł netto + VAT", en: "from 38 300,00 zł net + VAT" },
+    from: { pl: "od 38 300 zł netto + VAT", en: "from 38 300 zł net + VAT" },
   },
   {
     slug: "bazik-8kw",
@@ -45,8 +45,8 @@ export const CATALOGUE_PV: CataloguePv[] = [
     tier: "standard",
     kwp: 8.01,
     storageKwh: 6.14,
-    netto: 35570.31,
-    from: { pl: "od 35 570,31 zł netto + VAT", en: "from 35 570,31 zł net + VAT" },
+    netto: 35600,
+    from: { pl: "od 35 600 zł netto + VAT", en: "from 35 600 zł net + VAT" },
   },
   {
     slug: "premium-8kw",
@@ -55,7 +55,7 @@ export const CATALOGUE_PV: CataloguePv[] = [
     kwp: 8.07,
     storageKwh: 9.04,
     netto: 50000,
-    from: { pl: "od 50 000,00 zł netto + VAT", en: "from 50 000,00 zł net + VAT" },
+    from: { pl: "od 50 000 zł netto + VAT", en: "from 50 000 zł net + VAT" },
   },
   {
     slug: "bazik-10kw",
@@ -63,8 +63,8 @@ export const CATALOGUE_PV: CataloguePv[] = [
     tier: "standard",
     kwp: 9.79,
     storageKwh: 6.14,
-    netto: 39081,
-    from: { pl: "od 39 081,00 zł netto + VAT", en: "from 39 081,00 zł net + VAT" },
+    netto: 39100,
+    from: { pl: "od 39 100 zł netto + VAT", en: "from 39 100 zł net + VAT" },
   },
   {
     slug: "premium-10kw",
@@ -73,7 +73,7 @@ export const CATALOGUE_PV: CataloguePv[] = [
     kwp: 9.97,
     storageKwh: 18.08,
     netto: 66000,
-    from: { pl: "od 66 000,00 zł netto + VAT", en: "from 66 000,00 zł net + VAT" },
+    from: { pl: "od 66 000 zł netto + VAT", en: "from 66 000 zł net + VAT" },
   },
   {
     slug: "anker-x1-12kw",
@@ -82,7 +82,7 @@ export const CATALOGUE_PV: CataloguePv[] = [
     kwp: 11.4,
     storageKwh: 15,
     netto: 71100,
-    from: { pl: "od 71 100,00 zł netto + VAT", en: "from 71 100,00 zł net + VAT" },
+    from: { pl: "od 71 100 zł netto + VAT", en: "from 71 100 zł net + VAT" },
   },
   {
     slug: "bazik-12kw",
@@ -90,8 +90,8 @@ export const CATALOGUE_PV: CataloguePv[] = [
     tier: "standard",
     kwp: 12.02,
     storageKwh: 12.28,
-    netto: 49492.41,
-    from: { pl: "od 49 492,41 zł netto + VAT", en: "from 49 492,41 zł net + VAT" },
+    netto: 49500,
+    from: { pl: "od 49 500 zł netto + VAT", en: "from 49 500 zł net + VAT" },
   },
   {
     slug: "premium-12kw",
@@ -100,7 +100,7 @@ export const CATALOGUE_PV: CataloguePv[] = [
     kwp: 12.35,
     storageKwh: 18.08,
     netto: 73000,
-    from: { pl: "od 73 000,00 zł netto + VAT", en: "from 73 000,00 zł net + VAT" },
+    from: { pl: "od 73 000 zł netto + VAT", en: "from 73 000 zł net + VAT" },
   },
 ];
 
@@ -109,29 +109,29 @@ export const CATALOGUE_HEAT_PUMPS: CatalogueHeatPump[] = [
     slug: "vaillant-7kw",
     name: { pl: "Vaillant aroTHERM Plus 7 kW R290", en: "Vaillant aroTHERM Plus 7 kW R290" },
     kw: 7,
-    netto: 69833.33,
-    from: { pl: "od 69 833,33 zł netto + VAT", en: "from 69 833,33 zł net + VAT" },
+    netto: 69800,
+    from: { pl: "od 69 800 zł netto + VAT", en: "from 69 800 zł net + VAT" },
   },
   {
     slug: "daikin-mt-10kw",
     name: { pl: "Daikin Altherma 3 H MT 10 kW", en: "Daikin Altherma 3 H MT 10 kW" },
     kw: 10,
-    netto: 61489.81,
-    from: { pl: "od 61 489,81 zł netto + VAT", en: "from 61 489,81 zł net + VAT" },
+    netto: 61500,
+    from: { pl: "od 61 500 zł netto + VAT", en: "from 61 500 zł net + VAT" },
   },
   {
     slug: "vaillant-12kw",
     name: { pl: "Vaillant aroTHERM Plus 12 kW R290", en: "Vaillant aroTHERM Plus 12 kW R290" },
     kw: 12,
-    netto: 85296.3,
-    from: { pl: "od 85 296,30 zł netto + VAT", en: "from 85 296,30 zł net + VAT" },
+    netto: 85300,
+    from: { pl: "od 85 300 zł netto + VAT", en: "from 85 300 zł net + VAT" },
   },
   {
     slug: "daikin-ht-14kw",
     name: { pl: "Daikin Altherma 3 H HT 14 kW", en: "Daikin Altherma 3 H HT 14 kW" },
     kw: 14,
-    netto: 74185.19,
-    from: { pl: "od 74 185,19 zł netto + VAT", en: "from 74 185,19 zł net + VAT" },
+    netto: 74200,
+    from: { pl: "od 74 200 zł netto + VAT", en: "from 74 200 zł net + VAT" },
   },
 ];
 

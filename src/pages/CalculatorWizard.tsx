@@ -200,9 +200,12 @@ function round(n: number, digits = 0) {
 function fmtPLN(n: number, lang: Language = "pl") {
   const v = isFinite(n) ? n : 0;
   const locale = lang === "ua" ? "uk-UA" : lang === "de" ? "de-DE" : lang === "en" ? "en-GB" : "pl-PL";
-  // Два знаки — щоб суми калькулятора виглядали так само, як підписи на
-  // картках («34 219,63 zł»), а не «34 220».
-  return v.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " zł";
+  // Копійки — тільки якщо вони є, як і в підписах на картках
+  // (priceLabel.js, правило округлення 2026-09-13). Ціни каталогу тепер круглі,
+  // тож калькулятор показує «85 300 zł», а не «85 300,00 zł». Некругла сума
+  // лишається з копійками й тим самим помітною.
+  const digits = Number.isInteger(v) ? 0 : 2;
+  return v.toLocaleString(locale, { minimumFractionDigits: digits, maximumFractionDigits: digits }) + " zł";
 }
 
 /** Наша ціна: те саме число плюс єдиний на весь сайт суфікс. */
