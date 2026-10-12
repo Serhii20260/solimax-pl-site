@@ -252,16 +252,12 @@ export default function Finansowanie() {
                     <span className="font-medium text-green-700">{t.finansowanieExampleCzysteHpAmount}</span>
                   </div>
                   <div className="flex justify-between text-slate-600">
-                    <span>{t.finansowanieExampleBessSubsidy}</span>
-                    <span className="font-medium text-green-700">- PLN ~16,000</span>
-                  </div>
-                  <div className="flex justify-between text-slate-600">
                     <span>{t.finansowanieExampleThermoRelief}</span>
                     <span className="font-medium text-green-700">{t.finansowanieExampleThermoReliefAmount}</span>
                   </div>
                   <div className="border-t border-slate-100 pt-2 flex justify-between">
                     <span className="font-semibold text-slate-900">{t.finansowanieExampleYourCost}</span>
-                    <span className="font-bold text-slate-900 text-lg">PLN ~101,800</span>
+                    <span className="font-bold text-slate-900 text-lg">PLN ~117,800</span>
                   </div>
                 </div>
                 <p className="text-xs text-slate-400">{t.finansowanieExampleComplexNote}</p>
