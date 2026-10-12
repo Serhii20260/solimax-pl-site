@@ -80,7 +80,7 @@ export default function Finansowanie() {
                 {t.finansowanieProgramBessText}
               </p>
               <p className="text-xs text-slate-400 mb-2">{t.finansowanieProgramBessNote}</p>
-              <a href="https://mojprad.gov.pl" target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline font-medium">
+              <a href="https://przydomowemagazyny.gov.pl" target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline font-medium">
                 {t.finansowanieProgramBessLink}
               </a>
             </div>
@@ -211,13 +211,9 @@ export default function Finansowanie() {
                     <span>{t.finansowanieExampleSystemCost}</span>
                     <span className="font-medium">PLN 45,000</span>
                   </div>
-                  <div className="flex justify-between text-slate-600">
-                    <span>{t.finansowanieExampleBessSubsidy}</span>
-                    <span className="font-medium text-green-700">- PLN ~16,000</span>
-                  </div>
                   <div className="border-t border-slate-100 pt-2 flex justify-between">
                     <span className="font-semibold text-slate-900">{t.finansowanieExampleYourCost}</span>
-                    <span className="font-bold text-slate-900 text-lg">PLN ~29,000</span>
+                    <span className="font-bold text-slate-900 text-lg">PLN 45,000</span>
                   </div>
                 </div>
                 <p className="text-xs text-slate-400">{t.finansowanieExamplePvNote}</p>
@@ -233,11 +229,11 @@ export default function Finansowanie() {
                   </div>
                   <div className="flex justify-between text-slate-600">
                     <span>{t.finansowanieExampleCzysteSubsidy}</span>
-                    <span className="font-medium text-green-700">- PLN 28,000-40,000</span>
+                    <span className="font-medium text-green-700">- do 35 200 zł</span>
                   </div>
                   <div className="border-t border-slate-100 pt-2 flex justify-between">
                     <span className="font-semibold text-slate-900">{t.finansowanieExampleYourCost}</span>
-                    <span className="font-bold text-slate-900 text-lg">PLN 80,000-92,000</span>
+                    <span className="font-bold text-slate-900 text-lg">od PLN 84,800</span>
                   </div>
                 </div>
                 <p className="text-xs text-slate-400">{t.finansowanieExampleHeatPumpNote}</p>
@@ -265,7 +261,7 @@ export default function Finansowanie() {
                   </div>
                   <div className="border-t border-slate-100 pt-2 flex justify-between">
                     <span className="font-semibold text-slate-900">{t.finansowanieExampleYourCost}</span>
-                    <span className="font-bold text-slate-900 text-lg">PLN ~97,000-107,000</span>
+                    <span className="font-bold text-slate-900 text-lg">PLN ~101,800</span>
                   </div>
                 </div>
                 <p className="text-xs text-slate-400">{t.finansowanieExampleComplexNote}</p>

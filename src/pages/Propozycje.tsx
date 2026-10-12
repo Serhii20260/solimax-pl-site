@@ -159,6 +159,13 @@ export default function Propozycje() {
     },
   ]
 
+  // Одна сума дотації на всі чотири картки: наступна зміна правиться
+  // в одному місці, а не в чотирьох.
+  const czystePowietrzeFeature =
+    language === 'pl'
+      ? 'Czyste Powietrze — do 35 200 zł na pompę powietrze-woda o podwyższonej klasie efektywności (poziom najwyższy; stan na 12.10.2026); wysokość zależy od dochodu'
+      : 'Czyste Powietrze — up to 35,200 zł for an air-to-water heat pump of higher efficiency class (highest level; as of 12.10.2026); the amount depends on income'
+
   const tnPakiety: PackageCard[] = [
     {
       id: 'daikin-mt-10kw',
@@ -172,7 +179,7 @@ export default function Propozycje() {
         t.propozycjeHeatDaikinMtFeature2,
         t.propozycjeHeatBuffer80,
         t.propozycjeHeatInstallFeature,
-        'Czyste Powietrze — do 40 000,00 zł',
+        czystePowietrzeFeature,
         t.propozycjeWarrantyDocsFeature,
       ],
       subsidy: t.propozycjeSubsidyCzyste,
@@ -189,7 +196,7 @@ export default function Propozycje() {
         t.propozycjeHeatDaikinHtFeature2,
         t.propozycjeHeatBuffer150,
         t.propozycjeHeatInstallFeature,
-        'Czyste Powietrze — do 40 000,00 zł',
+        czystePowietrzeFeature,
         t.propozycjeWarrantyDocsFeature,
       ],
       subsidy: t.propozycjeSubsidyCzyste,
@@ -206,7 +213,7 @@ export default function Propozycje() {
         t.propozycjeHeatVaillant7Feature2,
         t.propozycjeHeatBuffer80,
         t.propozycjeHeatR290Feature,
-        'Czyste Powietrze — do 40 000,00 zł',
+        czystePowietrzeFeature,
         t.propozycjeWarrantyDocsFeature,
       ],
       subsidy: t.propozycjeSubsidyCzyste,
@@ -223,7 +230,7 @@ export default function Propozycje() {
         t.propozycjeHeatVaillant12Feature2,
         t.propozycjeHeatBuffer150,
         t.propozycjeHeatR290Feature,
-        'Czyste Powietrze — do 40 000,00 zł',
+        czystePowietrzeFeature,
         t.propozycjeWarrantyDocsFeature,
       ],
       subsidy: t.propozycjeSubsidyCzyste,

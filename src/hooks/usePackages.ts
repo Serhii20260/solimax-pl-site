@@ -142,9 +142,9 @@ const PL_COPY: Record<string, PackageCopy> = {
   },
   'daikin-mt': {
     title: 'Daikin Altherma 3 H MT 10 kW',
-    shortDescription: 'Nowe domy / ogrzewanie podlogowe - do 55°C, ETVH12 ze zbiornikiem 230 l',
-    fullDescription: 'Pompa ciepla Daikin dla nowych domow z ogrzewaniem podlogowym. Dotacja do PLN 40,000.',
-    specs: [{ key: 'Moc', value: '10 kW' }, { key: 'Temp.', value: 'do 55°C' }, { key: 'Zbiornik CWU', value: '230 l' }],
+    shortDescription: 'Nowe domy / ogrzewanie podlogowe - do 65°C, ETVH12 ze zbiornikiem 230 l',
+    fullDescription: 'Pompa ciepla Daikin dla nowych domow z ogrzewaniem podlogowym. Czyste Powietrze — do 35 200 zł na pompę powietrze-woda o podwyższonej klasie efektywności (poziom najwyższy; stan na 12.10.2026); wysokość zależy od dochodu.',
+    specs: [{ key: 'Moc', value: 'klasa 10 kW' }, { key: 'Temp.', value: 'do 65°C' }, { key: 'Zbiornik CWU', value: '230 l' }],
     promoLabel: 'Czyste Powietrze',
   },
   'daikin-ht': {
@@ -191,9 +191,9 @@ const PL_COPY: Record<string, PackageCopy> = {
   },
   'carport-hybrid': {
     title: 'Carport Hybrid 3F',
-    shortDescription: '1 miejsce · 4.3 kWp · Deye 5 kW · Wallbox 7 kW AC',
-    fullDescription: 'Fotowoltaiczna wiata na 1 miejsce z hybrydowym falownikiem Deye i wallboxem.',
-    specs: [{ key: 'PV', value: '4.3 kWp' }, { key: 'Falownik', value: 'Deye 5 kW' }, { key: 'Wallbox', value: '7 kW AC' }],
+    shortDescription: '1 miejsce · 4.3 kWp · Deye 5 kW · ladowarka EV 11 kW AC',
+    fullDescription: 'Fotowoltaiczna wiata na 1 miejsce z hybrydowym falownikiem Deye i ladowarka Anker SOLIX V1 Smart EV Charger 11 kW AC.',
+    specs: [{ key: 'PV', value: '4.3 kWp' }, { key: 'Falownik', value: 'Deye 5 kW' }, { key: 'Ladowarka EV', value: 'Anker SOLIX V1 Smart EV Charger 11 kW AC (3-fazowy, Type 2)' }],
     promoLabel: 'Carport',
   },
   'carport-premium': {
@@ -240,14 +240,14 @@ const EN_COPY: Record<string, PackageCopy> = {
   'pv-premium-8': { ...PL_COPY['pv-premium-8'], title: 'PV Premium 8 kW', shortDescription: 'Sigenergy 8 kW + 8 kWh + 17x AIKO 475W - AI optimization', fullDescription: 'Premium system with Sigenergy SigenStor all-in-one and AIKO Neostar panels.', specs: [{ key: 'PV', value: '8 kW' }, { key: 'Battery', value: '8 kWh' }, { key: 'Panels', value: '17x AIKO 475W' }] },
   'pv-premium-10': { ...PL_COPY['pv-premium-10'], title: 'PV Premium 10 kW', shortDescription: 'Sigenergy 8 kW + 16 kWh + 21x AIKO 475W - AI optimization + glass-glass', fullDescription: 'Expanded premium system with a large battery and glass-glass panels.', specs: [{ key: 'PV', value: '10 kW' }, { key: 'Battery', value: '16 kWh' }, { key: 'Panels', value: '21x AIKO 475W' }] },
   'pv-premium-12': { ...PL_COPY['pv-premium-12'], title: 'PV Premium 12 kW', shortDescription: 'Sigenergy 12 kW + 16 kWh + 26x AIKO 475W - maximum independence', fullDescription: 'Maximum premium system for high independence from the grid.', specs: [{ key: 'PV', value: '12 kW' }, { key: 'Battery', value: '16 kWh' }, { key: 'Panels', value: '26x AIKO 475W' }] },
-  'daikin-mt': { ...PL_COPY['daikin-mt'], title: 'Daikin Altherma 3 H MT 10 kW', shortDescription: 'New homes / underfloor heating - up to 55°C, ETVH12 with 230 l tank', fullDescription: 'Daikin heat pump for new homes with underfloor heating. Subsidy up to PLN 40,000.', specs: [{ key: 'Power', value: '10 kW' }, { key: 'Temp.', value: 'up to 55°C' }, { key: 'DHW tank', value: '230 l' }] },
+  'daikin-mt': { ...PL_COPY['daikin-mt'], title: 'Daikin Altherma 3 H MT 10 kW', shortDescription: 'New homes / underfloor heating - up to 65°C, ETVH12 with 230 l tank', fullDescription: 'Daikin heat pump for new homes with underfloor heating. Czyste Powietrze — up to 35,200 zł for an air-to-water heat pump of higher efficiency class (highest level; as of 12.10.2026); the amount depends on income.', specs: [{ key: 'Power', value: '10 kW class' }, { key: 'Temp.', value: 'up to 65°C' }, { key: 'DHW tank', value: '230 l' }] },
   'daikin-ht': { ...PL_COPY['daikin-ht'], title: 'Daikin Altherma 3 H HT 14 kW', shortDescription: 'Older radiators 80/60°C - up to 70°C, ETVH16 with 180 l tank', fullDescription: 'High-temperature Daikin heat pump for buildings with older radiators.', specs: [{ key: 'Power', value: '14 kW' }, { key: 'Temp.', value: 'up to 70°C' }, { key: 'DHW tank', value: '180 l' }] },
   'vaillant-9': { ...PL_COPY['vaillant-9'], title: 'Vaillant aroTHERM Plus 7 kW', shortDescription: 'R290 propane GWP=3 - up to 75°C, uniTOWER plus + 190 l tank', fullDescription: 'Eco heat pump by Vaillant with natural R290 refrigerant.', specs: [{ key: 'Power', value: '7 kW' }, { key: 'Temp.', value: 'up to 75°C' }, { key: 'Refrigerant', value: 'R290' }] },
   'vaillant-12': { ...PL_COPY['vaillant-12'], title: 'Vaillant aroTHERM Plus 12 kW', shortDescription: 'Older radiators - up to 75°C at -15°C, uniTOWER plus + 190 l tank', fullDescription: 'High-power Vaillant heat pump for older radiators with R290.', specs: [{ key: 'Power', value: '12 kW' }, { key: 'Temp.', value: 'up to 75°C at -15°C' }, { key: 'Refrigerant', value: 'R290' }] },
   'biznes-30': { ...PL_COPY['biznes-30'], title: 'PV Business 30 kW', shortDescription: '2x Deye 15 kW + 65x Trina 460W - BYD 27.6 kWh BESS option', fullDescription: 'Commercial system for business with BYD storage option.', specs: [{ key: 'PV', value: '30 kW' }, { key: 'Inverter', value: '2x Deye 15 kW' }, { key: 'BESS', value: 'BYD 27.6 kWh' }], promoLabel: 'For business' },
   'biznes-100': { ...PL_COPY['biznes-100'], title: 'PV Business 100 kW', shortDescription: 'Sungrow SG110CX + 218x Trina 460W - 225 kWh BESS option', fullDescription: 'Mid-scale commercial system with Sungrow PowerStack.', specs: [{ key: 'PV', value: '100 kW' }, { key: 'Inverter', value: 'Sungrow SG110CX' }, { key: 'BESS', value: '225 kWh' }], promoLabel: 'Commercial' },
   'biznes-200': { ...PL_COPY['biznes-200'], title: 'PV Business 200 kW', shortDescription: '2x Sungrow SG110CX + 435x Trina 460W - 514 kWh BESS option', fullDescription: 'Large commercial system with dual Sungrow PowerStack.', specs: [{ key: 'PV', value: '200 kW' }, { key: 'Inverter', value: '2x Sungrow SG110CX' }, { key: 'BESS', value: '514 kWh' }], promoLabel: 'Commercial' },
-  'carport-hybrid': { ...PL_COPY['carport-hybrid'], title: 'Carport Hybrid 3F', shortDescription: '1 parking space · 4.3 kWp · Deye 5 kW · 7 kW AC wallbox', fullDescription: 'PV carport for one parking space with Deye hybrid inverter and wallbox.', specs: [{ key: 'PV', value: '4.3 kWp' }, { key: 'Inverter', value: 'Deye 5 kW' }, { key: 'Wallbox', value: '7 kW AC' }] },
+  'carport-hybrid': { ...PL_COPY['carport-hybrid'], title: 'Carport Hybrid 3F', shortDescription: '1 parking space · 4.3 kWp · Deye 5 kW · 11 kW AC EV charger', fullDescription: 'PV carport for one parking space with a Deye hybrid inverter and an Anker SOLIX V1 Smart EV Charger 11 kW AC.', specs: [{ key: 'PV', value: '4.3 kWp' }, { key: 'Inverter', value: 'Deye 5 kW' }, { key: 'EV charger', value: 'Anker SOLIX V1 Smart EV Charger 11 kW AC (3-phase, Type 2)' }] },
   'carport-premium': { ...PL_COPY['carport-premium'], title: 'Carport Premium DC EV', shortDescription: '1 parking space · 4.3 kWp · Sigenergy · 25 kW DC charging', fullDescription: 'Premium PV carport with Sigenergy and fast DC charging.', specs: [{ key: 'PV', value: '4.3 kWp' }, { key: 'Inverter', value: 'Sigenergy 5 kW' }, { key: 'DC charging', value: '25 kW CCS2' }] },
   'carport-business': { ...PL_COPY['carport-business'], title: 'Carport Business Grid', shortDescription: '3-10 spaces · Sungrow · scalable system from 12 to 50+ kWp', fullDescription: 'Modular business carport with Sungrow grid inverter.', specs: [{ key: 'PV', value: '12-50+ kWp' }, { key: 'Spaces', value: '3-10' }, { key: 'Inverter', value: 'Sungrow' }], promoLabel: 'For business' },
 };
